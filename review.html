@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>오답 복습 — Exam Hub</title>
+<title>오답 다시풀기 — Exam Hub</title>
 <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
 <div class="topbar">
   <div class="topbar-inner">
     <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
-    <h1 id="exam-title">오답 복습</h1>
+    <h1 id="exam-title">오답 다시풀기</h1>
     <div class="spacer"></div>
+    <span id="left-badge" class="badge">남은 0</span>
   </div>
 </div>
 
@@ -19,8 +20,11 @@
   <div id="empty-view" style="display:none;text-align:center;padding:60px 0;">
     <div style="font-size:60px;">🎉</div>
     <h2>오답이 없습니다</h2>
-    <p class="muted">퀴즈를 더 풀어 약점을 찾아보세요.</p>
+    <p class="muted">모든 오답을 마스터하셨거나 아직 안 풀어보셨습니다.</p>
     <a id="empty-link" href="#" class="btn primary">퀴즈로 가기</a>
+  </div>
+  <div id="intro" class="muted" style="margin-bottom:14px;display:none;">
+    틀렸던 문제를 다시 풀어 마스터하세요. 정답을 맞히면 오답 목록에서 제거됩니다. 보기 순서는 매번 셔플됩니다.
   </div>
   <div id="list-view"></div>
 </div>
@@ -32,60 +36,177 @@
   const exam = await ExamHub.getExam(examId);
   if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
   document.documentElement.style.setProperty('--accent', exam.color);
-  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name} 오답 복습`;
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name} 오답 다시풀기`;
   document.getElementById('back-link').href = `exam.html?id=${examId}`;
   document.getElementById('empty-link').href = `quiz.html?id=${examId}`;
 
   const all = await ExamHub.loadQuestions(examId);
   const wrongIds = ExamHub.getWrongList(examId);
-  // 오답 복습도 보기 셔플 — 같은 문제 반복 학습 시 위치 암기 방지
-  const wrongQs = all.filter((q) => wrongIds.includes(q.id)).map((q) => ExamHub.shuffleOptions(q));
+  // 원본 데이터 매핑 (셔플은 카드별로 매번 새로)
+  const baseQs = all.filter((q) => wrongIds.includes(q.id));
 
-  if (wrongQs.length === 0) {
-    document.getElementById('empty-view').style.display = '';
-    return;
+  const intro = document.getElementById('intro');
+  const empty = document.getElementById('empty-view');
+  const listEl = document.getElementById('list-view');
+  const leftBadge = document.getElementById('left-badge');
+
+  function refresh() {
+    const ids = ExamHub.getWrongList(examId);
+    leftBadge.textContent = `남은 ${ids.length}`;
+    if (ids.length === 0) {
+      empty.style.display = '';
+      intro.style.display = 'none';
+      listEl.style.display = 'none';
+    } else {
+      empty.style.display = 'none';
+      intro.style.display = '';
+      listEl.style.display = '';
+    }
   }
 
-  const wrap = document.getElementById('list-view');
-  wrap.innerHTML = `<p class="muted">총 ${wrongQs.length}개 오답. 클릭해서 펼치고 ‘완료’로 제거하세요.</p>`;
+  if (baseQs.length === 0) { refresh(); return; }
+  intro.style.display = '';
+  refresh();
 
-  wrongQs.forEach((q, i) => {
+  // 카드 렌더링 — 펼치면 풀이 모드
+  baseQs.forEach((origQ, i) => {
     const card = document.createElement('div');
     card.className = 'card';
     card.style.marginBottom = '10px';
-    card.innerHTML = `
-      <div style="display:flex;gap:8px;align-items:center;cursor:pointer;" data-toggle="1">
-        <span class="badge bad">Q${i + 1}</span>
-        <span class="badge dim">${ExamHub.escape(q.subject || q.domain || '')}</span>
-        <div style="flex:1;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-          ${ExamHub.escape((q.question || '').slice(0, 80))}
+    card.dataset.qid = origQ.id;
+
+    let shuffled = ExamHub.shuffleOptions(origQ); // 카드 펼칠 때 매번 새로 셔플
+    let submitted = false;
+    let picked = null;
+
+    function renderHeader(open) {
+      return `
+        <div style="display:flex;gap:8px;align-items:center;cursor:pointer;" data-toggle="1">
+          <span class="badge bad">Q${i + 1}</span>
+          <span class="badge dim">${ExamHub.escape(origQ.subject || origQ.domain || '')}</span>
+          <div style="flex:1;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+            ${ExamHub.escape((origQ.question || '').slice(0, 80))}
+          </div>
+          <span class="muted">${open ? '▲' : '▼'}</span>
         </div>
-        <span class="muted" data-arrow="1">▼</span>
-      </div>
-      <div data-detail style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
-        ${ExamHub.renderQuestionBody(q)}
-        <div style="margin-top:10px;">
-          ${Object.entries(q.options || {}).map(([k, v]) => `
-            <div class="option ${k === q.answer ? 'correct' : ''}" style="cursor:default;"><span class="opt-label">${k}</span> ${ExamHub.escape(v)}</div>
-          `).join('')}
+      `;
+    }
+
+    function renderBody() {
+      // 답 제출 전: 보기 클릭 가능, 정답 안 보임
+      // 제출 후: 정답/오답 표시 + 4단 해설 + (정답이면 마스터하기, 오답이면 재시도)
+      const optionsHtml = Object.entries(shuffled.options).map(([k, v]) => {
+        let cls = 'option';
+        if (submitted) {
+          if (k === shuffled.answer) cls += ' correct';
+          else if (k === picked) cls += ' wrong';
+        } else if (picked === k) {
+          cls += ' selected';
+        }
+        return `<button class="${cls}" data-key="${k}" ${submitted ? 'disabled' : ''}>
+          <span class="opt-label">${k}</span> ${ExamHub.escape(v)}
+        </button>`;
+      }).join('');
+
+      let footerHtml = '';
+      if (!submitted) {
+        footerHtml = `
+          <div style="margin-top:12px;display:flex;gap:8px;">
+            <button class="btn primary" data-act="submit" ${picked ? '' : 'disabled'}>답 제출</button>
+            <button class="btn ghost" data-act="show-anyway">해설만 보기</button>
+          </div>
+        `;
+      } else {
+        const correct = picked === shuffled.answer;
+        footerHtml = `
+          <div style="margin-top:14px;">
+            ${ExamHub.renderExplanation(origQ)}
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            ${correct
+              ? `<button class="btn primary" data-act="master">✓ 마스터함 (목록에서 제거)</button>`
+              : `<button class="btn" data-act="retry">↻ 다시 시도</button>`}
+            <button class="btn ghost" data-act="next">건너뛰기</button>
+          </div>
+        `;
+      }
+
+      return `
+        <div data-detail style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+          ${ExamHub.renderQuestionBody(origQ)}
+          <div style="margin-top:14px;">${optionsHtml}</div>
+          ${footerHtml}
         </div>
-        ${ExamHub.renderExplanation(q)}
-        <div style="margin-top:14px;display:flex;gap:8px;">
-          <button class="btn primary" data-done="${q.id}">✓ 이 문제 마스터함</button>
-        </div>
-      </div>
-    `;
-    card.querySelector('[data-toggle]').onclick = () => {
-      const d = card.querySelector('[data-detail]');
-      const a = card.querySelector('[data-arrow]');
-      if (d.style.display === 'none') { d.style.display = ''; a.textContent = '▲'; }
-      else { d.style.display = 'none'; a.textContent = '▼'; }
-    };
-    card.querySelector('[data-done]').onclick = () => {
-      ExamHub.removeWrong(examId, q.id);
-      card.style.display = 'none';
-    };
-    wrap.appendChild(card);
+      `;
+    }
+
+    let isOpen = false;
+    function paint() {
+      card.innerHTML = renderHeader(isOpen) + (isOpen ? renderBody() : '');
+      bind();
+    }
+    function bind() {
+      card.querySelector('[data-toggle]')?.addEventListener('click', (e) => {
+        if (e.target.closest('[data-detail]')) return; // body 클릭은 토글 안 함
+        if (!isOpen) {
+          // 카드 펼칠 때마다 새로 셔플 + 상태 리셋
+          shuffled = ExamHub.shuffleOptions(origQ);
+          submitted = false;
+          picked = null;
+        }
+        isOpen = !isOpen;
+        paint();
+      });
+      if (!isOpen) return;
+      card.querySelectorAll('.option').forEach((b) => {
+        b.addEventListener('click', () => {
+          if (submitted) return;
+          picked = b.dataset.key;
+          paint();
+        });
+      });
+      const submitBtn = card.querySelector('[data-act="submit"]');
+      if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+          if (!picked) return;
+          submitted = true;
+          // 통계 기록 — 정답 시 stats에 반영, 다시풀이 성공 카운트
+          const correct = picked === shuffled.answer;
+          ExamHub.recordAnswer(examId, origQ, correct);
+          paint();
+        });
+      }
+      card.querySelector('[data-act="show-anyway"]')?.addEventListener('click', () => {
+        // 해설만 보기 — 풀지 않고 학습만
+        submitted = true;
+        picked = null; // 정답 비교 X
+        // 정답 자체로 처리하지 않고 해설만 보여주기 위해 picked=정답으로 fake
+        picked = shuffled.answer;
+        paint();
+      });
+      card.querySelector('[data-act="master"]')?.addEventListener('click', () => {
+        ExamHub.removeWrong(examId, origQ.id);
+        card.style.transition = 'opacity 0.3s';
+        card.style.opacity = '0';
+        setTimeout(() => { card.remove(); refresh(); }, 300);
+      });
+      card.querySelector('[data-act="retry"]')?.addEventListener('click', () => {
+        // 셔플 다시 + 다시 풀기 모드
+        shuffled = ExamHub.shuffleOptions(origQ);
+        submitted = false;
+        picked = null;
+        paint();
+      });
+      card.querySelector('[data-act="next"]')?.addEventListener('click', () => {
+        isOpen = false;
+        paint();
+        // 다음 펼친 카드 자동 열기
+        const nextCard = card.nextElementSibling;
+        if (nextCard) nextCard.querySelector('[data-toggle]')?.click();
+      });
+    }
+    paint();
+    listEl.appendChild(card);
   });
 })();
 </script>

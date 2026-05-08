@@ -1259,5 +1259,258 @@
       "practical": "지난달 활성 회원 - 이번달 활성 회원 = 이탈 회원. 전체 상품 - 주문에 등장한 상품 = 한 번도 안 팔린 상품. 차이 분석에 핵심.",
       "pitfall": "MINUS는 A 기준이라 순서 중요. A MINUS B ≠ B MINUS A. 또 MINUS는 자동 중복 제거 + 정렬 동반(UNION처럼). 큰 데이터에서는 NOT EXISTS가 더 빠를 수 있음."
     }
+  },
+  {
+    "id": "sqld_s2_041",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": ["CROSS JOIN", "카티션곱"],
+    "question": "CROSS JOIN(카티션 곱)에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "두 테이블의 모든 가능한 조합을 반환한다 (행수 = m × n).",
+      "B": "조인 조건이 필수이다.",
+      "C": "결과 행수는 항상 두 테이블 중 큰 쪽과 같다.",
+      "D": "NULL 값은 자동으로 제외된다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "CROSS JOIN은 '모든 짝짓기'예요. A 테이블 3행 × B 테이블 4행 = 12행. 조건 없이 모든 조합을 만듭니다. 의도치 않게 발생하면 데이터 폭증 원인이라 위험.",
+      "steps": [
+        "CROSS JOIN = 카티션 곱 = 모든 조합",
+        "결과 행수 = 좌측 행수 × 우측 행수",
+        "→ A"
+      ],
+      "practical": "달력 만들기 (연도 × 월 × 일), 모든 사이즈×색상 조합으로 SKU 생성 등 의도된 조합 생성에 사용. 조건 없이 일반 조인 작성 시 자동 CROSS JOIN으로 의도치 않은 폭증.",
+      "pitfall": "FROM A, B (콤마 조인) + WHERE 조건 빠뜨림 = CROSS JOIN. 100만행 × 100만행 = 1조행 → 서버 다운. 조인 조건 항상 ON 으로 명시 권장."
+    }
+  },
+  {
+    "id": "sqld_s2_042",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": ["RIGHT OUTER JOIN", "OUTER JOIN", "방향"],
+    "question": "다음 두 SQL이 동일한 결과를 보장하는 방법은?",
+    "code": "(가) SELECT * FROM A LEFT OUTER JOIN B ON A.k=B.k;\n(나) ___________________________________________",
+    "options": {
+      "A": "(나) SELECT * FROM B RIGHT OUTER JOIN A ON A.k=B.k;",
+      "B": "(나) SELECT * FROM A RIGHT OUTER JOIN B ON A.k=B.k;",
+      "C": "(나) SELECT * FROM A FULL OUTER JOIN B ON A.k=B.k;",
+      "D": "(나) SELECT * FROM A INNER JOIN B ON A.k=B.k;"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "LEFT/RIGHT OUTER JOIN은 '기준 테이블'이 어느 쪽인지의 차이. 'A LEFT JOIN B' = A 모두 + 매칭 B. 같은 결과를 RIGHT로 만들려면 테이블 순서를 뒤집어 'B RIGHT JOIN A' 로 적어야 'A 기준'이 유지됩니다.",
+      "steps": [
+        "LEFT OUTER JOIN: 좌측 모두 + 매칭 우측",
+        "A LEFT B = A 기준",
+        "B RIGHT A = A가 우측 = A 기준 (방향 반대지만 결과 같음)",
+        "→ A"
+      ],
+      "practical": "팀에 따라 LEFT만 쓰는 코딩 컨벤션 흔함 (가독성 일관). RIGHT는 거의 안 쓰지만 이론적으로 가능하다는 걸 시험에서 확인.",
+      "pitfall": "FULL OUTER JOIN은 양쪽 모두 보존 (어느 쪽이든 매칭 안 되면 NULL). LEFT/RIGHT와 결과 다름. 결과 컬럼 순서는 SELECT FROM 의 순서대로 — A FROM 이면 A 컬럼이 먼저."
+    }
+  },
+  {
+    "id": "sqld_s2_043",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": ["FULL OUTER JOIN", "양쪽보존"],
+    "question": "다음 데이터에서 FULL OUTER JOIN 결과 행수는?",
+    "code": "A: {1, 2, 3}\nB: {2, 3, 4, 5}\n\nSELECT * FROM A FULL OUTER JOIN B ON A.id = B.id;",
+    "options": {
+      "A": "2 (교집합만)",
+      "B": "3 (A 기준)",
+      "C": "4 (B 기준)",
+      "D": "5 (합집합)"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "FULL OUTER JOIN은 '양쪽 다 챙기기'. A에만 있는 1, 양쪽 다 있는 2·3, B에만 있는 4·5 — 총 5행. 매칭 안 되는 쪽은 NULL로 채워집니다.",
+      "steps": [
+        "교집합 = {2, 3} → 매칭 행 2",
+        "A에만 = {1} → 1행 (B 컬럼 NULL)",
+        "B에만 = {4, 5} → 2행 (A 컬럼 NULL)",
+        "총 = 2 + 1 + 2 = 5",
+        "→ D"
+      ],
+      "practical": "두 시스템의 데이터 비교 (양쪽 누락 검출). 옛 회원DB vs 신규 회원DB → 어느 쪽에만 있는 회원 식별. UNION ALL + WHERE 조합보다 한 줄로 표현 가능.",
+      "pitfall": "MySQL은 FULL OUTER JOIN 미지원 → LEFT JOIN UNION RIGHT JOIN 으로 우회. Oracle/PostgreSQL/SQL Server는 지원. 시험은 표준 SQL 기준이라 출제됨."
+    }
+  },
+  {
+    "id": "sqld_s2_044",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": ["NATURAL JOIN", "USING", "ON차이"],
+    "question": "NATURAL JOIN, USING, ON 의 차이로 옳지 않은 것은?",
+    "options": {
+      "A": "NATURAL JOIN은 같은 이름 컬럼 모두 자동 매칭한다.",
+      "B": "USING(col)은 명시한 컬럼만 매칭한다.",
+      "C": "ON은 등호 외에도 부등호·BETWEEN 등 자유 조건 가능하다.",
+      "D": "NATURAL JOIN과 USING절에서는 조인 컬럼에 테이블 별칭(alias)을 붙여야 한다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "NATURAL JOIN과 USING절에서 조인 컬럼은 '하나로 합쳐진' 상태라 별칭을 붙이면 안 돼요. SELECT a.dept_id 가 아니라 SELECT dept_id 로 써야 정상. ON은 분리 유지라 별칭 OK.",
+      "steps": [
+        "NATURAL/USING: 조인 컬럼이 결과에서 1개로 통합 → 별칭 X",
+        "ON: 양쪽 컬럼 분리 유지 → 별칭 O",
+        "D: '별칭을 붙여야 한다' = 잘못된 설명",
+        "→ D"
+      ],
+      "practical": "USING(col)은 가독성 좋고 일치 명시적이라 권장. NATURAL은 새 동일이름 컬럼 추가 시 의도치 않게 결과 바뀜 → 위험.",
+      "pitfall": "USING(dept_id) 결과에서 SELECT a.dept_id 시 ORA-25154 에러. 그냥 SELECT dept_id 로. SELECT * 면 자동 처리되어 안 보이지만 명시 컬럼 사용 시 주의."
+    }
+  },
+  {
+    "id": "sqld_s2_045",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": ["다중조인", "3-way join"],
+    "question": "다음 SQL에서 적절하지 않은 부분은?",
+    "code": "SELECT s.name, c.title, t.name AS teacher\nFROM Student s\nJOIN Course c ON s.course_id = c.id\nJOIN Teacher t ON c.teacher_id = t.id\nWHERE s.grade = 3;",
+    "options": {
+      "A": "3개 테이블 조인은 SQL 표준에서 허용된다.",
+      "B": "조인 순서대로 평가되며 옵티마이저가 더 빠른 순서로 재정렬할 수 있다.",
+      "C": "위 SQL은 문법적으로 정상이다.",
+      "D": "WHERE 절은 모든 조인이 끝난 뒤에 적용되어 매번 모든 행을 만든다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "옵티마이저는 똑똑해서 WHERE 조건을 가능한 한 일찍 적용해 행 수를 줄여요(predicate pushdown). 'WHERE는 마지막에' 라는 논리적 순서는 맞지만, 실행 단계에서는 더 빠르도록 재배열됩니다.",
+      "steps": [
+        "각 보기 검사",
+        "A: 3개 이상 조인 표준 OK → 맞음",
+        "B: 옵티마이저 자동 최적화 → 맞음",
+        "C: 문법 정상 → 맞음",
+        "D: '매번 모든 행' = 잘못 (옵티마이저가 일찍 필터) → 정답"
+      ],
+      "practical": "여러 테이블 조인 시 WHERE 조건은 '가장 작은 결과셋을 만드는 것 우선'으로 작성하면 옵티마이저 힌트 없이도 빠른 경우 많음.",
+      "pitfall": "조인 순서가 logical order ≠ execution order. EXPLAIN PLAN으로 실제 실행 순서 확인 가능. 시험은 logical 기준."
+    }
+  },
+  {
+    "id": "sqld_s2_046",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": ["NTILE", "분위수", "구간분할"],
+    "question": "NTILE(4) OVER (ORDER BY sal DESC) 함수의 결과 의미는?",
+    "options": {
+      "A": "연봉 내림차순으로 4개의 균등한 그룹으로 분할 (1,2,3,4 부여)",
+      "B": "연봉 상위 4명만 표시",
+      "C": "연봉을 4로 나눈 결과",
+      "D": "4행마다 새 ROW_NUMBER 부여"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "NTILE(N)은 '데이터를 N등분'. 100명을 NTILE(4)로 분류하면 25명씩 4그룹 (1, 2, 3, 4 라벨). '상위 25%' 라벨링이나 사분위수 구간 만들 때 핵심.",
+      "steps": [
+        "NTILE(4) → 데이터를 4 그룹으로",
+        "ORDER BY sal DESC → 연봉 내림차순 기준",
+        "각 행에 1~4 그룹 번호 부여",
+        "→ A"
+      ],
+      "practical": "고객 등급화 (구매액 NTILE(5) → 1=VVIP, 2=VIP, ..., 5=일반), 학생 성적 사분위 등 구간 분류에 핵심.",
+      "pitfall": "행수가 N으로 나누어떨어지지 않으면 앞 그룹이 1행 더 많음. 100행 NTILE(3) → (34, 33, 33). NTILE은 PARTITION BY 사용 시 파티션별로 따로 분할."
+    }
+  },
+  {
+    "id": "sqld_s2_047",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": ["FIRST_VALUE", "LAST_VALUE", "frame절"],
+    "question": "FIRST_VALUE / LAST_VALUE 사용 시 가장 흔한 함정은?",
+    "options": {
+      "A": "ORDER BY 없이 사용",
+      "B": "frame절 기본값 때문에 LAST_VALUE가 의도와 다른 결과를 반환",
+      "C": "PARTITION BY를 못 쓴다",
+      "D": "NULL 값은 자동 제외된다"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "ORDER BY가 있으면 frame절 기본값이 'UNBOUNDED PRECEDING ~ CURRENT ROW' (누적). LAST_VALUE는 '현재까지 본 마지막' = '현재 행' 자체가 되어 의미 없는 값. 진짜 마지막 원하면 frame을 'UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING'으로 명시해야 함.",
+      "steps": [
+        "ORDER BY + frame 기본 → 누적 (현재까지)",
+        "LAST_VALUE 누적 = 현재 행 자신",
+        "원하는 결과: 전체 파티션의 마지막",
+        "해결: ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING",
+        "→ B"
+      ],
+      "practical": "각 부서별 가장 늦게 입사한 직원 이름 표시: LAST_VALUE(name) OVER (PARTITION BY dept ORDER BY hire_date ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING).",
+      "pitfall": "FIRST_VALUE는 frame 기본값(누적)으로도 정상 동작 (첫 행은 항상 처음). LAST_VALUE만 frame 명시 필요. 시험에 함정으로 자주."
+    }
+  },
+  {
+    "id": "sqld_s2_048",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": ["RATIO_TO_REPORT", "비율", "분석함수"],
+    "question": "RATIO_TO_REPORT(sal) OVER () 함수의 결과는?",
+    "options": {
+      "A": "각 행의 sal 값을 전체 합계로 나눈 비율 (0~1)",
+      "B": "각 행의 sal 값을 평균으로 나눈 값",
+      "C": "각 행의 sal 누적 비율",
+      "D": "각 행의 순위"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "RATIO_TO_REPORT는 '전체 중에서 내가 차지하는 비중'. 각 행의 값을 전체 합계로 나눠서 0~1 사이 비율 반환. 모든 행 비율 합 = 1.",
+      "steps": [
+        "RATIO_TO_REPORT(컬럼) OVER (...) = 컬럼값 / SUM(컬럼) OVER (...)",
+        "전체 SUM 대비 비중",
+        "→ A"
+      ],
+      "practical": "부서별 매출 기여도, 상품별 매출 비중. PARTITION BY 추가 시 파티션 내 비율. 화면에 % 표시할 때 ROUND(ratio * 100, 2) || '%' 패턴.",
+      "pitfall": "OVER () 빈 윈도우 = 전체 기준. OVER (PARTITION BY dept) = 부서 내 비율. 이 두 결과 완전 다름. 의도와 다른 윈도우 정의 시 잘못된 비율 노출."
+    }
+  },
+  {
+    "id": "sqld_s2_049",
+    "subject": "S2",
+    "topic": "PIVOT/UNPIVOT",
+    "tags": ["PIVOT", "결과형식", "집계함수"],
+    "question": "PIVOT 절에서 반드시 명시해야 하는 두 가지는?",
+    "options": {
+      "A": "집계 함수와 IN 절(가로로 펼칠 값 목록)",
+      "B": "ORDER BY와 GROUP BY",
+      "C": "WHERE와 HAVING",
+      "D": "JOIN 조건과 별칭"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "PIVOT 형식: PIVOT (집계함수(컬럼) FOR 변환컬럼 IN ('값1', '값2', ...)). 집계함수(SUM/AVG 등)로 어떻게 묶을지, IN 으로 어떤 값들을 가로 컬럼으로 펼칠지 둘 다 필요.",
+      "steps": [
+        "PIVOT 문법: PIVOT (agg_func(col) FOR pivot_col IN (val1, val2, ...))",
+        "필수 1: 집계함수 (SUM/COUNT/AVG/MAX/MIN)",
+        "필수 2: IN 리스트 (가로 펼칠 값 명시)",
+        "→ A"
+      ],
+      "practical": "월별 매출 가로로: PIVOT (SUM(amount) FOR month IN ('2026-01' AS jan, '2026-02' AS feb, ...)). AS로 컬럼명 부여 가능.",
+      "pitfall": "IN 리스트는 정적 — 동적 값(예: 모든 월) 자동 펼치려면 PL/SQL 필요. SQL만으로는 불가. 또 집계함수 안 컬럼은 PIVOT 결과에 안 나타남, IN 컬럼·집계 결과 컬럼만 노출."
+    }
+  },
+  {
+    "id": "sqld_s2_050",
+    "subject": "S2",
+    "topic": "PIVOT/UNPIVOT",
+    "tags": ["UNPIVOT", "NULL처리", "INCLUDE/EXCLUDE"],
+    "question": "UNPIVOT의 NULL 처리에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "UNPIVOT은 기본적으로 NULL 값을 결과에서 제외한다.",
+      "B": "UNPIVOT은 항상 NULL을 포함한다.",
+      "C": "INCLUDE NULLS와 EXCLUDE NULLS는 동일한 결과를 반환한다.",
+      "D": "NULL 값은 자동으로 0으로 변환된다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "UNPIVOT은 가로를 세로로 펼치면서 'NULL인 컬럼은 행으로 안 만듦' 이 기본. 1월 매출만 있고 2월 NULL이면 1월 행만 결과에 등장. NULL도 보고 싶으면 INCLUDE NULLS 명시.",
+      "steps": [
+        "UNPIVOT 기본 동작 → EXCLUDE NULLS (NULL 행 제거)",
+        "INCLUDE NULLS 옵션 → NULL 행도 포함",
+        "→ A"
+      ],
+      "practical": "분기별 매출 (Q1, Q2, Q3, Q4) 중 일부 분기 데이터 없음(NULL) → 기본 UNPIVOT은 그 분기 행 제외. 누락된 기간을 보고 싶다면 INCLUDE NULLS 또는 NVL로 사전 채움.",
+      "pitfall": "결과 행수 차이: 5행 × 4컬럼 데이터에서 NULL 5개 있으면, 기본 = 15행, INCLUDE NULLS = 20행. 시험에서 행수 묻는 경우 NULL 처리 옵션 확인 필수."
+    }
   }
 ]
