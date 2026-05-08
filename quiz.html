@@ -195,6 +195,8 @@
     }
     if (cnt > 0) pool = pool.slice(0, cnt);
     if (pool.length === 0) { alert('해당 영역에 문제가 없습니다'); return; }
+    // 보기 순서 무작위 셔플 — 위치 암기 방지
+    pool = pool.map((q) => ExamHub.shuffleOptions(q));
     queue = pool; idx = 0; correctCount = 0; answers = [];
     document.getElementById('setup-view').style.display = 'none';
     document.getElementById('quiz-view').style.display = '';

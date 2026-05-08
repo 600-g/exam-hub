@@ -132,6 +132,26 @@
       return a;
     },
 
+    /**
+     * 보기(A/B/C/D) 순서 무작위 셔플 — 위치 암기 방지
+     * 같은 문제를 여러 번 만나도 항상 다른 배치로 보임.
+     * 정답은 새 위치로 자동 remap. 4단 해설은 정답 표시 그대로.
+     */
+    shuffleOptions(q) {
+      if (!q.options || Object.keys(q.options).length < 2) return q;
+      const entries = Object.entries(q.options); // [[origKey, value], ...]
+      const shuffled = this.shuffle(entries);
+      const newOptions = {};
+      const remap = {}; // newKey → origKey
+      shuffled.forEach(([origKey, val], i) => {
+        const newKey = String.fromCharCode(65 + i); // A=65, B=66, ...
+        newOptions[newKey] = val;
+        remap[newKey] = origKey;
+      });
+      const newAnswer = Object.keys(remap).find((k) => remap[k] === q.answer) || q.answer;
+      return { ...q, options: newOptions, answer: newAnswer, _origAnswer: q.answer };
+    },
+
     /* 약점 분석 — 토픽별 정답률 낮은 순 */
     getWeakTopics(examId, limit = 5) {
       const s = this.getStats(examId);

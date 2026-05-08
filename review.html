@@ -38,7 +38,8 @@
 
   const all = await ExamHub.loadQuestions(examId);
   const wrongIds = ExamHub.getWrongList(examId);
-  const wrongQs = all.filter((q) => wrongIds.includes(q.id));
+  // 오답 복습도 보기 셔플 — 같은 문제 반복 학습 시 위치 암기 방지
+  const wrongQs = all.filter((q) => wrongIds.includes(q.id)).map((q) => ExamHub.shuffleOptions(q));
 
   if (wrongQs.length === 0) {
     document.getElementById('empty-view').style.display = '';

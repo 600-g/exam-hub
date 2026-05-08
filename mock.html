@@ -240,7 +240,7 @@
   }
 
   document.getElementById('start-mock').onclick = () => {
-    queue = buildMockSet();
+    queue = buildMockSet().map((q) => ExamHub.shuffleOptions(q));
     if (queue.length === 0) { alert('이 시험에 등록된 문제가 없습니다'); return; }
     answers = {}; curIdx = 0;
     endTs = Date.now() + exam.timeMinutes * 60000;
