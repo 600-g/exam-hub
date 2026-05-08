@@ -1,0 +1,64 @@
+{
+  "exams": [
+    {
+      "id": "ai900",
+      "name": "AI-900",
+      "fullName": "Microsoft Azure AI Fundamentals",
+      "emoji": "🤖",
+      "color": "#0078d4",
+      "description": "Azure AI 서비스의 기초 개념과 ML 워크로드를 다루는 입문 자격증",
+      "totalQuestions": 50,
+      "passScore": 700,
+      "maxScore": 1000,
+      "timeMinutes": 60,
+      "domains": [
+        { "id": "AI Workloads", "name": "AI 워크로드 및 고려사항", "weight": 0.2 },
+        { "id": "Machine Learning", "name": "머신러닝", "weight": 0.25 },
+        { "id": "Computer Vision", "name": "컴퓨터 비전", "weight": 0.2 },
+        { "id": "NLP", "name": "자연어 처리", "weight": 0.15 },
+        { "id": "Generative AI", "name": "생성형 AI", "weight": 0.1 },
+        { "id": "Conversational AI", "name": "대화형 AI", "weight": 0.05 },
+        { "id": "Responsible AI", "name": "책임 있는 AI", "weight": 0.05 }
+      ],
+      "language": "ko-en",
+      "active": true
+    },
+    {
+      "id": "sqld",
+      "name": "SQLD",
+      "fullName": "SQL 개발자 (한국데이터산업진흥원)",
+      "emoji": "🗃️",
+      "color": "#f7a01e",
+      "description": "데이터 모델링과 SQL 작성·활용 능력을 검정하는 국가공인 자격증",
+      "totalQuestions": 50,
+      "passScore": 60,
+      "maxScore": 100,
+      "timeMinutes": 90,
+      "subjectFailThreshold": 0.4,
+      "subjects": [
+        {
+          "id": "S1",
+          "name": "데이터 모델링의 이해",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["엔터티", "속성", "관계", "식별자", "정규화", "관계와 조인", "트랜잭션", "NULL", "본질식별자vs인조식별자"]
+        },
+        {
+          "id": "S2",
+          "name": "SQL 기본 및 활용",
+          "questionCount": 40,
+          "score": 80,
+          "topics": [
+            "관계형DB", "SELECT", "함수", "WHERE", "GROUP BY/HAVING", "ORDER BY", "조인",
+            "서브쿼리", "집합연산자", "그룹함수", "윈도우함수", "Top N", "계층질의", "PIVOT/UNPIVOT", "정규표현식",
+            "DML", "TCL", "DDL", "DCL"
+          ]
+        }
+      ],
+      "language": "ko",
+      "active": true
+    }
+  ],
+  "version": "1.0.0",
+  "lastUpdated": "2026-05-08"
+}

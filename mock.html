@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>실전 모의고사 — Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
+    <h1 id="exam-title">모의고사</h1>
+    <div class="spacer"></div>
+    <span id="timer" class="timer">--:--</span>
+  </div>
+</div>
+
+<div class="container">
+  <div id="intro-view" class="card">
+    <h2 style="margin-top:0;">실전 모의고사</h2>
+    <p id="intro-desc" class="muted"></p>
+    <ul style="font-size:13.5px;line-height:1.9;">
+      <li>실제 시험과 동일한 문항 수 / 시간 제한</li>
+      <li>제출 전 다른 문제로 자유 이동 가능</li>
+      <li>제출 후 합격 / 과락 / 토픽별 약점 분석</li>
+      <li>중단 시 진행 상태는 저장되지 않음</li>
+    </ul>
+    <button id="start-mock" class="btn primary lg" style="width:100%;margin-top:14px;">⏱ 시작</button>
+  </div>
+
+  <div id="exam-view" style="display:none;">
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+      <span class="badge" id="mock-progress">0/0</span>
+      <span id="mock-subject" class="badge dim"></span>
+      <div class="spacer" style="flex:1;"></div>
+      <button id="grid-toggle" class="btn ghost" style="font-size:12px;">📋 문제 목록</button>
+    </div>
+    <div id="grid-view" style="display:none;margin-bottom:14px;" class="card"></div>
+    <div class="card">
+      <div id="mock-body"></div>
+      <div id="mock-options" style="margin-top:18px;"></div>
+      <div style="display:flex;gap:8px;margin-top:16px;">
+        <button id="mock-prev" class="btn">← 이전</button>
+        <button id="mock-next" class="btn">다음 →</button>
+        <div class="spacer" style="flex:1;"></div>
+        <button id="mock-submit" class="btn danger">제출</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="result-view" style="display:none;" class="card">
+    <h2 style="margin-top:0;">📊 결과</h2>
+    <div id="result-body"></div>
+    <div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button id="result-review" class="btn primary">오답 확인</button>
+      <a id="result-menu" href="#" class="btn">메뉴로</a>
+    </div>
+    <div id="result-detail" style="display:none;margin-top:18px;"></div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const examId = ExamHub.getExamIdFromUrl() || 'sqld';
+  const exam = await ExamHub.getExam(examId);
+  if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
+  document.documentElement.style.setProperty('--accent', exam.color);
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name} 모의고사`;
+  document.title = `${exam.name} 모의고사 — Exam Hub`;
+  document.getElementById('back-link').href = `exam.html?id=${examId}`;
+  document.getElementById('result-menu').href = `exam.html?id=${examId}`;
+  document.getElementById('intro-desc').textContent =
+    `${exam.totalQuestions}문항 · ${exam.timeMinutes}분 · 합격 ${exam.passScore}/${exam.maxScore}` +
+    (exam.subjectFailThreshold ? ` (과목별 ${Math.round(exam.subjectFailThreshold * 100)}% 미만 = 과락)` : '');
+
+  const all = await ExamHub.loadQuestions(examId);
+
+  function buildMockSet() {
+    // SQLD: subject 비율 맞춤 / 그 외: 도메인 weight
+    if (exam.subjects) {
+      const out = [];
+      exam.subjects.forEach((s) => {
+        const pool = all.filter((q) => q.subject === s.id);
+        out.push(...ExamHub.shuffle(pool).slice(0, s.questionCount));
+      });
+      return out;
+    }
+    if (exam.domains) {
+      const out = [];
+      exam.domains.forEach((d) => {
+        const target = Math.round(exam.totalQuestions * (d.weight || 0));
+        const pool = all.filter((q) => (q.domain || q.subject) === d.id);
+        out.push(...ExamHub.shuffle(pool).slice(0, target));
+      });
+      // 부족분은 전체에서 채움
+      while (out.length < exam.totalQuestions) {
+        const remain = all.filter((q) => !out.includes(q));
+        if (!remain.length) break;
+        out.push(remain[Math.floor(Math.random() * remain.length)]);
+      }
+      return ExamHub.shuffle(out);
+    }
+    return ExamHub.shuffle(all).slice(0, exam.totalQuestions);
+  }
+
+  let queue = [];
+  let answers = {}; // {qid: pickedKey}
+  let curIdx = 0;
+  let endTs = 0;
+  let timerHandle = null;
+
+  function tick() {
+    const remain = Math.max(0, endTs - Date.now());
+    const m = Math.floor(remain / 60000);
+    const s = Math.floor((remain % 60000) / 1000);
+    const t = document.getElementById('timer');
+    t.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    t.classList.toggle('danger', remain < 5 * 60 * 1000);
+    if (remain <= 0) finish(true);
+  }
+
+  function renderCurrent() {
+    const q = queue[curIdx];
+    document.getElementById('mock-progress').textContent = `${curIdx + 1}/${queue.length}`;
+    document.getElementById('mock-subject').textContent = q.subject || q.domain || '';
+    document.getElementById('mock-body').innerHTML = ExamHub.renderQuestionBody(q);
+    const opts = document.getElementById('mock-options');
+    opts.innerHTML = '';
+    const picked = answers[q.id];
+    Object.entries(q.options || {}).forEach(([k, v]) => {
+      const b = document.createElement('button');
+      b.className = 'option' + (picked === k ? ' selected' : '');
+      b.dataset.key = k;
+      b.innerHTML = `<span class="opt-label">${k}</span> ${ExamHub.escape(v)}`;
+      b.onclick = () => { answers[q.id] = k; renderCurrent(); renderGrid(); };
+      opts.appendChild(b);
+    });
+    renderGrid();
+  }
+
+  function renderGrid() {
+    const wrap = document.getElementById('grid-view');
+    wrap.innerHTML = queue.map((q, i) => {
+      const a = answers[q.id];
+      const cls = i === curIdx ? 'badge' : (a ? 'badge dim' : 'badge bad');
+      return `<button class="${cls}" style="margin:2px;cursor:pointer;border:none;${a ? 'background:var(--accent-soft);color:var(--accent);' : ''}" data-i="${i}">${i + 1}</button>`;
+    }).join('');
+    wrap.querySelectorAll('button').forEach((b) => {
+      b.onclick = () => { curIdx = parseInt(b.dataset.i, 10); renderCurrent(); };
+    });
+  }
+
+  function finish(timeUp) {
+    if (timerHandle) clearInterval(timerHandle);
+    document.getElementById('exam-view').style.display = 'none';
+    document.getElementById('result-view').style.display = '';
+    document.getElementById('timer').textContent = timeUp ? '⏰ 시간초과' : '✅ 제출';
+
+    let totalCorrect = 0;
+    const bySubject = {};
+    queue.forEach((q) => {
+      const a = answers[q.id];
+      const correct = a === q.answer;
+      if (correct) totalCorrect++;
+      else ExamHub.addWrong(examId, q.id);
+      ExamHub.recordAnswer(examId, q, correct);
+      const sid = q.subject || q.domain || 'unknown';
+      bySubject[sid] = bySubject[sid] || { total: 0, correct: 0, score: 0, maxScore: 0 };
+      bySubject[sid].total += 1;
+      if (correct) bySubject[sid].correct += 1;
+    });
+
+    let totalScore = 0;
+    let pass = true;
+    let failedSubjects = [];
+    if (exam.subjects) {
+      exam.subjects.forEach((s) => {
+        const r = bySubject[s.id] || { total: 0, correct: 0 };
+        const score = Math.round((r.correct / Math.max(s.questionCount, 1)) * s.score);
+        totalScore += score;
+        bySubject[s.id].score = score;
+        bySubject[s.id].maxScore = s.score;
+        bySubject[s.id].subjectName = s.name;
+        if (exam.subjectFailThreshold && r.correct / Math.max(s.questionCount, 1) < exam.subjectFailThreshold) {
+          pass = false;
+          failedSubjects.push(s.name);
+        }
+      });
+      if (totalScore < exam.passScore) pass = false;
+    } else {
+      totalScore = Math.round((totalCorrect / queue.length) * exam.maxScore);
+      pass = totalScore >= exam.passScore;
+    }
+
+    ExamHub.saveMockResult(examId, {
+      ts: Date.now(), score: totalScore, max: exam.maxScore, pass,
+      correct: totalCorrect, total: queue.length, failedSubjects, durationMs: Date.now() - (endTs - exam.timeMinutes * 60000),
+    });
+
+    const body = document.getElementById('result-body');
+    body.innerHTML = `
+      <div style="text-align:center;padding:18px 0;">
+        <div style="font-size:56px;font-weight:800;color:${pass ? 'var(--good)' : 'var(--bad)'};">
+          ${pass ? '🎉 합격' : '😢 불합격'}
+        </div>
+        <div style="font-size:28px;margin-top:6px;">${totalScore} / ${exam.maxScore}</div>
+        <div class="muted">${totalCorrect}/${queue.length} 정답 · 합격컷 ${exam.passScore}</div>
+        ${failedSubjects.length ? `<div class="badge bad" style="margin-top:8px;">과락: ${failedSubjects.join(', ')}</div>` : ''}
+      </div>
+      <table class="result" style="margin-top:14px;">
+        <thead><tr><th>과목</th><th>정답</th><th>점수</th></tr></thead>
+        <tbody>
+          ${Object.values(bySubject).map((r) => `
+            <tr><td>${ExamHub.escape(r.subjectName || '-')}</td><td>${r.correct}/${r.total}</td><td>${r.score}/${r.maxScore || '-'}</td></tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+    document.getElementById('result-review').onclick = () => {
+      const wrap = document.getElementById('result-detail');
+      wrap.style.display = '';
+      wrap.innerHTML = queue.map((q, i) => {
+        const a = answers[q.id];
+        const correct = a === q.answer;
+        return `
+          <div class="card" style="margin-bottom:10px;">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+              <span class="badge ${correct ? 'good' : 'bad'}">Q${i + 1} · ${correct ? '정답' : '오답'}</span>
+              <span class="badge dim">${ExamHub.escape(q.subject || q.domain || '')}</span>
+            </div>
+            ${ExamHub.renderQuestionBody(q)}
+            <div style="margin-top:10px;font-size:13px;">내 답: <b>${a || '-'}</b> · 정답: <b style="color:var(--good);">${q.answer}</b></div>
+            ${ExamHub.renderExplanation(q)}
+          </div>
+        `;
+      }).join('');
+    };
+  }
+
+  document.getElementById('start-mock').onclick = () => {
+    queue = buildMockSet();
+    if (queue.length === 0) { alert('이 시험에 등록된 문제가 없습니다'); return; }
+    answers = {}; curIdx = 0;
+    endTs = Date.now() + exam.timeMinutes * 60000;
+    document.getElementById('intro-view').style.display = 'none';
+    document.getElementById('exam-view').style.display = '';
+    timerHandle = setInterval(tick, 1000);
+    tick();
+    renderCurrent();
+  };
+  document.getElementById('mock-prev').onclick = () => { if (curIdx > 0) { curIdx--; renderCurrent(); } };
+  document.getElementById('mock-next').onclick = () => { if (curIdx < queue.length - 1) { curIdx++; renderCurrent(); } };
+  document.getElementById('mock-submit').onclick = () => { if (confirm('제출하시겠습니까? 제출 후 수정할 수 없습니다.')) finish(false); };
+  document.getElementById('grid-toggle').onclick = () => {
+    const w = document.getElementById('grid-view');
+    w.style.display = w.style.display === 'none' ? '' : 'none';
+  };
+})();
+</script>
+</body>
+</html>

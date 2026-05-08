@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>시험 메뉴 — Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="index.html" class="btn ghost">← 시험 선택</a>
+    <h1 id="exam-title">시험</h1>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="exam-summary" class="card" style="margin-bottom:18px;"></div>
+
+  <div class="grid cols-2">
+    <a id="link-quiz" class="exam-card" href="#">
+      <div class="emoji">📝</div>
+      <div><h3>학습 모드 (퀴즈)</h3>
+      <p>도메인·문제수·랜덤 선택. 즉각 피드백과 4단 해설.</p></div>
+    </a>
+    <a id="link-mock" class="exam-card" href="#">
+      <div class="emoji">⏱</div>
+      <div><h3>실전 모의고사</h3>
+      <p id="mock-desc">시간제한 + 합격컷 + 과락 판정.</p></div>
+    </a>
+    <a id="link-review" class="exam-card" href="#">
+      <div class="emoji">🔁</div>
+      <div><h3>오답 복습</h3>
+      <p id="review-desc">틀린 문제만 모아서 반복.</p></div>
+    </a>
+    <a id="link-stats" class="exam-card" href="#">
+      <div class="emoji">📊</div>
+      <div><h3>약점 분석</h3>
+      <p>토픽별 정답률 차트 + 약한 영역 추천.</p></div>
+    </a>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const id = ExamHub.getExamIdFromUrl() || 'ai900';
+  const exam = await ExamHub.getExam(id);
+  if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name}`;
+  document.title = `${exam.name} — Exam Hub`;
+  document.documentElement.style.setProperty('--accent', exam.color);
+
+  const stats = ExamHub.getStats(id);
+  const wrong = ExamHub.getWrongList(id).length;
+  const rate = stats.totalAnswered ? Math.round((stats.totalCorrect / stats.totalAnswered) * 100) : 0;
+
+  const summary = document.getElementById('exam-summary');
+  summary.innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:240px;">
+        <div style="font-size:18px;font-weight:700;">${ExamHub.escape(exam.fullName)}</div>
+        <div class="muted" style="margin-top:4px;">${ExamHub.escape(exam.description)}</div>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <div style="text-align:center;"><div style="font-size:22px;font-weight:700;">${stats.totalAnswered}</div><div class="muted">푼 문제</div></div>
+        <div style="text-align:center;"><div style="font-size:22px;font-weight:700;color:${rate >= 70 ? 'var(--good)' : rate >= 40 ? 'var(--accent)' : 'var(--bad)'};">${rate}%</div><div class="muted">정답률</div></div>
+        <div style="text-align:center;"><div style="font-size:22px;font-weight:700;color:${wrong > 0 ? 'var(--bad)' : 'var(--text-dim)'};">${wrong}</div><div class="muted">오답</div></div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('link-quiz').href = `quiz.html?id=${id}`;
+  document.getElementById('link-mock').href = `mock.html?id=${id}`;
+  document.getElementById('link-review').href = `review.html?id=${id}`;
+  document.getElementById('link-stats').href = `stats.html?id=${id}`;
+  document.getElementById('mock-desc').textContent = `${exam.totalQuestions}문항 / ${exam.timeMinutes}분 / 합격 ${exam.passScore}점`;
+  document.getElementById('review-desc').textContent = wrong === 0 ? '오답이 없습니다 🎉' : `오답 ${wrong}문제 대기 중`;
+})();
+</script>
+</body>
+</html>

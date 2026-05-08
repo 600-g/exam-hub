@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>퀴즈 — Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
+    <h1 id="exam-title">퀴즈</h1>
+    <div class="spacer"></div>
+    <span class="badge" id="progress-badge">0/0</span>
+  </div>
+</div>
+
+<div class="container">
+  <!-- 설정 화면 -->
+  <div id="setup-view" class="card">
+    <h2 style="margin-top:0;">학습 모드</h2>
+    <div style="margin:14px 0;">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">출제 영역</label>
+      <select id="domain-select" class="option" style="cursor:pointer;"></select>
+    </div>
+    <div style="margin:14px 0;">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">문제 수</label>
+      <select id="count-select" class="option" style="cursor:pointer;">
+        <option value="10">10문제</option>
+        <option value="20" selected>20문제</option>
+        <option value="50">50문제</option>
+        <option value="0">전체</option>
+      </select>
+    </div>
+    <div style="margin:14px 0;">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:6px;">출제 순서</label>
+      <select id="order-select" class="option" style="cursor:pointer;">
+        <option value="random" selected>랜덤</option>
+        <option value="sequential">순서대로</option>
+        <option value="weak">약점 우선 (정답률 낮은 토픽 위주)</option>
+      </select>
+    </div>
+    <button id="start-btn" class="btn primary lg" style="width:100%;">▶ 시작</button>
+  </div>
+
+  <!-- 퀴즈 화면 -->
+  <div id="quiz-view" style="display:none;">
+    <div class="progress" style="margin-bottom:14px;"><div id="progress-bar" style="width:0%;"></div></div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span class="badge" id="q-domain"></span>
+        <span class="muted" id="q-id" style="font-size:11px;"></span>
+      </div>
+      <div id="q-body"></div>
+      <div id="options" style="margin-top:18px;"></div>
+      <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+        <button id="submit-btn" class="btn primary">답 제출</button>
+        <button id="next-btn" class="btn" style="display:none;">다음 →</button>
+        <div class="spacer" style="flex:1;"></div>
+        <button id="quit-btn" class="btn ghost">중단</button>
+      </div>
+      <div id="explain-area"></div>
+    </div>
+  </div>
+
+  <!-- 결과 화면 -->
+  <div id="result-view" style="display:none;" class="card">
+    <h2 style="margin-top:0;">📊 결과</h2>
+    <div id="result-body"></div>
+    <div style="margin-top:18px;display:flex;gap:8px;">
+      <button id="result-restart" class="btn primary">다시 풀기</button>
+      <a id="result-menu" href="#" class="btn">메뉴로</a>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const examId = ExamHub.getExamIdFromUrl() || 'ai900';
+  const exam = await ExamHub.getExam(examId);
+  if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
+  document.documentElement.style.setProperty('--accent', exam.color);
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name}`;
+  document.title = `${exam.name} 퀴즈 — Exam Hub`;
+  document.getElementById('back-link').href = `exam.html?id=${examId}`;
+  document.getElementById('result-menu').href = `exam.html?id=${examId}`;
+
+  const all = await ExamHub.loadQuestions(examId);
+  const domains = [...new Set(all.map((q) => q.domain || q.subject || 'unknown'))];
+  const sel = document.getElementById('domain-select');
+  sel.innerHTML = `<option value="">전체 (${all.length}문제)</option>` + domains.map((d) => {
+    const n = all.filter((q) => (q.domain || q.subject) === d).length;
+    return `<option value="${ExamHub.escape(d)}">${ExamHub.escape(d)} (${n}문제)</option>`;
+  }).join('');
+
+  let queue = [];
+  let idx = 0;
+  let selected = null;
+  let correctCount = 0;
+  let answers = [];
+
+  function renderProgress() {
+    const total = queue.length;
+    const cur = idx + 1;
+    document.getElementById('progress-badge').textContent = `${cur}/${total}`;
+    document.getElementById('progress-bar').style.width = `${(idx / total) * 100}%`;
+  }
+
+  function renderQuestion() {
+    const q = queue[idx];
+    selected = null;
+    document.getElementById('q-domain').textContent = q.domain || q.subject || 'unknown';
+    document.getElementById('q-id').textContent = q.id || '';
+    document.getElementById('q-body').innerHTML = ExamHub.renderQuestionBody(q);
+    const optEl = document.getElementById('options');
+    optEl.innerHTML = '';
+    Object.entries(q.options || {}).forEach(([k, v]) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.dataset.key = k;
+      btn.innerHTML = `<span class="opt-label">${k}</span> ${ExamHub.escape(v)}`;
+      btn.onclick = () => {
+        if (selected === 'submitted') return;
+        selected = k;
+        optEl.querySelectorAll('.option').forEach((b) => b.classList.toggle('selected', b.dataset.key === k));
+      };
+      optEl.appendChild(btn);
+    });
+    document.getElementById('submit-btn').style.display = '';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('explain-area').innerHTML = '';
+    renderProgress();
+  }
+
+  function submit() {
+    if (!selected) { alert('보기를 선택해주세요'); return; }
+    const q = queue[idx];
+    const correct = q.answer === selected;
+    if (correct) correctCount++;
+    else ExamHub.addWrong(examId, q.id);
+    ExamHub.recordAnswer(examId, q, correct);
+    answers.push({ qid: q.id, picked: selected, correct });
+
+    document.querySelectorAll('.option').forEach((b) => {
+      b.style.cursor = 'default';
+      const k = b.dataset.key;
+      if (k === q.answer) b.classList.add('correct');
+      else if (k === selected) b.classList.add('wrong');
+    });
+    selected = 'submitted';
+    document.getElementById('submit-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = '';
+    document.getElementById('explain-area').innerHTML = ExamHub.renderExplanation(q);
+  }
+
+  function nextOrFinish() {
+    if (idx >= queue.length - 1) { showResult(); return; }
+    idx++;
+    renderQuestion();
+  }
+
+  function showResult() {
+    document.getElementById('quiz-view').style.display = 'none';
+    document.getElementById('result-view').style.display = '';
+    const total = queue.length;
+    const rate = Math.round((correctCount / total) * 100);
+    document.getElementById('result-body').innerHTML = `
+      <div style="text-align:center;padding:18px 0;">
+        <div style="font-size:48px;font-weight:700;color:${rate >= 70 ? 'var(--good)' : rate >= 40 ? 'var(--accent)' : 'var(--bad)'};">${rate}%</div>
+        <div class="muted">${correctCount} / ${total} 정답</div>
+      </div>
+      <div style="margin-top:14px;">
+        ${answers.map((a, i) => `<span class="badge ${a.correct ? 'good' : 'bad'}" style="margin:2px;">${i + 1}</span>`).join('')}
+      </div>
+    `;
+    document.getElementById('progress-badge').textContent = `${total}/${total}`;
+    document.getElementById('progress-bar').style.width = '100%';
+  }
+
+  document.getElementById('start-btn').onclick = () => {
+    const dom = sel.value;
+    const cnt = parseInt(document.getElementById('count-select').value, 10);
+    const order = document.getElementById('order-select').value;
+    let pool = dom ? all.filter((q) => (q.domain || q.subject) === dom) : all.slice();
+    if (order === 'random') pool = ExamHub.shuffle(pool);
+    else if (order === 'weak') {
+      const weak = ExamHub.getWeakTopics(examId, 999).map((w) => w.topic);
+      pool.sort((a, b) => {
+        const ax = Math.min(...(a.tags || []).map((t) => weak.indexOf(t) >= 0 ? weak.indexOf(t) : 9999), 9999);
+        const bx = Math.min(...(b.tags || []).map((t) => weak.indexOf(t) >= 0 ? weak.indexOf(t) : 9999), 9999);
+        return ax - bx;
+      });
+    }
+    if (cnt > 0) pool = pool.slice(0, cnt);
+    if (pool.length === 0) { alert('해당 영역에 문제가 없습니다'); return; }
+    queue = pool; idx = 0; correctCount = 0; answers = [];
+    document.getElementById('setup-view').style.display = 'none';
+    document.getElementById('quiz-view').style.display = '';
+    renderQuestion();
+  };
+  document.getElementById('submit-btn').onclick = submit;
+  document.getElementById('next-btn').onclick = nextOrFinish;
+  document.getElementById('quit-btn').onclick = () => { if (confirm('중단하고 메뉴로?')) location.href = `exam.html?id=${examId}`; };
+  document.getElementById('result-restart').onclick = () => location.reload();
+})();
+</script>
+</body>
+</html>

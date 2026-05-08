@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Exam Hub — 자격증 시험 준비</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <h1>📚 Exam Hub</h1>
+    <span class="muted">자격증 시험 준비 — AI-900 · SQLD</span>
+  </div>
+</div>
+
+<div class="container">
+  <p style="margin:12px 0 22px" class="muted">시험을 선택하세요. 각 시험은 별도의 진행률·오답·통계로 관리됩니다.</p>
+
+  <div id="exam-list" class="grid cols-2"></div>
+
+  <hr style="margin-top:42px" />
+  <p class="muted" style="text-align:center">
+    💡 모든 데이터는 브라우저(localStorage)에 저장됩니다 · 서버 백엔드 없음 · GitHub Pages 배포
+  </p>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const meta = await ExamHub.loadExams();
+  const wrap = document.getElementById('exam-list');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  meta.exams.filter((e) => e.active !== false).forEach((e) => {
+    const stats = ExamHub.getStats(e.id);
+    const wrongCount = ExamHub.getWrongList(e.id).length;
+    const rate = stats.totalAnswered ? Math.round((stats.totalCorrect / stats.totalAnswered) * 100) : null;
+    const a = document.createElement('a');
+    a.className = 'exam-card';
+    a.href = `exam.html?id=${e.id}`;
+    a.style.borderLeft = `4px solid ${e.color}`;
+    a.innerHTML = `
+      <div class="emoji">${e.emoji}</div>
+      <div style="flex:1;min-width:0;">
+        <h3>${ExamHub.escape(e.name)} <span class="muted" style="font-weight:normal;font-size:13px;">${ExamHub.escape(e.fullName)}</span></h3>
+        <p>${ExamHub.escape(e.description)}</p>
+        <div class="stat">
+          <span>📝 ${e.totalQuestions}문항 · ${e.timeMinutes}분</span>
+          <span>✅ 합격 ${e.passScore}/${e.maxScore}</span>
+          ${rate != null ? `<span>📊 정답률 ${rate}%</span>` : ''}
+          ${wrongCount > 0 ? `<span>❌ 오답 ${wrongCount}</span>` : ''}
+        </div>
+      </div>
+    `;
+    wrap.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

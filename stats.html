@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>약점 분석 — Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
+    <h1 id="exam-title">약점 분석</h1>
+    <div class="spacer"></div>
+    <button id="reset-btn" class="btn ghost danger" style="font-size:12px;">통계 리셋</button>
+  </div>
+</div>
+
+<div class="container">
+  <div id="overall" class="card" style="margin-bottom:14px;"></div>
+  <div id="weak-card" class="card" style="margin-bottom:14px;"></div>
+  <div id="domain-card" class="card" style="margin-bottom:14px;"></div>
+  <div id="topic-card" class="card" style="margin-bottom:14px;"></div>
+  <div id="mock-card" class="card"></div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const examId = ExamHub.getExamIdFromUrl() || 'ai900';
+  const exam = await ExamHub.getExam(examId);
+  if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
+  document.documentElement.style.setProperty('--accent', exam.color);
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name} 약점 분석`;
+  document.getElementById('back-link').href = `exam.html?id=${examId}`;
+
+  function render() {
+    const s = ExamHub.getStats(examId);
+    const rate = s.totalAnswered ? Math.round((s.totalCorrect / s.totalAnswered) * 100) : 0;
+    document.getElementById('overall').innerHTML = `
+      <h2 style="margin-top:0;">📊 전체 통계</h2>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;text-align:center;">
+        <div style="flex:1;min-width:120px;"><div style="font-size:32px;font-weight:700;">${s.totalAnswered}</div><div class="muted">총 푼 문제</div></div>
+        <div style="flex:1;min-width:120px;"><div style="font-size:32px;font-weight:700;color:var(--good);">${s.totalCorrect}</div><div class="muted">정답</div></div>
+        <div style="flex:1;min-width:120px;"><div style="font-size:32px;font-weight:700;color:${rate >= 70 ? 'var(--good)' : rate >= 40 ? 'var(--accent)' : 'var(--bad)'};">${rate}%</div><div class="muted">정답률</div></div>
+      </div>
+    `;
+
+    // 약점 토픽
+    const weak = ExamHub.getWeakTopics(examId, 8);
+    document.getElementById('weak-card').innerHTML = `
+      <h2 style="margin-top:0;">⚠️ 약한 토픽 (3회 이상 풀이 + 정답률 낮은 순)</h2>
+      ${weak.length === 0 ? '<p class="muted">데이터가 부족합니다. 더 풀어보세요.</p>' : `
+        ${weak.map((w) => {
+          const r = Math.round(w.rate * 100);
+          return `
+            <div style="margin:10px 0;">
+              <div style="display:flex;justify-content:space-between;font-size:13px;">
+                <span style="font-weight:600;">${ExamHub.escape(w.topic)}</span>
+                <span class="muted">${w.correct}/${w.answered} · ${r}%</span>
+              </div>
+              <div class="progress" style="margin-top:4px;"><div style="width:${r}%;background:${r >= 70 ? 'var(--good)' : r >= 40 ? 'var(--accent)' : 'var(--bad)'};"></div></div>
+            </div>
+          `;
+        }).join('')}
+      `}
+    `;
+
+    // 도메인/과목
+    const domains = Object.entries(s.byDomain || {}).map(([k, v]) => ({
+      key: k, ...v, rate: v.answered ? v.correct / v.answered : 0,
+    })).sort((a, b) => a.rate - b.rate);
+    document.getElementById('domain-card').innerHTML = `
+      <h2 style="margin-top:0;">📚 ${exam.subjects ? '과목별' : '도메인별'} 정답률</h2>
+      ${domains.length === 0 ? '<p class="muted">아직 데이터가 없습니다.</p>' :
+        domains.map((d) => {
+          const r = Math.round(d.rate * 100);
+          return `
+            <div style="margin:10px 0;">
+              <div style="display:flex;justify-content:space-between;font-size:13.5px;">
+                <span>${ExamHub.escape(d.key)}</span>
+                <span class="muted">${d.correct}/${d.answered} · ${r}%</span>
+              </div>
+              <div class="progress" style="margin-top:4px;"><div style="width:${r}%;background:${r >= 70 ? 'var(--good)' : r >= 40 ? 'var(--accent)' : 'var(--bad)'};"></div></div>
+            </div>
+          `;
+        }).join('')
+      }
+    `;
+
+    // 모든 토픽
+    const topics = Object.entries(s.byTopic || {}).map(([k, v]) => ({
+      topic: k, ...v, rate: v.answered ? v.correct / v.answered : 0,
+    })).sort((a, b) => b.answered - a.answered).slice(0, 30);
+    document.getElementById('topic-card').innerHTML = `
+      <h2 style="margin-top:0;">🏷 토픽별 (상위 30)</h2>
+      ${topics.length === 0 ? '<p class="muted">문제에 토픽 태그가 등록되면 표시됩니다.</p>' :
+        `<table class="result"><thead><tr><th>토픽</th><th>풀이</th><th>정답률</th></tr></thead><tbody>
+          ${topics.map((t) => {
+            const r = Math.round(t.rate * 100);
+            return `<tr><td>${ExamHub.escape(t.topic)}</td><td>${t.correct}/${t.answered}</td><td style="color:${r >= 70 ? 'var(--good)' : r >= 40 ? 'var(--accent)' : 'var(--bad)'};">${r}%</td></tr>`;
+          }).join('')}
+        </tbody></table>`
+      }
+    `;
+
+    // 모의고사 이력
+    const mocks = ExamHub.getMockResults(examId);
+    document.getElementById('mock-card').innerHTML = `
+      <h2 style="margin-top:0;">⏱ 모의고사 기록</h2>
+      ${mocks.length === 0 ? '<p class="muted">아직 모의고사 기록이 없습니다.</p>' : `
+        <table class="result"><thead><tr><th>일시</th><th>점수</th><th>결과</th><th>정답</th></tr></thead><tbody>
+          ${mocks.slice().reverse().map((m) => {
+            const dt = new Date(m.ts).toLocaleString('ko-KR');
+            return `<tr><td>${dt}</td><td>${m.score}/${m.max}</td><td>${m.pass ? '<span class="badge good">합격</span>' : '<span class="badge bad">불합격' + (m.failedSubjects && m.failedSubjects.length ? ' (과락)' : '') + '</span>'}</td><td>${m.correct}/${m.total}</td></tr>`;
+          }).join('')}
+        </tbody></table>
+      `}
+    `;
+  }
+  render();
+  document.getElementById('reset-btn').onclick = () => {
+    if (confirm('이 시험의 모든 통계와 오답을 리셋합니다. 계속할까요?')) {
+      ExamHub.resetStats(examId);
+      ExamHub.setJSON(examId, 'wrong_list', []);
+      ExamHub.setJSON(examId, 'mock_results', []);
+      render();
+    }
+  };
+})();
+</script>
+</body>
+</html>

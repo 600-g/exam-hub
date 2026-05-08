@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>오답 복습 — Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
+    <h1 id="exam-title">오답 복습</h1>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div id="empty-view" style="display:none;text-align:center;padding:60px 0;">
+    <div style="font-size:60px;">🎉</div>
+    <h2>오답이 없습니다</h2>
+    <p class="muted">퀴즈를 더 풀어 약점을 찾아보세요.</p>
+    <a id="empty-link" href="#" class="btn primary">퀴즈로 가기</a>
+  </div>
+  <div id="list-view"></div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const examId = ExamHub.getExamIdFromUrl() || 'ai900';
+  const exam = await ExamHub.getExam(examId);
+  if (!exam) { document.body.innerHTML = '<div class="container"><p>존재하지 않는 시험입니다.</p></div>'; return; }
+  document.documentElement.style.setProperty('--accent', exam.color);
+  document.getElementById('exam-title').textContent = `${exam.emoji} ${exam.name} 오답 복습`;
+  document.getElementById('back-link').href = `exam.html?id=${examId}`;
+  document.getElementById('empty-link').href = `quiz.html?id=${examId}`;
+
+  const all = await ExamHub.loadQuestions(examId);
+  const wrongIds = ExamHub.getWrongList(examId);
+  const wrongQs = all.filter((q) => wrongIds.includes(q.id));
+
+  if (wrongQs.length === 0) {
+    document.getElementById('empty-view').style.display = '';
+    return;
+  }
+
+  const wrap = document.getElementById('list-view');
+  wrap.innerHTML = `<p class="muted">총 ${wrongQs.length}개 오답. 클릭해서 펼치고 ‘완료’로 제거하세요.</p>`;
+
+  wrongQs.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.marginBottom = '10px';
+    card.innerHTML = `
+      <div style="display:flex;gap:8px;align-items:center;cursor:pointer;" data-toggle="1">
+        <span class="badge bad">Q${i + 1}</span>
+        <span class="badge dim">${ExamHub.escape(q.subject || q.domain || '')}</span>
+        <div style="flex:1;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+          ${ExamHub.escape((q.question || '').slice(0, 80))}
+        </div>
+        <span class="muted" data-arrow="1">▼</span>
+      </div>
+      <div data-detail style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+        ${ExamHub.renderQuestionBody(q)}
+        <div style="margin-top:10px;">
+          ${Object.entries(q.options || {}).map(([k, v]) => `
+            <div class="option ${k === q.answer ? 'correct' : ''}" style="cursor:default;"><span class="opt-label">${k}</span> ${ExamHub.escape(v)}</div>
+          `).join('')}
+        </div>
+        ${ExamHub.renderExplanation(q)}
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button class="btn primary" data-done="${q.id}">✓ 이 문제 마스터함</button>
+        </div>
+      </div>
+    `;
+    card.querySelector('[data-toggle]').onclick = () => {
+      const d = card.querySelector('[data-detail]');
+      const a = card.querySelector('[data-arrow]');
+      if (d.style.display === 'none') { d.style.display = ''; a.textContent = '▲'; }
+      else { d.style.display = 'none'; a.textContent = '▼'; }
+    };
+    card.querySelector('[data-done]').onclick = () => {
+      ExamHub.removeWrong(examId, q.id);
+      card.style.display = 'none';
+    };
+    wrap.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>
