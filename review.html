@@ -24,7 +24,10 @@
     <a id="empty-link" href="#" class="btn primary">퀴즈로 가기</a>
   </div>
   <div id="intro" class="muted" style="margin-bottom:14px;display:none;">
-    틀렸던 문제를 다시 풀어 마스터하세요. 정답을 맞히면 오답 목록에서 제거됩니다. 보기 순서는 매번 셔플됩니다.
+    <label style="display:block;margin-bottom:8px;">
+      <input type="checkbox" id="expand-mode" /> 범위 확장: 약점 토픽 + 전체 범위 포함 (다양한 학습)
+    </label>
+    <span id="mode-desc"></span>
   </div>
   <div id="list-view"></div>
 </div>
@@ -42,8 +45,22 @@
 
   const all = await ExamHub.loadQuestions(examId);
   const wrongIds = ExamHub.getWrongList(examId);
-  // 원본 데이터 매핑 (셔플은 카드별로 매번 새로)
-  const baseQs = all.filter((q) => wrongIds.includes(q.id));
+  const expandCheckbox = document.getElementById('expand-mode');
+  const modeDesc = document.getElementById('mode-desc');
+
+  let baseQs = [];
+  function loadQuestions() {
+    if (expandCheckbox.checked && wrongIds.length > 0) {
+      // 범위 확장 모드: 오답 + 약점 + 전체 섞이기
+      baseQs = ExamHub.buildPracticeSet(examId, all, exam, wrongIds, 20);
+      modeDesc.textContent = `📚 오답(${Math.min(wrongIds.length, 10)}개) + 약점 토픽 + 전체 범위 혼합 (${baseQs.length}문제)`;
+    } else {
+      // 오답만 모드 (기본)
+      baseQs = all.filter((q) => wrongIds.includes(q.id));
+      modeDesc.textContent = wrongIds.length > 0 ? `❌ 오답만 (${wrongIds.length}문제)` : '';
+    }
+    refresh();
+  }
 
   const intro = document.getElementById('intro');
   const empty = document.getElementById('empty-view');
@@ -53,7 +70,7 @@
   function refresh() {
     const ids = ExamHub.getWrongList(examId);
     leftBadge.textContent = `남은 ${ids.length}`;
-    if (ids.length === 0) {
+    if (baseQs.length === 0) {
       empty.style.display = '';
       intro.style.display = 'none';
       listEl.style.display = 'none';
@@ -64,11 +81,19 @@
     }
   }
 
-  if (baseQs.length === 0) { refresh(); return; }
-  intro.style.display = '';
-  refresh();
+  if (wrongIds.length === 0) { refresh(); return; }
+
+  expandCheckbox.addEventListener('change', () => {
+    listEl.innerHTML = ''; // 기존 카드 삭제
+    loadQuestions(); // 새로 로드
+    // 카드들 다시 그리기 (아래 코드로)
+    renderCards();
+  });
+
+  loadQuestions();
 
   // 카드 렌더링 — 펼치면 풀이 모드
+  function renderCards() {
   baseQs.forEach((origQ, i) => {
     const card = document.createElement('div');
     card.className = 'card';
@@ -208,6 +233,9 @@
     paint();
     listEl.appendChild(card);
   });
+  } // renderCards 함수 끝
+
+  renderCards();
 })();
 </script>
 </body>

@@ -168,6 +168,49 @@
       return arr;
     },
 
+    /* 연습 모드 문제 구성: 오답 + 약점 토픽 + 전체 범위 섞기 */
+    buildPracticeSet(examId, allQuestions, exam, wrongIds, targetCount = 20) {
+      const out = [];
+      const used = new Set();
+
+      // 1단계: 오답 문제들 우선 추가 (최대 targetCount/2)
+      const wrongQs = allQuestions.filter((q) => wrongIds.includes(q.id));
+      const wrongLimit = Math.ceil(targetCount / 2);
+      wrongQs.slice(0, wrongLimit).forEach((q) => {
+        out.push(q);
+        used.add(q.id);
+      });
+
+      // 2단계: 약점 토픽 문제 추가 (다음 targetCount/4)
+      if (out.length < targetCount) {
+        const weakTopics = this.getWeakTopics(examId, 5).map((w) => w.topic);
+        const weakQs = allQuestions.filter(
+          (q) =>
+            !used.has(q.id) &&
+            (q.tags || []).some((t) => weakTopics.includes(t))
+        );
+        const weakLimit = Math.ceil(targetCount / 4);
+        weakQs.slice(0, weakLimit).forEach((q) => {
+          out.push(q);
+          used.add(q.id);
+        });
+      }
+
+      // 3단계: 전체 범위에서 나머지 채우기 (섞여서)
+      if (out.length < targetCount) {
+        const remain = allQuestions.filter((q) => !used.has(q.id));
+        const shuffled = this.shuffle(remain);
+        const needCount = targetCount - out.length;
+        shuffled.slice(0, needCount).forEach((q) => {
+          out.push(q);
+          used.add(q.id);
+        });
+      }
+
+      // 최종 섞기
+      return this.shuffle(out.slice(0, targetCount));
+    },
+
     /* HTML 이스케이프 (XSS 방지) */
     escape(s) {
       if (s == null) return '';
