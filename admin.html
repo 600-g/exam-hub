@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>관리자 — 문제 편집 | Exam Hub</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  .editor-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  @media (max-width: 1024px) { .editor-panel { grid-template-columns: 1fr; } }
+  .field-group { margin: 12px 0; }
+  .field-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .field-group input, .field-group textarea, .field-group select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; }
+  .field-group textarea { min-height: 100px; font-family: 'Courier New', monospace; font-size: 13px; }
+  .option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0; }
+  .option-item { border: 1px solid var(--border); padding: 10px; border-radius: 6px; }
+  .option-item label { margin-bottom: 4px; }
+  .option-item input { width: 100%; }
+  .tag-input { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { background: var(--accent); color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+  .tag-remove { cursor: pointer; font-weight: bold; }
+  .button-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .list-view { max-height: 600px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
+  .list-item { padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+  .list-item:hover { background: var(--accent-soft); }
+  .list-item.active { background: var(--accent); color: white; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+  .modal.active { display: flex; }
+  .modal-content { background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; overflow: auto; width: 500px; }
+  .form-hint { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="exam.html" class="btn ghost">← 돌아가기</a>
+    <h1>📝 문제 편집</h1>
+    <div class="spacer"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div style="margin-bottom: 20px; display: flex; gap: 8px; flex-wrap: wrap;">
+    <select id="exam-select" class="option" style="flex: 1; min-width: 200px;">
+      <option value="">시험 선택...</option>
+    </select>
+    <button id="add-question-btn" class="btn primary">+ 새 문제 추가</button>
+    <button id="export-btn" class="btn">📥 JSON 내보내기</button>
+    <button id="import-btn" class="btn">📤 JSON 가져오기</button>
+  </div>
+
+  <div class="editor-panel">
+    <div>
+      <h3 style="margin-top: 0;">📋 문제 목록</h3>
+      <div id="question-list" class="list-view"></div>
+    </div>
+
+    <div id="editor-area" style="display: none;">
+      <h3 style="margin-top: 0;">✏️ 문제 편집</h3>
+
+      <div class="field-group">
+        <label>시험</label>
+        <select id="field-subject" class="option"></select>
+      </div>
+
+      <div class="field-group">
+        <label>주제(Topic)</label>
+        <input type="text" id="field-topic" placeholder="엔터티, 속성, SQL SELECT 등">
+      </div>
+
+      <div class="field-group">
+        <label>태그 (쉼표로 구분)</label>
+        <input type="text" id="field-tags" placeholder="기본개념, 정규화, 조인">
+        <div id="tag-display" class="tag-input" style="margin-top: 8px;"></div>
+      </div>
+
+      <div class="field-group">
+        <label>난이도</label>
+        <select id="field-difficulty" class="option">
+          <option value="하">🟢 하 (기초)</option>
+          <option value="중" selected>🟡 중 (표준)</option>
+          <option value="상">🔴 상 (심화)</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>문제 텍스트</label>
+        <textarea id="field-question" placeholder="다음 중 올바른 설명은?"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>SQL 코드 (선택)</label>
+        <textarea id="field-code" placeholder="SELECT * FROM users WHERE id = 1;"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>정답</label>
+        <select id="field-answer" class="option">
+          <option value="A">A</option>
+          <option value="B" selected>B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label>보기</label>
+        <div class="option-grid">
+          <div class="option-item">
+            <label>A</label>
+            <input type="text" id="field-opt-a" placeholder="보기 A">
+          </div>
+          <div class="option-item">
+            <label>B</label>
+            <input type="text" id="field-opt-b" placeholder="보기 B">
+          </div>
+          <div class="option-item">
+            <label>C</label>
+            <input type="text" id="field-opt-c" placeholder="보기 C">
+          </div>
+          <div class="option-item">
+            <label>D</label>
+            <input type="text" id="field-opt-d" placeholder="보기 D">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>쉬운 설명</label>
+        <textarea id="field-simple" placeholder="초보자도 이해할 수 있는 설명"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>단계별 풀이 (줄바꿈으로 구분)</label>
+        <textarea id="field-steps" placeholder="1단계: 개념 파악
+2단계: 적용
+3단계: 검증"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>💡 실무 활용</label>
+        <textarea id="field-practical" placeholder="실제 업무에서 어떻게 쓰이는지"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>⚠️ 헷갈리지 말 것</label>
+        <textarea id="field-pitfall" placeholder="학생들이 자주 틀리는 부분"></textarea>
+      </div>
+
+      <div class="button-row">
+        <button id="save-question-btn" class="btn primary">💾 저장</button>
+        <button id="delete-question-btn" class="btn danger" style="display: none;">🗑 삭제</button>
+        <button id="cancel-btn" class="btn ghost">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="import-modal" class="modal">
+  <div class="modal-content">
+    <h3 style="margin-top: 0;">JSON 가져오기</h3>
+    <textarea id="import-json" style="width: 100%; height: 300px; font-family: monospace; font-size: 12px;"></textarea>
+    <div style="margin-top: 12px; display: flex; gap: 8px;">
+      <button id="import-confirm" class="btn primary" style="flex: 1;">확인</button>
+      <button id="import-cancel" class="btn ghost" style="flex: 1;">취소</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+(async () => {
+  const exams = await ExamHub.loadExams();
+  const examSelect = document.getElementById('exam-select');
+  const fieldSubject = document.getElementById('field-subject');
+
+  exams.exams.forEach((e) => {
+    const opt1 = document.createElement('option');
+    opt1.value = e.id;
+    opt1.textContent = e.name;
+    examSelect.appendChild(opt1);
+  });
+
+  let currentExamId = null;
+  let allQuestions = [];
+  let currentQId = null;
+
+  async function loadQuestions() {
+    if (!currentExamId) return;
+    allQuestions = await ExamHub.loadQuestions(currentExamId);
+    renderList();
+  }
+
+  function renderList() {
+    const list = document.getElementById('question-list');
+    list.innerHTML = allQuestions.map((q) => `
+      <div class="list-item" data-qid="${q.id}">
+        <div style="font-weight: 600;">${ExamHub.escape((q.question || '').slice(0, 60))}</div>
+        <div class="muted" style="font-size: 12px; margin-top: 4px;">
+          📌 ${q.subject || q.domain || ''} · 🎯 ${q.difficulty || '중'} · #${q.topic || ''}
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.list-item').forEach((el) => {
+      el.addEventListener('click', () => editQuestion(el.dataset.qid));
+    });
+  }
+
+  function editQuestion(qid) {
+    currentQId = qid;
+    const q = allQuestions.find((x) => x.id === qid);
+    if (!q) return;
+
+    document.getElementById('editor-area').style.display = '';
+    document.getElementById('field-subject').value = q.subject || '';
+    document.getElementById('field-topic').value = q.topic || '';
+    document.getElementById('field-tags').value = (q.tags || []).join(', ');
+    document.getElementById('field-difficulty').value = q.difficulty || '중';
+    document.getElementById('field-question').value = q.question || '';
+    document.getElementById('field-code').value = q.code || '';
+    document.getElementById('field-answer').value = q.answer || 'B';
+    document.getElementById('field-opt-a').value = q.options?.A || '';
+    document.getElementById('field-opt-b').value = q.options?.B || '';
+    document.getElementById('field-opt-c').value = q.options?.C || '';
+    document.getElementById('field-opt-d').value = q.options?.D || '';
+    document.getElementById('field-simple').value = (q.explanation_detail?.simple) || '';
+    document.getElementById('field-steps').value = (q.explanation_detail?.steps || []).join('\n');
+    document.getElementById('field-practical').value = (q.explanation_detail?.practical) || '';
+    document.getElementById('field-pitfall').value = (q.explanation_detail?.pitfall) || '';
+
+    document.getElementById('delete-question-btn').style.display = '';
+    document.querySelectorAll('.list-item').forEach((el) => el.classList.remove('active'));
+    document.querySelector(`[data-qid="${qid}"]`)?.classList.add('active');
+  }
+
+  function newQuestion() {
+    currentQId = null;
+    const exam = exams.exams.find((e) => e.id === currentExamId);
+    const newId = `${currentExamId}_new_${Date.now()}`;
+
+    document.getElementById('editor-area').style.display = '';
+    document.getElementById('field-subject').value = exam?.subjects?.[0]?.id || exam?.id || '';
+    document.getElementById('field-topic').value = '';
+    document.getElementById('field-tags').value = '';
+    document.getElementById('field-difficulty').value = '중';
+    document.getElementById('field-question').value = '';
+    document.getElementById('field-code').value = '';
+    document.getElementById('field-answer').value = 'B';
+    document.getElementById('field-opt-a').value = '';
+    document.getElementById('field-opt-b').value = '';
+    document.getElementById('field-opt-c').value = '';
+    document.getElementById('field-opt-d').value = '';
+    document.getElementById('field-simple').value = '';
+    document.getElementById('field-steps').value = '';
+    document.getElementById('field-practical').value = '';
+    document.getElementById('field-pitfall').value = '';
+    document.getElementById('delete-question-btn').style.display = 'none';
+    document.querySelectorAll('.list-item').forEach((el) => el.classList.remove('active'));
+  }
+
+  function saveQuestion() {
+    const subject = document.getElementById('field-subject').value;
+    const topic = document.getElementById('field-topic').value;
+    const tags = document.getElementById('field-tags').value.split(',').map((t) => t.trim()).filter((t) => t);
+    const difficulty = document.getElementById('field-difficulty').value;
+    const question = document.getElementById('field-question').value;
+    const code = document.getElementById('field-code').value;
+    const answer = document.getElementById('field-answer').value;
+    const optA = document.getElementById('field-opt-a').value;
+    const optB = document.getElementById('field-opt-b').value;
+    const optC = document.getElementById('field-opt-c').value;
+    const optD = document.getElementById('field-opt-d').value;
+    const simple = document.getElementById('field-simple').value;
+    const steps = document.getElementById('field-steps').value.split('\n').filter((s) => s.trim());
+    const practical = document.getElementById('field-practical').value;
+    const pitfall = document.getElementById('field-pitfall').value;
+
+    if (!question || !optA || !optB || !optC || !optD) {
+      alert('필수 필드: 문제, 보기 A/B/C/D');
+      return;
+    }
+
+    if (currentQId) {
+      // 기존 문제 수정
+      const idx = allQuestions.findIndex((q) => q.id === currentQId);
+      allQuestions[idx] = {
+        ...allQuestions[idx],
+        subject,
+        topic,
+        tags,
+        difficulty,
+        question,
+        code: code || undefined,
+        options: { A: optA, B: optB, C: optC, D: optD },
+        answer,
+        explanation_detail: { simple, steps, practical, pitfall },
+      };
+    } else {
+      // 새 문제 추가
+      const newId = `${currentExamId}_new_${Date.now()}`;
+      allQuestions.push({
+        id: newId,
+        subject,
+        topic,
+        tags,
+        difficulty,
+        question,
+        code: code || undefined,
+        options: { A: optA, B: optB, C: optC, D: optD },
+        answer,
+        explanation_detail: { simple, steps, practical, pitfall },
+      });
+    }
+
+    ExamHub.setJSON(`admin_${currentExamId}`, 'questions_draft', allQuestions);
+    alert('저장됨! (로컬 저장소) 👍\n\n주의: 아직 서버에 반영되지 않았습니다.\n아래 "JSON 내보내기"로 백업 권장.');
+    renderList();
+    newQuestion();
+  }
+
+  function deleteQuestion() {
+    if (!currentQId || !confirm('정말 삭제할까요?')) return;
+    allQuestions = allQuestions.filter((q) => q.id !== currentQId);
+    ExamHub.setJSON(`admin_${currentExamId}`, 'questions_draft', allQuestions);
+    renderList();
+    document.getElementById('editor-area').style.display = 'none';
+  }
+
+  function exportJSON() {
+    const data = JSON.stringify(allQuestions, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentExamId}_questions_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  examSelect.addEventListener('change', (e) => {
+    currentExamId = e.target.value;
+    document.getElementById('editor-area').style.display = 'none';
+
+    // 기존 draft 있으면 로드, 아니면 서버 로드
+    const draft = ExamHub.getJSON(`admin_${currentExamId}`, 'questions_draft', null);
+    if (draft) {
+      allQuestions = draft;
+      alert('✏️ 편집 중인 초안이 있습니다. (서버 데이터는 로드되지 않음)');
+    } else {
+      loadQuestions();
+    }
+  });
+
+  document.getElementById('add-question-btn').addEventListener('click', newQuestion);
+  document.getElementById('save-question-btn').addEventListener('click', saveQuestion);
+  document.getElementById('delete-question-btn').addEventListener('click', deleteQuestion);
+  document.getElementById('cancel-btn').addEventListener('click', () => {
+    document.getElementById('editor-area').style.display = 'none';
+  });
+
+  document.getElementById('export-btn').addEventListener('click', exportJSON);
+
+  document.getElementById('import-btn').addEventListener('click', () => {
+    document.getElementById('import-modal').classList.add('active');
+  });
+
+  document.getElementById('import-confirm').addEventListener('click', () => {
+    try {
+      const json = document.getElementById('import-json').value;
+      const data = JSON.parse(json);
+      if (!Array.isArray(data)) throw new Error('배열이어야 합니다');
+      allQuestions = data;
+      ExamHub.setJSON(`admin_${currentExamId}`, 'questions_draft', allQuestions);
+      document.getElementById('import-modal').classList.remove('active');
+      renderList();
+      alert('✅ 가져왔습니다!');
+    } catch (e) {
+      alert('❌ 잘못된 JSON: ' + e.message);
+    }
+  });
+
+  document.getElementById('import-cancel').addEventListener('click', () => {
+    document.getElementById('import-modal').classList.remove('active');
+  });
+})();
+</script>
+</body>
+</html>

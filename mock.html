@@ -18,7 +18,7 @@
 
 <div class="container">
   <div id="intro-view" class="card">
-    <h2 style="margin-top:0;">실전 모의고사</h2>
+    <h2 style="margin-top:0;">⏱ 실전 모의고사</h2>
     <p id="intro-desc" class="muted"></p>
     <ul style="font-size:13.5px;line-height:1.9;">
       <li>실제 시험과 동일한 문항 수 / 시간 제한</li>
@@ -26,6 +26,18 @@
       <li>제출 후 합격 / 과락 / 토픽별 약점 분석</li>
       <li>중단 시 진행 상태는 저장되지 않음</li>
     </ul>
+
+    <div style="margin-top: 18px; border-top: 1px solid var(--border); padding-top: 18px;">
+      <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px;">📊 출제 방식</label>
+      <select id="mode-select" class="option" style="margin-bottom: 12px;">
+        <option value="standard">🎯 표준: 실제 배점 비율대로 (권장)</option>
+        <option value="difficulty">🔴 난이도 균형: 상/중/하 균등하게</option>
+      </select>
+      <p class="muted" style="font-size: 12px; margin: 0;">
+        표준 모드는 시험 난이도를 정확히 반영합니다. 난이도 균형 모드는 모든 난이도를 골고루 경험할 수 있습니다.
+      </p>
+    </div>
+
     <button id="start-mock" class="btn primary lg" style="width:100%;margin-top:14px;">⏱ 시작</button>
   </div>
 
@@ -240,7 +252,11 @@
   }
 
   document.getElementById('start-mock').onclick = () => {
-    queue = buildMockSet().map((q) => ExamHub.shuffleOptions(q));
+    const mode = document.getElementById('mode-select').value;
+    const mockSet = mode === 'difficulty'
+      ? ExamHub.buildDifficultyBalancedSet(all, exam, exam.totalQuestions)
+      : buildMockSet();
+    queue = mockSet.map((q) => ExamHub.shuffleOptions(q));
     if (queue.length === 0) { alert('이 시험에 등록된 문제가 없습니다'); return; }
     answers = {}; curIdx = 0;
     endTs = Date.now() + exam.timeMinutes * 60000;

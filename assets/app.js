@@ -168,6 +168,38 @@
       return arr;
     },
 
+    /* 난이도 균형 모드: 상/중/하 균등하게 출제 */
+    buildDifficultyBalancedSet(allQuestions, exam, targetCount = 50) {
+      const out = [];
+      const used = new Set();
+
+      // 난이도별 목표 개수
+      const perLevel = Math.floor(targetCount / 3);
+      const levels = ['하', '중', '상'];
+
+      levels.forEach((level) => {
+        const pool = allQuestions.filter(
+          (q) => !used.has(q.id) && (q.difficulty || '중') === level
+        );
+        const shuffled = this.shuffle(pool);
+        shuffled.slice(0, perLevel).forEach((q) => {
+          out.push(q);
+          used.add(q.id);
+        });
+      });
+
+      // 부족분 보충 (섞여서)
+      while (out.length < targetCount) {
+        const remain = allQuestions.filter((q) => !used.has(q.id));
+        if (!remain.length) break;
+        const q = remain[Math.floor(Math.random() * remain.length)];
+        out.push(q);
+        used.add(q.id);
+      }
+
+      return this.shuffle(out.slice(0, targetCount));
+    },
+
     /* 연습 모드 문제 구성: 오답 + 약점 토픽 + 전체 범위 섞기 */
     buildPracticeSet(examId, allQuestions, exam, wrongIds, targetCount = 20) {
       const out = [];
