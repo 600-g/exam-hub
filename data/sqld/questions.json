@@ -3,7 +3,11 @@
     "id": "sqld_s1_001",
     "subject": "S1",
     "topic": "엔터티",
-    "tags": ["엔터티", "인스턴스", "기본개념"],
+    "tags": [
+      "엔터티",
+      "인스턴스",
+      "기본개념"
+    ],
     "question": "다음 중 엔터티(Entity)에 대한 설명으로 가장 적절하지 않은 것은?",
     "options": {
       "A": "업무에서 필요로 하는 정보를 가지고 있는 사람·장소·사물·사건·개념이다.",
@@ -22,13 +26,18 @@
       ],
       "practical": "회원이 1명뿐인 카페 회원 테이블은 '회원 엔터티'라고 안 부릅니다. 데이터가 누적되어 여러 행이 쌓일 가능성이 있을 때만 엔터티로 모델링합니다.",
       "pitfall": "'엔터티 = 테이블'은 비슷하지만 같진 않습니다. 엔터티는 '논리적 모델', 테이블은 '물리적 구현체'예요. 시험에서는 엔터티 개념을 묻는 경우가 많으니 헷갈리지 마세요."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s1_002",
     "subject": "S1",
     "topic": "속성",
-    "tags": ["속성", "분해여부", "단일값"],
+    "tags": [
+      "속성",
+      "분해여부",
+      "단일값"
+    ],
     "question": "다음 중 속성(Attribute)에 대한 설명으로 옳지 않은 것은?",
     "options": {
       "A": "한 개의 속성은 한 개의 속성값만을 가진다.",
@@ -47,13 +56,19 @@
       ],
       "practical": "쇼핑몰이 '서울 강남구 거주자에게 무료배송' 정책을 만들려면 시·구·동을 별도 컬럼으로 둬야 WHERE city='서울' AND district='강남구' 같은 쿼리가 가능합니다.",
       "pitfall": "단, 검색에 안 쓰이는 정보(예: 상세주소 '101동 502호')는 한 칸에 둬도 됩니다. 반드시 모든 정보를 쪼갤 필요는 없어요. '업무에 필요한 만큼 쪼갠다'가 정답."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s1_003",
     "subject": "S1",
     "topic": "식별자",
-    "tags": ["주식별자", "유일성", "최소성", "불변성"],
+    "tags": [
+      "주식별자",
+      "유일성",
+      "최소성",
+      "불변성"
+    ],
     "question": "주식별자(Primary Identifier)의 특성으로 가장 거리가 먼 것은?",
     "options": {
       "A": "유일성 — 엔터티 내 모든 인스턴스를 유일하게 구분한다.",
@@ -72,13 +87,18 @@
       ],
       "practical": "주민번호를 식별자로 쓰지 않는 이유 중 하나도 '변경 가능성'(외국인 등록번호 변경 등)입니다. 그래서 별도의 사번·회원번호를 발급하는 게 안전합니다.",
       "pitfall": "'존재성 = NOT NULL'과 같은 의미입니다. 식별자에 NULL이 들어가면 그 행을 식별할 수 없게 되니 절대 금지. 시험에 자주 나옵니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_004",
     "subject": "S1",
     "topic": "정규화",
-    "tags": ["정규화", "제2정규형", "부분함수종속"],
+    "tags": [
+      "정규화",
+      "제2정규형",
+      "부분함수종속"
+    ],
     "question": "다음 중 제2정규형(2NF)을 만족시키기 위해 제거해야 하는 것은?",
     "options": {
       "A": "다중값 속성(Multi-valued Attribute)",
@@ -96,13 +116,18 @@
       ],
       "practical": "예시: (학번+과목코드)가 PK인데 '학생이름'이 학번에만 의존하면 부분종속. → 학생 테이블 분리해서 (학번→학생이름)으로 따로 관리합니다.",
       "pitfall": "1NF=다중값(A), 2NF=부분종속(B), 3NF=이행종속(C), BCNF=결정자(D). 4가지를 한 줄로 외우세요: '원·부·이·결'. 시험에 자주 출제됩니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_005",
     "subject": "S1",
     "topic": "NULL",
-    "tags": ["NULL", "비교연산", "IS NULL"],
+    "tags": [
+      "NULL",
+      "비교연산",
+      "IS NULL"
+    ],
     "question": "관계형 데이터베이스의 NULL에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "NULL은 0(숫자)이나 빈 문자열('')과 같다.",
@@ -122,13 +147,18 @@
       ],
       "practical": "회원 가입 시 휴대폰 미입력 → NULL. SELECT COUNT(phone) FROM members 하면 휴대폰 입력한 회원만 셉니다. 전체 인원은 COUNT(*)을 써야 합니다.",
       "pitfall": "WHERE name = NULL 은 절대로 결과가 안 나옵니다 (UNKNOWN이라 어떤 행도 매칭 안 됨). 반드시 WHERE name IS NULL 로 써야 NULL인 행이 나옵니다. 실무에서도 자주 실수하는 부분."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s1_006",
     "subject": "S1",
     "topic": "본질식별자vs인조식별자",
-    "tags": ["본질식별자", "인조식별자", "대리키"],
+    "tags": [
+      "본질식별자",
+      "인조식별자",
+      "대리키"
+    ],
     "question": "다음 중 인조식별자(Surrogate Key)를 도입하기에 가장 적절한 상황은?",
     "options": {
       "A": "본질식별자가 1개 컬럼으로 충분히 짧고 변경되지 않는 경우",
@@ -146,13 +176,18 @@
       ],
       "practical": "주문 테이블 PK가 (주문일+고객ID+상품코드+순번)이라 4개 컬럼이라면, 자식 테이블(주문상세)에서도 4개를 다 갖고 있어야 하니 비효율. order_id (자동증가)를 만들면 자식은 1개만 들고 다니면 끝.",
       "pitfall": "인조식별자를 쓰면 본질식별자(자연키)에는 UNIQUE 제약을 별도로 걸어야 합니다. 안 그러면 같은 데이터가 다른 order_id로 중복 입력 가능. 이걸 빠뜨리는 실수가 잦습니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_001",
     "subject": "S2",
     "topic": "SELECT",
-    "tags": ["SELECT", "DISTINCT", "기본문법"],
+    "tags": [
+      "SELECT",
+      "DISTINCT",
+      "기본문법"
+    ],
     "question": "다음 SQL의 결과로 옳은 것은?",
     "code": "EMP 테이블 (10건)\n  DEPT_ID: 10, 10, 20, 20, 20, 30, 30, NULL, NULL, 40\n\nSELECT COUNT(DISTINCT DEPT_ID) FROM EMP;",
     "options": {
@@ -172,13 +207,18 @@
       ],
       "practical": "쇼핑몰에서 '오늘 주문에 등장한 상품 종류 수' 구할 때 COUNT(DISTINCT product_id)를 자주 씁니다.",
       "pitfall": "COUNT(*)는 NULL 포함해서 모든 행 수(=10)를 세고, COUNT(컬럼)은 NULL 제외 행 수(=8), COUNT(DISTINCT 컬럼)은 NULL 제외 + 중복 제외(=4). 셋 다 다릅니다. 시험에 단골 출제."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_002",
     "subject": "S2",
     "topic": "WHERE",
-    "tags": ["WHERE", "BETWEEN", "비교연산"],
+    "tags": [
+      "WHERE",
+      "BETWEEN",
+      "비교연산"
+    ],
     "question": "다음 두 쿼리가 동일한 결과를 보장하기 위한 조건은?",
     "code": "(가) SELECT * FROM EMP WHERE SAL BETWEEN 100 AND 200;\n(나) SELECT * FROM EMP WHERE SAL >= 100 AND SAL <= 200;",
     "options": {
@@ -198,13 +238,18 @@
       ],
       "practical": "날짜 범위 검색: BETWEEN '2026-01-01' AND '2026-12-31' 처럼 작은 값 → 큰 값 순서를 지켜야 합니다. 변수로 받을 때 순서가 뒤바뀌면 결과가 0건이 되어 버그 원인이 됩니다.",
       "pitfall": "BETWEEN은 양 끝값을 모두 포함합니다(>= 와 <=). 만약 끝값을 빼고 싶다면 SAL > 100 AND SAL < 200 (직접 조건) 으로 써야 해요."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_003",
     "subject": "S2",
     "topic": "ORDER BY",
-    "tags": ["ORDER BY", "NULL", "정렬"],
+    "tags": [
+      "ORDER BY",
+      "NULL",
+      "정렬"
+    ],
     "question": "Oracle에서 ORDER BY절로 오름차순 정렬할 때 NULL 값의 기본 위치는?",
     "options": {
       "A": "맨 앞에 위치한다.",
@@ -222,13 +267,18 @@
       ],
       "practical": "회원 명단을 가입일 오름차순 정렬할 때, 가입일이 NULL인 미완성 데이터는 자동으로 맨 뒤로 갑니다. 화면에서 '활성 회원 먼저, NULL은 나중에' 같은 자연스러운 결과가 됩니다.",
       "pitfall": "MySQL/PostgreSQL은 Oracle과 반대 동작을 보일 수 있습니다. 다중 DBMS를 다룬다면 ORDER BY col ASC NULLS LAST 처럼 명시하세요. SQLD는 Oracle 기준이라 'NULL은 맨 뒤(ASC 기본)'로 외우면 됩니다."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_004",
     "subject": "S2",
     "topic": "함수",
-    "tags": ["NVL", "COALESCE", "NULL처리"],
+    "tags": [
+      "NVL",
+      "COALESCE",
+      "NULL처리"
+    ],
     "question": "다음 SQL의 결과로 옳은 것은?",
     "code": "SELECT NVL(NULL, 'A') AS C1,\n       COALESCE(NULL, NULL, 'B', 'C') AS C2,\n       NULLIF('SQL', 'SQL') AS C3\nFROM DUAL;",
     "options": {
@@ -248,13 +298,18 @@
       ],
       "practical": "NVL: 누락된 휴대폰을 '미입력'으로 표시 (NVL(phone, '미입력')). COALESCE: 휴대폰 → 집전화 → 이메일 우선순위 (COALESCE(phone, home, email)). NULLIF: 0으로 나누기 방지 (a / NULLIF(b, 0)).",
       "pitfall": "NVL은 Oracle 전용, COALESCE는 표준 SQL입니다. 실무에서는 호환성 위해 COALESCE 권장. 또 NVL은 인자 2개 한정, COALESCE는 무제한이라는 차이 기억하세요."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_005",
     "subject": "S2",
     "topic": "함수",
-    "tags": ["문자열함수", "SUBSTR", "INSTR"],
+    "tags": [
+      "문자열함수",
+      "SUBSTR",
+      "INSTR"
+    ],
     "question": "다음 SQL의 결과로 옳은 것은?",
     "code": "SELECT SUBSTR('SQL Developer', 5, 3) FROM DUAL;",
     "options": {
@@ -274,13 +329,18 @@
       ],
       "practical": "주민번호 앞 6자리(생년월일) 추출: SUBSTR(jumin, 1, 6). 주문번호 첫 4자리(연도) 추출: SUBSTR(order_no, 1, 4).",
       "pitfall": "프로그래밍 언어(Java/Python)는 0부터 시작하지만 Oracle은 1부터 시작! 또 시작위치를 음수로 주면 뒤에서부터 셉니다 (SUBSTR(s, -3) = 마지막 3자리). 이건 자주 시험에 나옵니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_006",
     "subject": "S2",
     "topic": "GROUP BY/HAVING",
-    "tags": ["GROUP BY", "HAVING", "집계함수"],
+    "tags": [
+      "GROUP BY",
+      "HAVING",
+      "집계함수"
+    ],
     "question": "다음 중 옳지 않은 SQL은?",
     "options": {
       "A": "SELECT dept_id, AVG(sal) FROM emp GROUP BY dept_id HAVING AVG(sal) > 3000;",
@@ -299,13 +359,18 @@
       ],
       "practical": "'평균연봉 3000만 이상인 부서만 조회' = HAVING AVG(sal) > 3000. '연봉 1000만 넘는 직원만 부서별로 모아 평균' = WHERE sal > 1000 + GROUP BY. 둘은 다릅니다.",
       "pitfall": "외우기 쉬운 룰: 'WHERE에 집계함수 ❌, HAVING은 OK'. 단, WINDOW 함수는 또 다른 얘기 — WINDOW 함수는 WHERE/HAVING 둘 다 안 됩니다."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_007",
     "subject": "S2",
     "topic": "GROUP BY/HAVING",
-    "tags": ["GROUP BY", "집계함수", "결과해석"],
+    "tags": [
+      "GROUP BY",
+      "집계함수",
+      "결과해석"
+    ],
     "question": "다음 SQL의 결과 행 수는?",
     "code": "SAL 테이블\n  DEPT  JOB    SAL\n  10    A     1000\n  10    A     2000\n  10    B     1500\n  20    A     3000\n  20    B     2500\n  20    B     2500\n\nSELECT DEPT, JOB, COUNT(*) FROM SAL GROUP BY DEPT, JOB;",
     "options": {
@@ -324,13 +389,18 @@
       ],
       "practical": "월별·상품별 매출 집계 같은 다차원 분석에 자주 씁니다. GROUP BY year, month, product_id → 셋 조합으로 묶어 매출 합계.",
       "pitfall": "GROUP BY에 안 쓴 컬럼은 SELECT에 그냥 쓸 수 없습니다. 반드시 집계함수로 감싸거나(COUNT, SUM 등), GROUP BY에 추가해야 합니다."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_008",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["INNER JOIN", "조인조건", "결과행수"],
+    "tags": [
+      "INNER JOIN",
+      "조인조건",
+      "결과행수"
+    ],
     "question": "다음 SQL의 결과로 가장 적절한 것은?",
     "code": "EMP            DEPT\n eid  dept_id    dept_id  name\n  1   10         10       영업\n  2   20         20       개발\n  3   NULL       30       인사\n  4   30\n\nSELECT e.eid, d.name FROM EMP e INNER JOIN DEPT d ON e.dept_id = d.dept_id;",
     "options": {
@@ -352,13 +422,18 @@
       ],
       "practical": "INNER JOIN은 '확실히 양쪽에 데이터가 있는 경우만' 분석할 때 씁니다. 부서 미배정자(NULL)도 보고 싶으면 LEFT OUTER JOIN을 써야 합니다.",
       "pitfall": "NULL = NULL 결과는 UNKNOWN이라 INNER JOIN에서는 절대 매칭되지 않습니다. NULL 데이터를 포함하려면 OUTER JOIN을 써야 해요. 자주 헷갈리는 부분."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_009",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["LEFT OUTER JOIN", "OUTER JOIN", "NULL"],
+    "tags": [
+      "LEFT OUTER JOIN",
+      "OUTER JOIN",
+      "NULL"
+    ],
     "question": "다음 두 쿼리에 대한 설명으로 옳은 것은?",
     "code": "(가) SELECT * FROM A LEFT OUTER JOIN B ON A.k = B.k;\n(나) SELECT * FROM A, B WHERE A.k = B.k(+);",
     "options": {
@@ -378,13 +453,18 @@
       ],
       "practical": "회원이 모두 나오되, 주문이 있는 회원만 주문정보가 채워지고 없으면 NULL로 표시 — 가장 흔한 패턴입니다. 표준 SQL인 LEFT OUTER JOIN을 권장.",
       "pitfall": "(+)는 Oracle만 됩니다. 다른 DBMS(PostgreSQL/MySQL)에서는 에러. SQLD 시험에는 둘 다 등장하니 둘 다 알아둬야 합니다. (+)의 위치가 'NULL 허용 쪽' = 'OUTER JOIN되는 쪽'입니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_010",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["NATURAL JOIN", "USING", "표준조인"],
+    "tags": [
+      "NATURAL JOIN",
+      "USING",
+      "표준조인"
+    ],
     "question": "NATURAL JOIN과 USING절의 차이로 가장 적절한 것은?",
     "options": {
       "A": "NATURAL JOIN은 같은 이름의 모든 컬럼으로 자동 조인되며, USING은 명시한 컬럼만 사용한다.",
@@ -403,13 +483,18 @@
       ],
       "practical": "테이블 변경 후 새 컬럼이 우연히 같은 이름이면 NATURAL JOIN 결과가 갑자기 바뀝니다. 그래서 실무는 ON 또는 USING을 권장.",
       "pitfall": "NATURAL JOIN과 USING절에서는 조인 컬럼을 SELECT할 때 테이블 별칭(alias)을 붙이면 안 됩니다. 그냥 SELECT dept_id 처럼 써야 함. ON절에서는 별칭 OK. 시험에 자주 나오는 함정."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_011",
     "subject": "S2",
     "topic": "서브쿼리",
-    "tags": ["서브쿼리", "스칼라서브쿼리", "단일행"],
+    "tags": [
+      "서브쿼리",
+      "스칼라서브쿼리",
+      "단일행"
+    ],
     "question": "다음 SQL에서 잘못된 부분은?",
     "code": "SELECT eid, sal,\n       (SELECT dept_name FROM DEPT WHERE dept_id = e.dept_id) AS dept\nFROM EMP e\nWHERE sal = (SELECT sal FROM EMP WHERE eid IN (1, 2, 3));",
     "options": {
@@ -429,13 +514,18 @@
       ],
       "practical": "여러 결과 중 하나라도 매칭되면 OK라면 = 대신 IN을 쓰세요: WHERE sal IN (SELECT sal FROM EMP WHERE eid IN (1,2,3))",
       "pitfall": "스칼라 서브쿼리(SELECT절 안의 서브쿼리)는 반드시 단일행·단일컬럼이어야 합니다. 만약 0행이면 NULL, 2행 이상이면 에러. 데이터가 늘면서 갑자기 에러나는 흔한 버그."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_012",
     "subject": "S2",
     "topic": "서브쿼리",
-    "tags": ["인라인뷰", "서브쿼리", "FROM절"],
+    "tags": [
+      "인라인뷰",
+      "서브쿼리",
+      "FROM절"
+    ],
     "question": "FROM절에 사용된 서브쿼리(인라인 뷰)에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "인라인 뷰는 ORDER BY를 사용할 수 없다.",
@@ -455,13 +545,18 @@
       ],
       "practical": "복잡한 집계 위에 다시 집계할 때 자주 씁니다. (예: 부서별 평균 연봉을 구한 뒤, 그중 최고 평균 부서) → FROM (SELECT dept, AVG(sal) avg_sal FROM emp GROUP BY dept) → 외부에서 MAX(avg_sal).",
       "pitfall": "WITH절(공통 테이블 표현식, CTE)은 가독성이 좋고 같은 서브쿼리를 여러 번 참조할 때 유리. 인라인 뷰는 한 번만 쓸 때 간결. 복잡한 분석은 WITH절을 권장."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_013",
     "subject": "S2",
     "topic": "집합연산자",
-    "tags": ["UNION", "UNION ALL", "INTERSECT"],
+    "tags": [
+      "UNION",
+      "UNION ALL",
+      "INTERSECT"
+    ],
     "question": "UNION과 UNION ALL의 차이로 옳은 것은?",
     "options": {
       "A": "UNION은 중복을 제거하고 정렬하지만, UNION ALL은 중복을 그대로 두며 정렬하지 않는다.",
@@ -479,13 +574,18 @@
       ],
       "practical": "중복 가능성이 없거나 중복이 의미 있으면 UNION ALL을 쓰세요(빠름). 진짜로 중복 제거가 필요할 때만 UNION. 큰 테이블에서 UNION 남발하면 정렬 비용으로 느려집니다.",
       "pitfall": "UNION은 컬럼 개수와 데이터 타입이 양쪽 모두 일치해야 합니다. INTERSECT(교집합), MINUS(차집합)도 같은 규칙. SELECT 컬럼이 안 맞으면 에러."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_014",
     "subject": "S2",
     "topic": "그룹함수",
-    "tags": ["ROLLUP", "그룹함수", "소계"],
+    "tags": [
+      "ROLLUP",
+      "그룹함수",
+      "소계"
+    ],
     "question": "다음 SQL의 결과 그룹 수는?",
     "code": "데이터: DEPT(10,20), JOB(A,B) 각각 1건씩 총 4행\n\nSELECT DEPT, JOB, SUM(SAL)\nFROM EMP\nGROUP BY ROLLUP(DEPT, JOB);",
     "options": {
@@ -506,13 +606,18 @@
       ],
       "practical": "월별 매출 보고서: ROLLUP(연도, 월) → 월별 + 연도 소계 + 전체 합계가 한 번에 나옵니다. 보고서에 '소계 행'을 만들 때 핵심.",
       "pitfall": "CUBE(A, B)는 모든 조합 = (A,B), (A), (B), () = 4가지(2^n). ROLLUP은 계층적이라 (A,B), (A), () = 3가지(n+1). 둘이 다릅니다. GROUPING SETS는 명시한 조합만."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_015",
     "subject": "S2",
     "topic": "그룹함수",
-    "tags": ["GROUPING SETS", "CUBE", "GROUPING"],
+    "tags": [
+      "GROUPING SETS",
+      "CUBE",
+      "GROUPING"
+    ],
     "question": "GROUPING() 함수의 용도로 가장 적절한 것은?",
     "options": {
       "A": "그룹화에서 NULL 값을 제외하는 함수이다.",
@@ -530,13 +635,18 @@
       ],
       "practical": "리포트에서 'NULL'이 보이면 사용자가 헷갈리니 CASE WHEN GROUPING(dept)=1 THEN '전체합계' ELSE dept END 처럼 보기 좋게 라벨링합니다.",
       "pitfall": "GROUPING_ID() 함수도 있습니다. 여러 컬럼의 GROUPING을 비트로 묶어서 한 번에 반환. 시험에서 같이 출제될 수 있습니다."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_016",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["RANK", "DENSE_RANK", "ROW_NUMBER"],
+    "tags": [
+      "RANK",
+      "DENSE_RANK",
+      "ROW_NUMBER"
+    ],
     "question": "다음 SQL에서 동점자 처리에 대한 설명으로 옳은 것은?",
     "code": "점수: 100, 100, 90, 80\n\nSELECT score,\n  RANK()       OVER (ORDER BY score DESC) r1,\n  DENSE_RANK() OVER (ORDER BY score DESC) r2,\n  ROW_NUMBER() OVER (ORDER BY score DESC) r3\nFROM T;",
     "options": {
@@ -557,13 +667,18 @@
       ],
       "practical": "올림픽 메달 = RANK (금금 다음이 동), 게임 리더보드 등수 표시 = DENSE_RANK 자주, 페이지네이션·중복제거 = ROW_NUMBER.",
       "pitfall": "OVER (ORDER BY ...)에서 ORDER BY는 필수입니다. 없으면 어떻게 순위를 매길지 모르니 에러. PARTITION BY를 추가하면 그룹별로 따로 순위 매김 (반별 1등 식)."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_017",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["LAG", "LEAD", "오프셋"],
+    "tags": [
+      "LAG",
+      "LEAD",
+      "오프셋"
+    ],
     "question": "LAG와 LEAD 함수에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "LAG는 다음 행 값, LEAD는 이전 행 값을 가져온다.",
@@ -582,13 +697,18 @@
       ],
       "practical": "주가 분석: LAG(price, 1) OVER (ORDER BY date) → 전일가. (오늘가 - 전일가) 로 변동률 계산. 매출 전월 대비도 동일 패턴.",
       "pitfall": "LAG(컬럼, 1, 기본값) → 첫 행은 이전이 없어서 NULL. 기본값을 지정하면 NULL 대신 그 값. (예: LAG(price, 1, 0)). 시험에서 첫/마지막 행 처리에 자주 출제."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_018",
     "subject": "S2",
     "topic": "Top N",
-    "tags": ["ROWNUM", "TOP N", "FETCH FIRST"],
+    "tags": [
+      "ROWNUM",
+      "TOP N",
+      "FETCH FIRST"
+    ],
     "question": "다음 중 Oracle에서 SAL이 가장 높은 5명을 조회하는 SQL로 옳은 것은?",
     "options": {
       "A": "SELECT * FROM EMP WHERE ROWNUM <= 5 ORDER BY SAL DESC;",
@@ -607,13 +727,18 @@
       ],
       "practical": "인기 상품 Top 10, 매출 상위 5개 부서 등은 항상 이 패턴. Oracle 12c 이후로는 ORDER BY ... FETCH FIRST 5 ROWS ONLY 도 지원됩니다.",
       "pitfall": "ROWNUM은 1부터 부여되지만, ROWNUM > 5는 절대 결과가 안 나옵니다. (1, 2... 부여되는데 첫 행이 1이라 > 5에 매칭 안 되고 폐기). 페이징할 때 인라인뷰로 ROWNUM AS rn 두고 외부에서 WHERE rn BETWEEN 11 AND 20 같이 처리해야 합니다."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_019",
     "subject": "S2",
     "topic": "계층질의",
-    "tags": ["CONNECT BY", "계층질의", "PRIOR"],
+    "tags": [
+      "CONNECT BY",
+      "계층질의",
+      "PRIOR"
+    ],
     "question": "Oracle 계층 질의에서 PRIOR의 의미로 가장 적절한 것은?",
     "options": {
       "A": "이전에 실행된 쿼리 결과를 의미한다.",
@@ -632,13 +757,17 @@
       ],
       "practical": "조직도, 카테고리 트리(상위카테고리→하위카테고리), 게시판 답글 트리, 부품 BOM 등 계층 구조 데이터에 필수. START WITH로 루트 지정, CONNECT BY로 연결 규칙.",
       "pitfall": "PRIOR을 어느 쪽에 붙이느냐로 '위로 올라가기 vs 아래로 내려가기'가 바뀝니다. PRIOR mgr_id = emp_id 이면 거꾸로 자기 부하직원 트리. 그림으로 그려서 외우는 게 안전."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_020",
     "subject": "S2",
     "topic": "계층질의",
-    "tags": ["LEVEL", "SYS_CONNECT_BY_PATH"],
+    "tags": [
+      "LEVEL",
+      "SYS_CONNECT_BY_PATH"
+    ],
     "question": "Oracle 계층 질의의 의사컬럼(Pseudo Column) 중 깊이를 의미하는 것은?",
     "options": {
       "A": "ROWNUM",
@@ -657,13 +786,18 @@
       ],
       "practical": "직급 구조: SELECT LPAD(' ', LEVEL*2) || name FROM emp START WITH mgr IS NULL CONNECT BY PRIOR id = mgr → 트리 모양 출력.",
       "pitfall": "CONNECT_BY_ISLEAF: 리프(말단) 노드 여부(0/1). SYS_CONNECT_BY_PATH: 루트→현재 경로를 문자열로. 같이 출제되니 묶어서 외우세요."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_021",
     "subject": "S2",
     "topic": "DML",
-    "tags": ["MERGE", "INSERT", "UPDATE"],
+    "tags": [
+      "MERGE",
+      "INSERT",
+      "UPDATE"
+    ],
     "question": "MERGE INTO 문의 가장 적절한 사용 시나리오는?",
     "options": {
       "A": "여러 테이블을 한꺼번에 삭제할 때",
@@ -680,13 +814,18 @@
       ],
       "practical": "외부에서 받은 일일 매출 데이터를 일별매출 테이블에 반영: 같은 날짜가 있으면 업데이트, 없으면 새 날짜 삽입 — 한 줄 SQL로 끝.",
       "pitfall": "MERGE 없을 때는 INSERT INTO ... ON DUPLICATE KEY UPDATE (MySQL), INSERT ... ON CONFLICT DO UPDATE (PostgreSQL)로 대신할 수 있습니다. SQLD는 Oracle 기준 MERGE 위주."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_022",
     "subject": "S2",
     "topic": "TCL",
-    "tags": ["COMMIT", "ROLLBACK", "SAVEPOINT"],
+    "tags": [
+      "COMMIT",
+      "ROLLBACK",
+      "SAVEPOINT"
+    ],
     "question": "TCL(트랜잭션 제어어)에 대한 설명으로 옳지 않은 것은?",
     "options": {
       "A": "COMMIT은 트랜잭션의 변경사항을 영구히 반영한다.",
@@ -705,13 +844,18 @@
       ],
       "practical": "큰 변경 전엔 SAVEPOINT를 찍어두면 일부만 되돌릴 수 있습니다. SAVEPOINT s1; ... SAVEPOINT s2; ... ROLLBACK TO s1; (s1 이후만 취소).",
       "pitfall": "DCL(GRANT/REVOKE)도 자동 커밋입니다. 즉 'DDL과 DCL은 자동 커밋, DML과 TCL만 트랜잭션 영향'. 외우는 핵심 룰."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_023",
     "subject": "S2",
     "topic": "DDL",
-    "tags": ["제약조건", "FK", "NOT NULL"],
+    "tags": [
+      "제약조건",
+      "FK",
+      "NOT NULL"
+    ],
     "question": "제약조건(Constraint)에 대한 설명으로 옳지 않은 것은?",
     "options": {
       "A": "PRIMARY KEY는 자동으로 NOT NULL과 UNIQUE를 모두 만족한다.",
@@ -731,13 +875,18 @@
       ],
       "practical": "성별 컬럼: CHECK (gender IN ('M','F','U')). 나이 컬럼: CHECK (age BETWEEN 0 AND 120). 이런 단순한 값 검증에 좋습니다.",
       "pitfall": "PRIMARY KEY를 만들면 UNIQUE 인덱스가 자동 생성됩니다. 따라서 추가 UNIQUE 인덱스를 또 만들면 중복 인덱스로 공간 낭비. 또 UNIQUE는 NULL을 무한 허용(Oracle), MySQL은 다수 NULL 허용, MS SQL은 1개만 — DBMS별로 다름."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_024",
     "subject": "S2",
     "topic": "DCL",
-    "tags": ["GRANT", "REVOKE", "권한"],
+    "tags": [
+      "GRANT",
+      "REVOKE",
+      "권한"
+    ],
     "question": "DCL에 대한 설명으로 옳지 않은 것은?",
     "options": {
       "A": "GRANT는 사용자에게 권한을 부여한다.",
@@ -755,13 +904,18 @@
       ],
       "practical": "신입사원 입사 시 dev_role 하나만 부여하면 SELECT, INSERT 등 모든 개발 권한이 한꺼번에 적용. 권한 변경도 dev_role 하나만 수정하면 모든 사용자에게 자동 반영.",
       "pitfall": "WITH GRANT OPTION으로 받은 권한은 위임 가능하지만, 원본 권한이 회수되면 '연쇄 회수'가 일어날 수 있습니다(CASCADE). 권한 관리할 때 주의."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_007",
     "subject": "S1",
     "topic": "트랜잭션",
-    "tags": ["트랜잭션", "ACID", "원자성"],
+    "tags": [
+      "트랜잭션",
+      "ACID",
+      "원자성"
+    ],
     "question": "트랜잭션의 ACID 특성 중 '한 트랜잭션의 모든 작업이 모두 반영되거나 모두 취소되어야 한다'는 성질은?",
     "options": {
       "A": "원자성(Atomicity)",
@@ -779,13 +933,18 @@
       ],
       "practical": "은행 이체, 쇼핑몰 결제+재고차감, 회원가입+이메일발송 등 '여러 단계가 묶인 작업'은 모두 트랜잭션으로 처리해야 데이터 정합성 유지.",
       "pitfall": "ACID 외우기: A→All or Nothing, C→Consistent state, I→Isolated from others, D→Durable after commit. 4가지 한 줄로 외우면 시험에 빈번."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_008",
     "subject": "S1",
     "topic": "관계",
-    "tags": ["관계", "카디널리티", "차수"],
+    "tags": [
+      "관계",
+      "카디널리티",
+      "차수"
+    ],
     "question": "엔터티 간 관계에서 '관계 차수(Cardinality)'에 해당하지 않는 것은?",
     "options": {
       "A": "1:1 (일대일)",
@@ -803,13 +962,18 @@
       ],
       "practical": "M:N은 실제 DB로 구현할 때 보통 '교차 엔터티(Junction Table)'로 분해합니다. 학생-과목이면 (학생ID, 과목ID)를 가진 수강 테이블 추가.",
       "pitfall": "필수 여부(선택성, optionality)는 차수와 별개 개념입니다. 1:M 관계에서도 '필수 1' vs '선택 0..1' 구분 — 시험에 자주 같이 출제."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_009",
     "subject": "S1",
     "topic": "정규화",
-    "tags": ["정규화", "제3정규형", "이행종속"],
+    "tags": [
+      "정규화",
+      "제3정규형",
+      "이행종속"
+    ],
     "question": "다음 테이블에서 제3정규형(3NF)을 위반하는 종속 관계는? (PK: 학번)",
     "code": "학생(학번, 학과코드, 학과명, 학과사무실)",
     "options": {
@@ -829,13 +993,18 @@
       ],
       "practical": "분해: 학생(학번, 학과코드) + 학과(학과코드, 학과명, 학과사무실). 학과 정보가 바뀌면 학과 테이블 한 행만 수정하면 됨 (이상 방지).",
       "pitfall": "3NF 위반 신호 = '같은 값이 여러 행에 반복'. INSERT 이상(학생 없으면 학과 못 등록), UPDATE 이상(학과명 바꾸면 모든 학생 행 수정), DELETE 이상(마지막 학생 삭제 시 학과 정보 사라짐)."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s1_010",
     "subject": "S1",
     "topic": "관계",
-    "tags": ["식별자관계", "비식별자관계", "ERD"],
+    "tags": [
+      "식별자관계",
+      "비식별자관계",
+      "ERD"
+    ],
     "question": "식별자 관계(Identifying)와 비식별자 관계(Non-Identifying)의 차이로 옳은 것은?",
     "options": {
       "A": "식별자 관계는 부모 PK가 자식 PK의 일부가 되며, 자식은 부모 없이 존재할 수 없다.",
@@ -854,13 +1023,18 @@
       ],
       "practical": "주문(주문ID PK) - 주문상세(주문ID + 라인번호 PK) → 식별자 관계. 주문 없는 주문상세 불가. vs 부서(부서ID PK) - 사원(사번 PK, 부서ID FK) → 비식별자. 부서 없는 신입사원도 일단 등록 가능.",
       "pitfall": "ERD 표기: 식별자 관계는 실선, 비식별자 관계는 점선. 자식 PK가 무엇인지로 판단하는 게 가장 빠름."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_025",
     "subject": "S2",
     "topic": "PIVOT/UNPIVOT",
-    "tags": ["PIVOT", "행을열로", "53회신규"],
+    "tags": [
+      "PIVOT",
+      "행을열로",
+      "53회신규"
+    ],
     "question": "PIVOT 절에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "여러 행의 데이터를 여러 컬럼으로 변환한다.",
@@ -878,13 +1052,18 @@
       ],
       "practical": "보고서 형태 데이터를 만들 때 핵심. 매출 (월,금액) 행 형식 → '1월', '2월', '3월' 컬럼 형식으로 변환 → 한눈에 비교 쉬움. 53회 시험부터 출제 시작.",
       "pitfall": "PIVOT 절 안 IN 리스트에 모든 컬럼명을 명시해야 합니다. 동적 컬럼은 SQL만으로는 불가 (PL/SQL 또는 동적 SQL 필요). PIVOT은 결과만 변환, 원 테이블은 그대로."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_026",
     "subject": "S2",
     "topic": "PIVOT/UNPIVOT",
-    "tags": ["UNPIVOT", "열을행으로", "53회신규"],
+    "tags": [
+      "UNPIVOT",
+      "열을행으로",
+      "53회신규"
+    ],
     "question": "다음 SQL의 결과 행 수는?",
     "code": "원본:\n  ID  Q1  Q2  Q3  Q4\n  10  100 200 150 300\n  20  50  80  90  120\n\nSELECT * FROM T\nUNPIVOT (sales FOR quarter IN (Q1, Q2, Q3, Q4));",
     "options": {
@@ -904,13 +1083,18 @@
       ],
       "practical": "엑셀 형태(분기별 컬럼)로 들어온 데이터를 표준 정규화 형태(분기 컬럼 + 값 컬럼)로 변환할 때 핵심. 외부 시스템 연동 시 자주 사용.",
       "pitfall": "UNPIVOT은 NULL 값을 기본 제외합니다(EXCLUDE NULLS 기본). 포함하려면 INCLUDE NULLS 명시. 또 데이터 타입이 변환 컬럼들끼리 호환되어야 함."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_027",
     "subject": "S2",
     "topic": "정규표현식",
-    "tags": ["REGEXP_LIKE", "정규표현식", "패턴매칭"],
+    "tags": [
+      "REGEXP_LIKE",
+      "정규표현식",
+      "패턴매칭"
+    ],
     "question": "다음 SQL의 결과로 옳은 것은?",
     "code": "T 테이블 NAME 컬럼: '홍길동', 'Hong', '김철수', 'A123', '이영희'\n\nSELECT NAME FROM T\nWHERE REGEXP_LIKE(NAME, '^[가-힣]+$');",
     "options": {
@@ -933,13 +1117,18 @@
       ],
       "practical": "이메일/전화번호/주민번호 형식 검증, 한글만 추출, 공백 제거 등에 자주. 비밀번호 강도 검사도 정규식으로 간결히 표현.",
       "pitfall": "REGEXP_LIKE는 boolean 결과 (WHERE에 사용). REGEXP_REPLACE는 치환, REGEXP_SUBSTR은 추출, REGEXP_INSTR은 위치 반환. 4종 함수 묶어서 외우세요."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_028",
     "subject": "S2",
     "topic": "정규표현식",
-    "tags": ["REGEXP_REPLACE", "정규표현식", "치환"],
+    "tags": [
+      "REGEXP_REPLACE",
+      "정규표현식",
+      "치환"
+    ],
     "question": "다음 SQL의 결과는?",
     "code": "SELECT REGEXP_REPLACE('010-1234-5678', '[0-9]', '*') FROM DUAL;",
     "options": {
@@ -959,13 +1148,18 @@
       ],
       "practical": "개인정보 마스킹, 휴대폰 가운데 자리 가리기, 주민번호 뒷자리 *처리 등에 핵심. 로그 출력 시 민감정보 자동 마스킹.",
       "pitfall": "[0-9]+ (1자리 이상)로 쓰면 결과는 '*-*-*' (연속 숫자가 한 *로). 의도와 다를 수 있으니 +의 위치 신경 쓰세요. 또 5번째 인자로 시작 위치, 횟수 지정 가능."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_029",
     "subject": "S2",
     "topic": "그룹함수",
-    "tags": ["CUBE", "GROUPING SETS", "다차원집계"],
+    "tags": [
+      "CUBE",
+      "GROUPING SETS",
+      "다차원집계"
+    ],
     "question": "CUBE(A, B)가 만드는 그룹의 종류는?",
     "options": {
       "A": "(A, B) 1종류",
@@ -983,13 +1177,18 @@
       ],
       "practical": "다차원 분석에 핵심. 매출을 (지역+상품), (지역만), (상품만), (전체) 4가지 각도로 한 SQL로 집계. BI 대시보드 백엔드에 자주.",
       "pitfall": "ROLLUP=n+1 종류, CUBE=2^n 종류, GROUPING SETS=명시한 만큼만. 셋의 차이 정확히 구분해야 시험에 강함."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_030",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["윈도우함수", "frame절", "ROWS BETWEEN"],
+    "tags": [
+      "윈도우함수",
+      "frame절",
+      "ROWS BETWEEN"
+    ],
     "question": "윈도우 함수의 frame 절 'ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW'의 의미는?",
     "options": {
       "A": "현재 행 1행만 대상",
@@ -1008,13 +1207,17 @@
       ],
       "practical": "누적 매출 (SUM(sales) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) — 일별 매출 누계 차트의 핵심.",
       "pitfall": "frame절 생략 시 ORDER BY 있으면 기본 'RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW' = 누적. 없으면 전체 파티션. 같은 SUM이라도 의미가 달라짐."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_031",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["셀프조인", "self join"],
+    "tags": [
+      "셀프조인",
+      "self join"
+    ],
     "question": "셀프 조인(Self Join)이 가장 적절한 시나리오는?",
     "options": {
       "A": "두 개의 다른 테이블을 결합할 때",
@@ -1032,13 +1235,18 @@
       ],
       "practical": "조직도, 카테고리 트리, 답글 구조 모두 셀프조인으로 1단계 펼치기 가능. 다단계 트리는 CONNECT BY 또는 재귀 CTE.",
       "pitfall": "셀프조인 시 테이블 별칭 필수 (FROM EMP e1 JOIN EMP e2 ON ...). 별칭 없이 EMP.col 두 번 쓰면 모호 컬럼 에러. 또 INNER로 하면 최상위(상사 없는 사람) 빠짐 → LEFT OUTER 권장."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_032",
     "subject": "S2",
     "topic": "함수",
-    "tags": ["TO_CHAR", "TO_DATE", "형변환"],
+    "tags": [
+      "TO_CHAR",
+      "TO_DATE",
+      "형변환"
+    ],
     "question": "다음 SQL의 결과는?",
     "code": "SELECT TO_CHAR(TO_DATE('20260508', 'YYYYMMDD'), 'YYYY-MM-DD') FROM DUAL;",
     "options": {
@@ -1057,13 +1265,18 @@
       ],
       "practical": "외부에서 받은 문자열 날짜(예: '20260508')를 DB의 DATE 컬럼에 넣을 때 TO_DATE 필수. 출력 시 사용자 친화 포맷으로 다시 TO_CHAR.",
       "pitfall": "포맷 문자 대소문자 주의: MM(월)·MI(분)·MON(월약자) 다름. HH는 12시간제, HH24는 24시간제. 시험에 자주 함정으로 출제."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_033",
     "subject": "S2",
     "topic": "함수",
-    "tags": ["ADD_MONTHS", "MONTHS_BETWEEN", "날짜함수"],
+    "tags": [
+      "ADD_MONTHS",
+      "MONTHS_BETWEEN",
+      "날짜함수"
+    ],
     "question": "다음 중 결과가 옳지 않은 것은? (오늘 = 2026-05-08 가정)",
     "options": {
       "A": "ADD_MONTHS(SYSDATE, 1) → 2026-06-08",
@@ -1082,13 +1295,18 @@
       ],
       "practical": "근속 개월수: MONTHS_BETWEEN(SYSDATE, hire_date) — 입사일이 두 번째 인자. 결과는 양수.",
       "pitfall": "ADD_MONTHS(date, n) 결과가 월말 처리에 특이: ADD_MONTHS('2026-01-31', 1) = '2026-02-28' (2월 31일 없으니 자동 월말). 이게 정상 동작이지만 헷갈릴 수 있음."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_034",
     "subject": "S2",
     "topic": "함수",
-    "tags": ["ROUND", "TRUNC", "숫자함수"],
+    "tags": [
+      "ROUND",
+      "TRUNC",
+      "숫자함수"
+    ],
     "question": "다음 SQL의 결과는?",
     "code": "SELECT ROUND(123.456, 1) AS C1,\n       ROUND(123.456, -1) AS C2,\n       TRUNC(123.456, 1) AS C3,\n       TRUNC(123.456, -1) AS C4\nFROM DUAL;",
     "options": {
@@ -1109,13 +1327,18 @@
       ],
       "practical": "결제 금액 단위 절사 (TRUNC(amount, -2): 백원 단위로 버림 → 1234 → 1200). 평점 표시 (ROUND(avg, 1): 4.7).",
       "pitfall": "ROUND(123.456) 처럼 두 번째 인자 생략 시 0번째 자리 = 정수로 반올림. -1 vs 0 vs 1 헷갈리면 시험에서 한 번에 틀림."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_035",
     "subject": "S2",
     "topic": "WHERE",
-    "tags": ["LIKE", "와일드카드", "ESCAPE"],
+    "tags": [
+      "LIKE",
+      "와일드카드",
+      "ESCAPE"
+    ],
     "question": "다음 SQL의 의도는?",
     "code": "SELECT * FROM T WHERE name LIKE 'A_%' ESCAPE '\\';",
     "options": {
@@ -1134,13 +1357,18 @@
       ],
       "practical": "전화번호 첫자리만 '01'로 검색: phone LIKE '01%'. 5자 정확히 검색: name LIKE '_____' (밑줄 5개).",
       "pitfall": "_ 자체를 검색하려면 ESCAPE 사용. WHERE col LIKE '%\\_%' ESCAPE '\\\\' → 진짜 밑줄 포함 행만. ESCAPE 절 없이 _를 검색 못 함."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_036",
     "subject": "S2",
     "topic": "서브쿼리",
-    "tags": ["EXISTS", "IN", "성능"],
+    "tags": [
+      "EXISTS",
+      "IN",
+      "성능"
+    ],
     "question": "EXISTS와 IN의 차이로 가장 적절한 것은?",
     "options": {
       "A": "EXISTS는 결과 존재 여부만 확인 (true/false), IN은 값 일치 여부 비교",
@@ -1158,13 +1386,17 @@
       ],
       "practical": "주문이 1건이라도 있는 회원 조회: WHERE EXISTS (SELECT 1 FROM orders WHERE orders.member_id = m.id). 특정 카테고리에 해당하는 상품: WHERE category_id IN (SELECT id FROM categories WHERE ...).",
       "pitfall": "IN 서브쿼리 결과에 NULL 있으면 NOT IN은 항상 0행 반환! NULL = NULL = UNKNOWN이라 매칭 자체 안 됨. 안전하게 NOT EXISTS 권장."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_037",
     "subject": "S2",
     "topic": "DML",
-    "tags": ["INSERT ALL", "다중삽입"],
+    "tags": [
+      "INSERT ALL",
+      "다중삽입"
+    ],
     "question": "INSERT ALL 문에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "한 SQL로 여러 테이블에 동시에 행을 삽입할 수 있다.",
@@ -1182,13 +1414,18 @@
       ],
       "practical": "매출 데이터 분기 처리: 금액≥100만 = VIP테이블, 미만 = 일반테이블. 한 SELECT로 두 테이블 분배.",
       "pitfall": "INSERT ALL은 무조건 모든 INTO 절 실행, INSERT FIRST는 첫 매칭 WHEN만 실행. 헷갈리지 마세요. 또 동일 테이블 여러 INTO도 가능하지만 보통 안 씀."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_038",
     "subject": "S2",
     "topic": "DDL",
-    "tags": ["TRUNCATE", "DELETE", "DROP"],
+    "tags": [
+      "TRUNCATE",
+      "DELETE",
+      "DROP"
+    ],
     "question": "TRUNCATE TABLE과 DELETE FROM의 차이로 옳지 않은 것은?",
     "options": {
       "A": "TRUNCATE는 DDL, DELETE는 DML이다.",
@@ -1208,13 +1445,17 @@
       ],
       "practical": "임시 테이블 매일 비울 땐 TRUNCATE (빠름 + 자동커밋 OK). 감사 로그 일부 정리는 DELETE (조건 + 트리거 필요).",
       "pitfall": "외래키 제약이 있는 자식 테이블에서 부모를 TRUNCATE 하면 에러. CASCADE 옵션 또는 자식 먼저 처리 필요. DELETE는 ON DELETE CASCADE 따라감."
-    }
+    },
+    "difficulty": "하"
   },
   {
     "id": "sqld_s2_039",
     "subject": "S2",
     "topic": "서브쿼리",
-    "tags": ["상관서브쿼리", "correlated"],
+    "tags": [
+      "상관서브쿼리",
+      "correlated"
+    ],
     "question": "상관 서브쿼리(Correlated Subquery)에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "외부 쿼리의 컬럼을 서브쿼리에서 참조한다.",
@@ -1232,13 +1473,18 @@
       ],
       "practical": "각 부서의 평균 연봉보다 많이 받는 직원: SELECT * FROM emp e WHERE sal > (SELECT AVG(sal) FROM emp WHERE dept_id = e.dept_id). 안쪽에서 외부 e.dept_id 참조.",
       "pitfall": "상관 서브쿼리는 외부 행 수만큼 반복 실행되어 큰 테이블에 느릴 수 있음. JOIN + GROUP BY로 재작성하면 빨라지는 경우 많음. 시험에는 둘 다 출제."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_040",
     "subject": "S2",
     "topic": "집합연산자",
-    "tags": ["MINUS", "EXCEPT", "차집합"],
+    "tags": [
+      "MINUS",
+      "EXCEPT",
+      "차집합"
+    ],
     "question": "다음 SQL의 결과는?",
     "code": "A: {1, 2, 3, 4}\nB: {3, 4, 5, 6}\n\nSELECT * FROM A MINUS SELECT * FROM B;",
     "options": {
@@ -1258,13 +1504,17 @@
       ],
       "practical": "지난달 활성 회원 - 이번달 활성 회원 = 이탈 회원. 전체 상품 - 주문에 등장한 상품 = 한 번도 안 팔린 상품. 차이 분석에 핵심.",
       "pitfall": "MINUS는 A 기준이라 순서 중요. A MINUS B ≠ B MINUS A. 또 MINUS는 자동 중복 제거 + 정렬 동반(UNION처럼). 큰 데이터에서는 NOT EXISTS가 더 빠를 수 있음."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_041",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["CROSS JOIN", "카티션곱"],
+    "tags": [
+      "CROSS JOIN",
+      "카티션곱"
+    ],
     "question": "CROSS JOIN(카티션 곱)에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "두 테이블의 모든 가능한 조합을 반환한다 (행수 = m × n).",
@@ -1282,13 +1532,18 @@
       ],
       "practical": "달력 만들기 (연도 × 월 × 일), 모든 사이즈×색상 조합으로 SKU 생성 등 의도된 조합 생성에 사용. 조건 없이 일반 조인 작성 시 자동 CROSS JOIN으로 의도치 않은 폭증.",
       "pitfall": "FROM A, B (콤마 조인) + WHERE 조건 빠뜨림 = CROSS JOIN. 100만행 × 100만행 = 1조행 → 서버 다운. 조인 조건 항상 ON 으로 명시 권장."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_042",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["RIGHT OUTER JOIN", "OUTER JOIN", "방향"],
+    "tags": [
+      "RIGHT OUTER JOIN",
+      "OUTER JOIN",
+      "방향"
+    ],
     "question": "다음 두 SQL이 동일한 결과를 보장하는 방법은?",
     "code": "(가) SELECT * FROM A LEFT OUTER JOIN B ON A.k=B.k;\n(나) ___________________________________________",
     "options": {
@@ -1308,13 +1563,17 @@
       ],
       "practical": "팀에 따라 LEFT만 쓰는 코딩 컨벤션 흔함 (가독성 일관). RIGHT는 거의 안 쓰지만 이론적으로 가능하다는 걸 시험에서 확인.",
       "pitfall": "FULL OUTER JOIN은 양쪽 모두 보존 (어느 쪽이든 매칭 안 되면 NULL). LEFT/RIGHT와 결과 다름. 결과 컬럼 순서는 SELECT FROM 의 순서대로 — A FROM 이면 A 컬럼이 먼저."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_043",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["FULL OUTER JOIN", "양쪽보존"],
+    "tags": [
+      "FULL OUTER JOIN",
+      "양쪽보존"
+    ],
     "question": "다음 데이터에서 FULL OUTER JOIN 결과 행수는?",
     "code": "A: {1, 2, 3}\nB: {2, 3, 4, 5}\n\nSELECT * FROM A FULL OUTER JOIN B ON A.id = B.id;",
     "options": {
@@ -1335,13 +1594,18 @@
       ],
       "practical": "두 시스템의 데이터 비교 (양쪽 누락 검출). 옛 회원DB vs 신규 회원DB → 어느 쪽에만 있는 회원 식별. UNION ALL + WHERE 조합보다 한 줄로 표현 가능.",
       "pitfall": "MySQL은 FULL OUTER JOIN 미지원 → LEFT JOIN UNION RIGHT JOIN 으로 우회. Oracle/PostgreSQL/SQL Server는 지원. 시험은 표준 SQL 기준이라 출제됨."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_044",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["NATURAL JOIN", "USING", "ON차이"],
+    "tags": [
+      "NATURAL JOIN",
+      "USING",
+      "ON차이"
+    ],
     "question": "NATURAL JOIN, USING, ON 의 차이로 옳지 않은 것은?",
     "options": {
       "A": "NATURAL JOIN은 같은 이름 컬럼 모두 자동 매칭한다.",
@@ -1360,13 +1624,17 @@
       ],
       "practical": "USING(col)은 가독성 좋고 일치 명시적이라 권장. NATURAL은 새 동일이름 컬럼 추가 시 의도치 않게 결과 바뀜 → 위험.",
       "pitfall": "USING(dept_id) 결과에서 SELECT a.dept_id 시 ORA-25154 에러. 그냥 SELECT dept_id 로. SELECT * 면 자동 처리되어 안 보이지만 명시 컬럼 사용 시 주의."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_045",
     "subject": "S2",
     "topic": "조인",
-    "tags": ["다중조인", "3-way join"],
+    "tags": [
+      "다중조인",
+      "3-way join"
+    ],
     "question": "다음 SQL에서 적절하지 않은 부분은?",
     "code": "SELECT s.name, c.title, t.name AS teacher\nFROM Student s\nJOIN Course c ON s.course_id = c.id\nJOIN Teacher t ON c.teacher_id = t.id\nWHERE s.grade = 3;",
     "options": {
@@ -1387,13 +1655,18 @@
       ],
       "practical": "여러 테이블 조인 시 WHERE 조건은 '가장 작은 결과셋을 만드는 것 우선'으로 작성하면 옵티마이저 힌트 없이도 빠른 경우 많음.",
       "pitfall": "조인 순서가 logical order ≠ execution order. EXPLAIN PLAN으로 실제 실행 순서 확인 가능. 시험은 logical 기준."
-    }
+    },
+    "difficulty": "중"
   },
   {
     "id": "sqld_s2_046",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["NTILE", "분위수", "구간분할"],
+    "tags": [
+      "NTILE",
+      "분위수",
+      "구간분할"
+    ],
     "question": "NTILE(4) OVER (ORDER BY sal DESC) 함수의 결과 의미는?",
     "options": {
       "A": "연봉 내림차순으로 4개의 균등한 그룹으로 분할 (1,2,3,4 부여)",
@@ -1412,13 +1685,18 @@
       ],
       "practical": "고객 등급화 (구매액 NTILE(5) → 1=VVIP, 2=VIP, ..., 5=일반), 학생 성적 사분위 등 구간 분류에 핵심.",
       "pitfall": "행수가 N으로 나누어떨어지지 않으면 앞 그룹이 1행 더 많음. 100행 NTILE(3) → (34, 33, 33). NTILE은 PARTITION BY 사용 시 파티션별로 따로 분할."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_047",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["FIRST_VALUE", "LAST_VALUE", "frame절"],
+    "tags": [
+      "FIRST_VALUE",
+      "LAST_VALUE",
+      "frame절"
+    ],
     "question": "FIRST_VALUE / LAST_VALUE 사용 시 가장 흔한 함정은?",
     "options": {
       "A": "ORDER BY 없이 사용",
@@ -1438,13 +1716,18 @@
       ],
       "practical": "각 부서별 가장 늦게 입사한 직원 이름 표시: LAST_VALUE(name) OVER (PARTITION BY dept ORDER BY hire_date ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING).",
       "pitfall": "FIRST_VALUE는 frame 기본값(누적)으로도 정상 동작 (첫 행은 항상 처음). LAST_VALUE만 frame 명시 필요. 시험에 함정으로 자주."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_048",
     "subject": "S2",
     "topic": "윈도우함수",
-    "tags": ["RATIO_TO_REPORT", "비율", "분석함수"],
+    "tags": [
+      "RATIO_TO_REPORT",
+      "비율",
+      "분석함수"
+    ],
     "question": "RATIO_TO_REPORT(sal) OVER () 함수의 결과는?",
     "options": {
       "A": "각 행의 sal 값을 전체 합계로 나눈 비율 (0~1)",
@@ -1462,13 +1745,18 @@
       ],
       "practical": "부서별 매출 기여도, 상품별 매출 비중. PARTITION BY 추가 시 파티션 내 비율. 화면에 % 표시할 때 ROUND(ratio * 100, 2) || '%' 패턴.",
       "pitfall": "OVER () 빈 윈도우 = 전체 기준. OVER (PARTITION BY dept) = 부서 내 비율. 이 두 결과 완전 다름. 의도와 다른 윈도우 정의 시 잘못된 비율 노출."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_049",
     "subject": "S2",
     "topic": "PIVOT/UNPIVOT",
-    "tags": ["PIVOT", "결과형식", "집계함수"],
+    "tags": [
+      "PIVOT",
+      "결과형식",
+      "집계함수"
+    ],
     "question": "PIVOT 절에서 반드시 명시해야 하는 두 가지는?",
     "options": {
       "A": "집계 함수와 IN 절(가로로 펼칠 값 목록)",
@@ -1487,13 +1775,18 @@
       ],
       "practical": "월별 매출 가로로: PIVOT (SUM(amount) FOR month IN ('2026-01' AS jan, '2026-02' AS feb, ...)). AS로 컬럼명 부여 가능.",
       "pitfall": "IN 리스트는 정적 — 동적 값(예: 모든 월) 자동 펼치려면 PL/SQL 필요. SQL만으로는 불가. 또 집계함수 안 컬럼은 PIVOT 결과에 안 나타남, IN 컬럼·집계 결과 컬럼만 노출."
-    }
+    },
+    "difficulty": "상"
   },
   {
     "id": "sqld_s2_050",
     "subject": "S2",
     "topic": "PIVOT/UNPIVOT",
-    "tags": ["UNPIVOT", "NULL처리", "INCLUDE/EXCLUDE"],
+    "tags": [
+      "UNPIVOT",
+      "NULL처리",
+      "INCLUDE/EXCLUDE"
+    ],
     "question": "UNPIVOT의 NULL 처리에 대한 설명으로 옳은 것은?",
     "options": {
       "A": "UNPIVOT은 기본적으로 NULL 값을 결과에서 제외한다.",
@@ -1511,6 +1804,1290 @@
       ],
       "practical": "분기별 매출 (Q1, Q2, Q3, Q4) 중 일부 분기 데이터 없음(NULL) → 기본 UNPIVOT은 그 분기 행 제외. 누락된 기간을 보고 싶다면 INCLUDE NULLS 또는 NVL로 사전 채움.",
       "pitfall": "결과 행수 차이: 5행 × 4컬럼 데이터에서 NULL 5개 있으면, 기본 = 15행, INCLUDE NULLS = 20행. 시험에서 행수 묻는 경우 NULL 처리 옵션 확인 필수."
+    },
+    "difficulty": "상"
+  },
+  {
+    "id": "sqld_s1_011",
+    "subject": "S1",
+    "topic": "슈퍼타입서브타입",
+    "tags": [
+      "슈퍼타입",
+      "서브타입",
+      "배타적",
+      "포괄적"
+    ],
+    "difficulty": "중",
+    "question": "다음 중 슈퍼타입/서브타입 관계에 대한 설명으로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "배타적(Exclusive) 관계는 서브타입 중 단 하나에만 속함을 의미한다.",
+      "B": "포괄적(Inclusive) 관계는 여러 서브타입에 동시에 속할 수 있다.",
+      "C": "서브타입은 슈퍼타입의 속성을 상속받지 못한다.",
+      "D": "서브타입은 슈퍼타입에는 없는 고유 속성을 가질 수 있다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "슈퍼타입(부모)이 가진 공통 속성은 서브타입(자식)이 모두 물려받아요. '동물'이 슈퍼타입이고 '강아지·고양이'가 서브타입이면, 강아지도 고양이도 '이름·나이' 같은 공통 속성을 자동으로 갖습니다.",
+      "steps": [
+        "슈퍼타입/서브타입의 기본 원칙: 상속(공통 속성) + 고유 속성",
+        "C번 검사: '상속받지 못한다' → 정반대, 상속이 핵심",
+        "→ C번이 틀린 설명"
+      ],
+      "practical": "쇼핑몰 회원(슈퍼타입) → 일반회원/VIP회원(서브타입). 공통 정보(이름·이메일)는 회원 테이블, 고유 정보(VIP등급·할인율)는 VIP 테이블에 저장.",
+      "pitfall": "배타적은 ⊕(exclusive or), 포괄적은 OR. 시험에서 기호로도 출제될 수 있습니다."
+    }
+  },
+  {
+    "id": "sqld_s1_012",
+    "subject": "S1",
+    "topic": "슈퍼타입서브타입",
+    "tags": [
+      "변환방식",
+      "OneToOne",
+      "PlusType",
+      "SingleTable"
+    ],
+    "difficulty": "상",
+    "question": "슈퍼타입/서브타입을 물리 테이블로 변환하는 방법 중, 처리 성능은 좋지만 NULL이 많이 생기는 방식은?",
+    "options": {
+      "A": "OneToOne Type (서브타입별 개별 테이블)",
+      "B": "Plus Type (슈퍼+서브 분리, 1:1 관계)",
+      "C": "Single Table Type (하나의 테이블에 통합)",
+      "D": "Hybrid Type (혼합)"
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "Single Table은 모든 서브타입을 한 테이블에 합쳐서 보관해요. JOIN이 없으니 빠르지만, 어떤 행에는 강아지 속성만, 어떤 행에는 고양이 속성만 있으니 나머지는 NULL이 됩니다.",
+      "steps": [
+        "3가지 변환 방식 비교 → OneToOne(분리·느림·NULL적음), Plus(JOIN필요·중간), Single(통합·빠름·NULL많음)",
+        "문제 키워드: '성능 좋음 + NULL 많음' → Single Table",
+        "C 선택"
+      ],
+      "practical": "트랜잭션이 슈퍼+서브 동시 접근이 잦으면 Single Table이 유리. 서브타입별 처리가 독립적이면 OneToOne.",
+      "pitfall": "Single Table은 컬럼 수가 폭증해서 8KB 페이지 초과 위험. 서브타입이 3개 이상이면 Plus나 OneToOne 고려."
+    }
+  },
+  {
+    "id": "sqld_s1_013",
+    "subject": "S1",
+    "topic": "관계",
+    "tags": [
+      "식별관계",
+      "비식별관계",
+      "PK",
+      "FK"
+    ],
+    "difficulty": "중",
+    "question": "식별 관계(Identifying Relationship)와 비식별 관계(Non-Identifying Relationship)의 차이에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "식별 관계에서 부모의 PK는 자식의 일반 속성이 된다.",
+      "B": "비식별 관계에서 부모의 PK는 자식의 PK 일부가 된다.",
+      "C": "식별 관계는 자식의 존재가 부모에 종속되며 FK가 PK에 포함된다.",
+      "D": "두 관계는 표기법만 다를 뿐 의미는 같다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "식별 관계 = '자식 혼자 못 사는 관계'예요. 부모가 없으면 자식 식별 자체가 안 되니까, 부모의 키를 자식의 PK에 포함시켜요. 비식별 관계 = '자식이 독립적'이라 부모 키를 일반 FK로만 받습니다.",
+      "steps": [
+        "식별 관계: 부모 PK → 자식 PK의 일부 (실선 표기)",
+        "비식별 관계: 부모 PK → 자식의 일반 FK (점선 표기)",
+        "A·B는 반대로 서술, D는 의미 동일하다고 잘못 단정",
+        "C가 정답"
+      ],
+      "practical": "주문(부모) - 주문상세(자식)는 식별 관계. 주문상세의 PK는 (주문번호+상세번호). 고객(부모) - 주문(자식)은 비식별 관계 — 주문은 고객 없이도 의미 있는 식별자(주문번호)를 가짐.",
+      "pitfall": "식별 관계가 많으면 PK가 복합키로 비대해져 조회 성능이 나빠질 수 있습니다."
+    }
+  },
+  {
+    "id": "sqld_s1_014",
+    "subject": "S1",
+    "topic": "관계",
+    "tags": [
+      "자기참조",
+      "재귀관계",
+      "계층"
+    ],
+    "difficulty": "중",
+    "question": "자기참조 관계(Recursive Relationship)에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "하나의 엔터티가 자기 자신과 관계를 맺는다.",
+      "B": "조직도의 '상위 부서' 관계가 대표적인 예이다.",
+      "C": "자기참조는 1:N 관계로만 표현 가능하다.",
+      "D": "계층질의(CONNECT BY)와 함께 자주 사용된다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "자기참조는 친구관계처럼 M:N도 가능해요. 'A는 B의 친구, B는 A의 친구' — 양쪽 다 친구로 연결되니 M:N. 1:N만 된다고 단정하면 안 됩니다.",
+      "steps": [
+        "자기참조 형태: 1:1(부부), 1:N(부서-하위부서), M:N(친구·BOM)",
+        "C번: '1:N만 가능' → 거짓",
+        "→ C가 옳지 않음"
+      ],
+      "practical": "제조 BOM(부품-부품 구성)은 M:N 자기참조. 중간에 BOM_DETAIL 테이블로 풀어서 구현합니다.",
+      "pitfall": "M:N 자기참조는 반드시 교차 엔터티(중간 테이블)로 풀어야 합니다. 직접 M:N으로는 RDB에 못 담아요."
+    }
+  },
+  {
+    "id": "sqld_s1_015",
+    "subject": "S1",
+    "topic": "정규화",
+    "tags": [
+      "1NF",
+      "원자성",
+      "다중값제거"
+    ],
+    "difficulty": "하",
+    "question": "다음 테이블을 제1정규형(1NF)으로 변환하려면 어떤 작업이 필요한가?\n\n학생(학번, 이름, 취미목록='등산,독서,영화')",
+    "options": {
+      "A": "취미목록 컬럼을 여러 행으로 분리한다.",
+      "B": "이름을 성과 이름으로 분리한다.",
+      "C": "학번에 NOT NULL을 적용한다.",
+      "D": "이름의 함수 종속성을 제거한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "1NF의 핵심은 '한 칸에 한 값만'(원자성)이에요. '등산,독서,영화'처럼 콤마로 묶인 값은 검색·집계가 어려우니, '학생-취미' 테이블을 만들어 행으로 풀어야 합니다.",
+      "steps": [
+        "1NF 위반 패턴 식별 → 한 컬럼에 여러 값(콤마/배열)",
+        "해결책 → 행으로 분리, 별도 자식 테이블 신설",
+        "A 선택"
+      ],
+      "practical": "(학번=1, 이름=김철수, 취미='등산,독서') → (학번=1, 취미=등산), (학번=1, 취미=독서) 두 행으로.",
+      "pitfall": "JSON/배열 컬럼을 쓰면 RDB에서 검색 인덱스가 안 먹습니다. 정규화 우선."
+    }
+  },
+  {
+    "id": "sqld_s1_016",
+    "subject": "S1",
+    "topic": "정규화",
+    "tags": [
+      "3NF",
+      "이행적종속",
+      "분해"
+    ],
+    "difficulty": "중",
+    "question": "제3정규형(3NF)을 만족하기 위해 제거해야 하는 함수 종속은?",
+    "options": {
+      "A": "부분 함수 종속",
+      "B": "이행적 함수 종속",
+      "C": "다치 종속(Multivalued Dependency)",
+      "D": "조인 종속"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "3NF는 'A→B, B→C이면 사실상 A→C인데 이건 중복'이라는 거예요. 학번→학과코드→학과명이면, 학생 테이블에 학과명까지 두면 학과명이 계속 중복됩니다. 학과 테이블로 빼야 해요.",
+      "steps": [
+        "정규형별 키워드: 1NF=원자성, 2NF=부분종속, 3NF=이행종속, BCNF=결정자",
+        "문제는 '3NF' → '이행적 함수 종속'",
+        "B 선택"
+      ],
+      "practical": "사원(사번, 부서코드, 부서명, 부서장) → 부서명·부서장은 부서코드에 종속 → 부서 테이블로 분리.",
+      "pitfall": "BCNF는 3NF의 강화판. '결정자가 후보키가 아닌 경우'를 제거. 3NF 만족해도 BCNF 위반 가능."
+    }
+  },
+  {
+    "id": "sqld_s1_017",
+    "subject": "S1",
+    "topic": "반정규화",
+    "tags": [
+      "반정규화",
+      "성능",
+      "트레이드오프"
+    ],
+    "difficulty": "중",
+    "question": "반정규화(De-normalization)에 대한 설명으로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "조회 성능 향상을 위해 일부러 중복을 허용한다.",
+      "B": "정규화를 하지 않은 상태와 동일한 의미이다.",
+      "C": "조인 횟수를 줄이거나 집계 결과를 미리 저장하는 기법이 포함된다.",
+      "D": "데이터 일관성 관리 부담이 증가하는 단점이 있다."
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "반정규화 = '정규화 후 의도적으로 중복 추가'예요. 처음부터 정규화 안 한 것(미정규화)과는 다릅니다. 먼저 깨끗하게 정리하고, 성능 때문에 일부만 다시 합치는 거죠.",
+      "steps": [
+        "정규화 → 반정규화 순서가 정상",
+        "B: '정규화 안 한 것과 같다' → 잘못된 정의",
+        "→ B가 적절치 않음"
+      ],
+      "practical": "주문 테이블에 '고객명' 중복 저장 → JOIN 없이 조회 가능. 단, 고객명 변경 시 모든 주문도 갱신 필요.",
+      "pitfall": "반정규화는 OLTP보다 OLAP/리포팅에서 유용. 무분별한 반정규화는 갱신이상의 원인."
+    }
+  },
+  {
+    "id": "sqld_s1_018",
+    "subject": "S1",
+    "topic": "본질식별자vs인조식별자",
+    "tags": [
+      "인조식별자",
+      "대체키",
+      "Surrogate"
+    ],
+    "difficulty": "중",
+    "question": "인조식별자(Surrogate Key) 사용의 장점이 아닌 것은?",
+    "options": {
+      "A": "복합키를 단순화하여 JOIN 성능을 개선할 수 있다.",
+      "B": "비즈니스 변경에 따른 식별자 변경 영향이 적다.",
+      "C": "업무적 의미가 명확하여 데이터 추적이 용이하다.",
+      "D": "인덱스 크기가 작아 성능이 좋다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "인조식별자는 '의미 없는 번호'(예: 1, 2, 3)예요. 의미가 없는 게 장점이자 단점인데, '업무 추적'에는 오히려 불리합니다. ID만 봐선 무엇인지 알 수 없으니까요.",
+      "steps": [
+        "인조키 장점: 단순·불변·작은인덱스",
+        "C번: '업무적 의미 명확' → 인조키와 정반대(본질식별자의 특성)",
+        "→ C 선택"
+      ],
+      "practical": "회원ID 1234가 누군지 ID만 보고는 모름. 본질식별자(주민번호·사번)는 보고 알 수 있음.",
+      "pitfall": "인조키는 '대리키' 또는 'Surrogate Key'로도 불립니다. 모두 같은 개념."
+    }
+  },
+  {
+    "id": "sqld_s1_019",
+    "subject": "S1",
+    "topic": "관계",
+    "tags": [
+      "카디널리티",
+      "선택성",
+      "ERD"
+    ],
+    "difficulty": "중",
+    "question": "관계의 카디널리티(Cardinality)와 선택성(Optionality)에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "카디널리티는 관계에 참여하는 인스턴스의 개수, 선택성은 참여 여부이다.",
+      "B": "카디널리티는 표기법만 다를 뿐 모든 관계가 1:1이다.",
+      "C": "선택성은 데이터 유형(숫자/문자)을 의미한다.",
+      "D": "카디널리티는 정규화 단계를 결정한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "카디널리티 = '몇 개랑 연결?' (1:1, 1:N, M:N). 선택성 = '꼭 연결해야 해?' (필수/선택). 둘은 다른 개념이에요.",
+      "steps": [
+        "카디널리티 = 수량 (1:1, 1:N, M:N)",
+        "선택성 = 참여 여부 (Mandatory / Optional)",
+        "A 선택"
+      ],
+      "practical": "주문은 반드시 고객이 있어야 함(필수, Mandatory) — 선택성. 고객 1명이 주문 N개 가능 — 카디널리티.",
+      "pitfall": "IE 표기법에서 원(O) = 선택, 막대(|) = 필수. 까마귀발(crow's foot) = N. 표기 시험 출제 빈도 높음."
+    }
+  },
+  {
+    "id": "sqld_s1_020",
+    "subject": "S1",
+    "topic": "데이터무결성",
+    "tags": [
+      "참조무결성",
+      "FK",
+      "CASCADE"
+    ],
+    "difficulty": "중",
+    "question": "참조 무결성 제약(Referential Integrity)에 대한 설명으로 적절하지 않은 것은?",
+    "options": {
+      "A": "FK 값은 부모 테이블의 PK 값이거나 NULL이어야 한다.",
+      "B": "ON DELETE CASCADE는 부모 삭제 시 자식도 자동 삭제한다.",
+      "C": "ON DELETE SET NULL은 부모 삭제 시 자식의 FK를 NULL로 만든다.",
+      "D": "ON DELETE RESTRICT는 자식 데이터가 있어도 부모 삭제를 허용한다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "RESTRICT = '제한' = 자식이 있으면 부모 삭제 금지. 이게 기본 동작이에요. 자식이 있어도 삭제 가능하다고 하면 무결성이 깨집니다.",
+      "steps": [
+        "ON DELETE 옵션 4가지 정리 → CASCADE(자식삭제), SET NULL(FK NULL화), RESTRICT/NO ACTION(거부), SET DEFAULT(기본값)",
+        "D: 'RESTRICT는 허용' → 반대(거부)",
+        "→ D 적절치 않음"
+      ],
+      "practical": "고객 삭제 시 주문이 있으면 RESTRICT로 막거나, 주문도 같이 지울지(CASCADE) 결정. 보통 운영DB는 RESTRICT 권장.",
+      "pitfall": "CASCADE 남용 시 의도치 않은 대량 삭제 위험. 부모 1행 삭제로 자식 수만 행이 연쇄 삭제될 수 있음."
+    }
+  },
+  {
+    "id": "sqld_s2_051",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "INNER JOIN",
+      "ON",
+      "USING"
+    ],
+    "difficulty": "중",
+    "question": "ON절과 USING절의 차이에 대한 설명으로 가장 적절한 것은?",
+    "options": {
+      "A": "USING은 컬럼명이 양쪽 테이블에 같을 때만 사용 가능하고, 결과에 컬럼이 한 번만 표시된다.",
+      "B": "ON은 컬럼명이 달라도 사용 가능하지만 결과에 양쪽 컬럼이 모두 표시되지 않는다.",
+      "C": "USING은 조인 조건에 부등호(>, <) 사용이 가능하다.",
+      "D": "ON과 USING은 완전히 동일하게 동작한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "USING은 '같은 이름끼리 묶어줘' 단축 문법이에요. 한 번에 한 컬럼명만 적고, 결과에도 한 번만 나옵니다. ON은 자유도가 높아 다른 컬럼명이나 부등호도 가능합니다.",
+      "steps": [
+        "USING: 같은 컬럼명 필수, 결과 컬럼 1개, 부등호 불가",
+        "ON: 컬럼명 달라도 OK, 양쪽 컬럼 모두 표시, 부등호 OK",
+        "A 선택"
+      ],
+      "practical": "SELECT * FROM emp JOIN dept USING(deptno) → deptno 한 번만 출력. ON e.deptno=d.deptno면 양쪽 다 출력.",
+      "pitfall": "USING절 안의 컬럼은 별칭(테이블명.컬럼)을 붙이면 에러. SELECT emp.deptno FROM emp JOIN dept USING(deptno) → 오류."
+    }
+  },
+  {
+    "id": "sqld_s2_052",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "LEFT OUTER JOIN",
+      "NULL"
+    ],
+    "difficulty": "중",
+    "question": "다음 쿼리의 결과로 옳은 것은?\n\nemp(empno, name, deptno): (1,A,10),(2,B,20),(3,C,NULL)\ndept(deptno, dname): (10,영업),(20,개발),(30,기획)\n\nSELECT e.name, d.dname\nFROM emp e LEFT OUTER JOIN dept d ON e.deptno = d.deptno;",
+    "options": {
+      "A": "2행 (A-영업, B-개발)",
+      "B": "3행 (A-영업, B-개발, C-NULL)",
+      "C": "3행 (A-영업, B-개발, C-기획)",
+      "D": "4행 (A-영업, B-개발, C-NULL, NULL-기획)"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "LEFT OUTER JOIN은 '왼쪽(emp) 전부 살리기'예요. C는 부서가 NULL이라 매칭 안 되지만 그대로 나오고, dname은 NULL이 됩니다. 기획부서(30)는 오른쪽이라 빠집니다.",
+      "steps": [
+        "LEFT OUTER → 왼쪽 emp 전부 출력",
+        "A,B는 매칭 성공 → 부서명 출력",
+        "C는 deptno NULL → 매칭 실패 → dname=NULL로 출력",
+        "기획(30)은 오른쪽 단독 → LEFT OUTER엔 안 나옴",
+        "총 3행"
+      ],
+      "practical": "주문에 고객이 NULL이어도 모든 주문을 보고 싶을 때 LEFT OUTER. 매칭 실패 시 우측이 NULL.",
+      "pitfall": "WHERE d.dname IS NOT NULL을 붙이면 NULL인 행이 제거되어 INNER JOIN과 같아집니다. 조건 위치 주의."
+    }
+  },
+  {
+    "id": "sqld_s2_053",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "FULL OUTER JOIN"
+    ],
+    "difficulty": "중",
+    "question": "FULL OUTER JOIN의 결과에 포함되는 행이 아닌 것은?",
+    "options": {
+      "A": "양쪽 테이블에서 조인 조건을 만족하는 행",
+      "B": "왼쪽 테이블에만 존재하고 오른쪽엔 매칭이 없는 행",
+      "C": "오른쪽 테이블에만 존재하고 왼쪽엔 매칭이 없는 행",
+      "D": "양쪽 모두 NULL인 가상 행"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "FULL OUTER = LEFT + RIGHT 합집합이에요. 양쪽 매칭 + 왼쪽만 + 오른쪽만. 둘 다 없는 '가상 행'은 만들지 않습니다.",
+      "steps": [
+        "FULL OUTER = 매칭 + 왼쪽 단독 + 오른쪽 단독",
+        "D는 양쪽 데이터가 없는데 행이 생긴다는 말 → 없음",
+        "D 선택"
+      ],
+      "practical": "회원-주문 FULL OUTER → 주문 없는 회원, 회원 없는 주문(이상 데이터), 정상 매칭 모두 한눈에.",
+      "pitfall": "MySQL은 FULL OUTER JOIN 미지원 → UNION으로 우회. Oracle/PostgreSQL은 지원."
+    }
+  },
+  {
+    "id": "sqld_s2_054",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "CROSS JOIN",
+      "Cartesian"
+    ],
+    "difficulty": "하",
+    "question": "다음 중 CROSS JOIN의 결과 행 수를 계산한 것으로 옳은 것은? (A 테이블 5행, B 테이블 4행)",
+    "options": {
+      "A": "5행",
+      "B": "9행",
+      "C": "20행",
+      "D": "조인 조건이 없어 오류 발생"
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "CROSS JOIN = '모든 조합'이에요. A의 5행 × B의 4행 = 20행. 조인 조건 없이 카르테시안 곱을 만듭니다.",
+      "steps": [
+        "CROSS JOIN = M × N",
+        "5 × 4 = 20",
+        "C 선택"
+      ],
+      "practical": "달력 생성(년×월), 색상×사이즈 상품 조합 등에서 유용.",
+      "pitfall": "ON 절 빼고 일반 조인 하면 자동 CROSS JOIN처럼 카르테시안 곱이 됨. 의도하지 않은 폭증의 원인."
+    }
+  },
+  {
+    "id": "sqld_s2_055",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "NATURAL JOIN"
+    ],
+    "difficulty": "중",
+    "question": "NATURAL JOIN에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "양쪽 테이블에서 컬럼명과 데이터 타입이 같은 모든 컬럼을 조인 조건으로 사용한다.",
+      "B": "조인에 사용된 컬럼은 결과에 한 번만 표시된다.",
+      "C": "ON절이나 USING절을 함께 사용할 수 있다.",
+      "D": "동일한 이름의 컬럼이 없으면 CROSS JOIN과 같은 결과가 나온다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "NATURAL JOIN은 '알아서 같은 이름으로 묶기'예요. 자동이라 ON/USING을 같이 쓸 수 없습니다. 둘은 서로 배타적인 문법입니다.",
+      "steps": [
+        "NATURAL JOIN 특징: 자동 매칭, 같은 컬럼 1번만, ON/USING 병용 불가",
+        "C: 'ON/USING 함께 사용' → 거짓",
+        "→ C 옳지 않음"
+      ],
+      "practical": "테이블 설계가 일관되면 편리하나, 의도치 않은 컬럼 매칭 위험 → 운영DB에선 비권장.",
+      "pitfall": "양쪽에 같은 이름이지만 의미가 다른 컬럼(예: status)이 있으면 잘못 매칭되어 결과가 왜곡됨."
+    }
+  },
+  {
+    "id": "sqld_s2_056",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "SELF JOIN",
+      "자기조인"
+    ],
+    "difficulty": "중",
+    "question": "SELF JOIN을 사용하기에 가장 적절한 경우는?",
+    "options": {
+      "A": "두 개의 서로 다른 테이블을 PK로 조인할 때",
+      "B": "한 테이블 내에서 자기 자신의 다른 행과 관계를 맺을 때",
+      "C": "테이블 전체를 모두 출력할 때",
+      "D": "데이터 변경 작업을 위해 두 트랜잭션을 동시에 처리할 때"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "SELF JOIN은 '같은 테이블을 두 번 참조'하는 거예요. 사원 테이블에서 '이 사원의 상사 이름'을 찾을 때, 사원 테이블에 자기 자신을 다시 붙입니다.",
+      "steps": [
+        "SELF JOIN = 한 테이블에 별칭 2개 부여",
+        "예: SELECT e.name 사원, m.name 상사 FROM emp e JOIN emp m ON e.mgr=m.empno",
+        "B 선택"
+      ],
+      "practical": "조직 계층, 이전 행과의 비교(누적합·증감), 친구 관계 등.",
+      "pitfall": "반드시 다른 별칭 부여 필수(e, m). 안 그러면 어느 쪽 컬럼인지 구분 불가."
+    }
+  },
+  {
+    "id": "sqld_s2_057",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "OUTER JOIN",
+      "WHERE",
+      "조건위치"
+    ],
+    "difficulty": "상",
+    "question": "다음 두 쿼리의 결과가 다른 이유로 가장 적절한 것은?\n\n①  FROM A LEFT OUTER JOIN B ON A.id=B.id AND B.flag='Y'\n②  FROM A LEFT OUTER JOIN B ON A.id=B.id WHERE B.flag='Y'",
+    "options": {
+      "A": "①은 INNER JOIN처럼, ②는 LEFT OUTER JOIN처럼 동작한다.",
+      "B": "②는 LEFT JOIN의 NULL 행이 WHERE에서 걸러져 결과가 INNER JOIN과 같아진다.",
+      "C": "두 쿼리는 항상 같은 결과를 낸다.",
+      "D": "①은 오류가 발생하고 ②만 정상 수행된다."
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "조인절(ON)의 조건은 '조인할 때 적용', WHERE의 조건은 '조인 결과에 적용'이에요. ②처럼 WHERE에 OUTER 테이블 조건을 두면 NULL 행이 모두 빠져서 INNER가 되어버립니다.",
+      "steps": [
+        "①: ON에 조건 → 매칭 안 되면 NULL로 유지 (LEFT OUTER 유지)",
+        "②: WHERE에 조건 → B.flag='Y'가 NULL이면 FALSE → 행 제거 (INNER화)",
+        "B 선택"
+      ],
+      "practical": "OUTER JOIN의 우측 필터링은 반드시 ON절에 둬야 OUTER 특성이 유지됨.",
+      "pitfall": "이 패턴은 실무에서 가장 자주 나오는 OUTER JOIN 함정. 시험에도 단골 출제."
+    }
+  },
+  {
+    "id": "sqld_s2_058",
+    "subject": "S2",
+    "topic": "조인",
+    "tags": [
+      "ANTI JOIN",
+      "NOT EXISTS",
+      "NOT IN"
+    ],
+    "difficulty": "상",
+    "question": "Anti Join을 구현하기에 가장 적절한 SQL은?",
+    "options": {
+      "A": "SELECT * FROM A WHERE EXISTS (SELECT 1 FROM B WHERE B.id=A.id)",
+      "B": "SELECT * FROM A WHERE NOT EXISTS (SELECT 1 FROM B WHERE B.id=A.id)",
+      "C": "SELECT * FROM A INNER JOIN B ON A.id=B.id",
+      "D": "SELECT * FROM A CROSS JOIN B"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "Anti Join = 'B에 없는 A만 뽑기'예요. NOT EXISTS가 가장 표준적·안전한 구현입니다. NULL 처리도 자연스럽고 옵티마이저가 인덱스를 잘 씁니다.",
+      "steps": [
+        "Anti Join: A에 있지만 B에 매칭 없는 행",
+        "B의 NOT EXISTS가 정확한 구현",
+        "B 선택"
+      ],
+      "practical": "구매 안 한 회원, 발주 안 된 품목, 미회신 메일 등 '없는 것 찾기'에 모두 활용.",
+      "pitfall": "NOT IN은 서브쿼리에 NULL이 섞이면 전체가 FALSE가 되어 결과가 0건 — NOT EXISTS가 안전."
+    }
+  },
+  {
+    "id": "sqld_s2_059",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "단일행서브쿼리"
+    ],
+    "difficulty": "중",
+    "question": "다음 중 단일행 서브쿼리에서 사용할 수 없는 연산자는?",
+    "options": {
+      "A": "=",
+      "B": "<>",
+      "C": ">",
+      "D": "IN"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "단일행 서브쿼리는 한 값만 돌려주니 등호·부등호로 비교해요. IN은 '여러 값 중 하나'를 비교하는 거니까 다중행 서브쿼리에 어울립니다.",
+      "steps": [
+        "단일행 연산자: =, <>, >, <, >=, <=",
+        "다중행 연산자: IN, NOT IN, ANY, ALL, EXISTS",
+        "D 선택"
+      ],
+      "practical": "최고 급여자 = SELECT * FROM emp WHERE sal = (SELECT MAX(sal) FROM emp). MAX가 1행이므로 =.",
+      "pitfall": "단일행 서브쿼리가 우연히 2행 반환하면 ORA-01427 에러. MAX/MIN 등으로 1행 보장 필수."
+    }
+  },
+  {
+    "id": "sqld_s2_060",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "다중행서브쿼리",
+      "IN",
+      "ANY",
+      "ALL"
+    ],
+    "difficulty": "상",
+    "question": "다음 쿼리와 동일한 의미인 것은?\n\nSELECT * FROM emp WHERE sal > ANY (SELECT sal FROM emp WHERE dept='IT');",
+    "options": {
+      "A": "sal > IT부서의 모든 사원 급여",
+      "B": "sal > IT부서의 최대 급여",
+      "C": "sal > IT부서의 최소 급여",
+      "D": "sal > IT부서의 평균 급여"
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "ANY는 '아무거나 하나만 만족하면 OK'예요. > ANY(...)는 '서브쿼리 값 중 가장 작은 것보다만 크면 됨' = MIN보다 크면 됨.",
+      "steps": [
+        "> ANY → MIN 비교와 동일",
+        "> ALL → MAX 비교와 동일",
+        "< ANY → MAX보다 작으면 됨, < ALL → MIN보다 작으면 됨",
+        "C 선택"
+      ],
+      "practical": "IT부서 최저급여보다 많이 받는 사원 찾기.",
+      "pitfall": "ANY/ALL은 헷갈리니 MIN/MAX로 환산해서 이해하는 것이 시험 정답률↑."
+    }
+  },
+  {
+    "id": "sqld_s2_061",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "상관서브쿼리"
+    ],
+    "difficulty": "상",
+    "question": "상관 서브쿼리(Correlated Subquery)에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "외부 쿼리의 컬럼을 서브쿼리에서 참조한다.",
+      "B": "외부 쿼리의 각 행마다 서브쿼리가 반복 수행된다.",
+      "C": "독립 실행이 가능하여 단독으로도 결과를 얻을 수 있다.",
+      "D": "EXISTS와 함께 자주 사용된다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "상관 서브쿼리는 바깥 쿼리 값에 '의존'해서 돌아가요. 그래서 서브쿼리만 따로 떼서 실행하면 '외부 컬럼 모름' 에러가 납니다.",
+      "steps": [
+        "상관 = 외부 컬럼 참조 = 단독 실행 불가",
+        "C: '단독 실행 가능' → 거짓",
+        "→ C 옳지 않음"
+      ],
+      "practical": "각 부서 평균보다 많이 받는 사원 찾기: WHERE sal > (SELECT AVG(sal) FROM emp e2 WHERE e2.dept=e.dept).",
+      "pitfall": "상관 서브쿼리는 행마다 반복 → 성능 주의. 옵티마이저가 JOIN으로 변환할 수도 있음."
+    }
+  },
+  {
+    "id": "sqld_s2_062",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "EXISTS",
+      "NOT EXISTS"
+    ],
+    "difficulty": "중",
+    "question": "EXISTS 연산자에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "서브쿼리의 모든 컬럼을 외부에 반환한다.",
+      "B": "서브쿼리가 1행이라도 반환하면 TRUE, 아니면 FALSE이다.",
+      "C": "EXISTS와 IN은 항상 동일한 성능을 보인다.",
+      "D": "EXISTS의 서브쿼리는 SELECT * 만 허용된다."
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "EXISTS는 '있는지 없는지'만 봐요. 무엇이 있는지(컬럼 값)는 안 봅니다. 1행이라도 발견되는 순간 TRUE 반환하고 멈춥니다.",
+      "steps": [
+        "EXISTS = 존재 여부 검사 (행 수 무관, 1행 발견시 단락평가)",
+        "B 선택"
+      ],
+      "practical": "주문이 1건이라도 있는 회원만 조회: WHERE EXISTS (SELECT 1 FROM orders WHERE customer_id=c.id).",
+      "pitfall": "EXISTS의 SELECT 절은 의미 없음 — SELECT 1, SELECT *, SELECT NULL 모두 같음. 가독성을 위해 1을 권장."
+    }
+  },
+  {
+    "id": "sqld_s2_063",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "스칼라서브쿼리"
+    ],
+    "difficulty": "중",
+    "question": "스칼라 서브쿼리(Scalar Subquery)에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "SELECT 절에 위치할 수 있다.",
+      "B": "반드시 1행 1컬럼을 반환해야 한다.",
+      "C": "여러 행을 반환하면 NULL로 처리된다.",
+      "D": "결과가 없으면 NULL을 반환한다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "스칼라 서브쿼리는 '딱 1개 값'을 돌려줘야 해요. 0개면 NULL이지만, 2개 이상 돌아오면 에러가 납니다.",
+      "steps": [
+        "스칼라 서브쿼리: 1행 1컬럼 필수",
+        "0행 → NULL, 다행 → ORA-01427 에러",
+        "C: '다행이면 NULL' → 거짓(에러)",
+        "→ C 옳지 않음"
+      ],
+      "practical": "SELECT name, (SELECT dname FROM dept WHERE deptno=e.deptno) FROM emp e — 사원마다 부서명 1개씩.",
+      "pitfall": "JOIN으로 풀 수 있다면 JOIN이 더 빠른 경우가 많음. 스칼라 서브쿼리는 캐싱되지만 행마다 호출되는 경우 비용↑."
+    }
+  },
+  {
+    "id": "sqld_s2_064",
+    "subject": "S2",
+    "topic": "서브쿼리",
+    "tags": [
+      "인라인뷰",
+      "FROM절서브쿼리"
+    ],
+    "difficulty": "중",
+    "question": "인라인 뷰(Inline View)에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "FROM 절에 들어가는 서브쿼리이다.",
+      "B": "데이터 사전(Dictionary)에 저장된다.",
+      "C": "SELECT 절에만 사용 가능하다.",
+      "D": "1행만 반환해야 한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "인라인 뷰 = '임시로 만든 가상 테이블'을 FROM에 두는 거예요. CREATE VIEW로 등록되는 게 아니라 그 쿼리 안에서만 살아 있는 1회용 뷰.",
+      "steps": [
+        "인라인 뷰: FROM 절 서브쿼리, 일회성",
+        "A 선택"
+      ],
+      "practical": "SELECT * FROM (SELECT dept, AVG(sal) avgsal FROM emp GROUP BY dept) v WHERE v.avgsal > 5000.",
+      "pitfall": "인라인 뷰는 별칭 필수(Oracle). 컬럼명에 함수 표현식이 있으면 별칭으로만 외부에서 참조 가능."
+    }
+  },
+  {
+    "id": "sqld_s2_065",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "ROW_NUMBER"
+    ],
+    "difficulty": "상",
+    "question": "ROW_NUMBER() OVER (ORDER BY sal DESC) 함수가 반환하는 값은?",
+    "options": {
+      "A": "급여 내림차순 기준 고유한 순번 (1,2,3,4,...)",
+      "B": "동일 급여에는 같은 순위를 부여 (1,2,2,4,...)",
+      "C": "동일 급여에는 같은 순위, 다음은 연속 (1,2,2,3,...)",
+      "D": "급여를 N개 구간으로 나눈 그룹 번호"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "ROW_NUMBER는 '무조건 1,2,3,4,...'예요. 동점이 있어도 임의로 한쪽에 먼저 번호를 줍니다. 동률 처리가 필요하면 RANK를 써야 해요.",
+      "steps": [
+        "ROW_NUMBER: 무조건 연속 고유번호 (1,2,3,4)",
+        "RANK: 동률 같은 순위 + 점프 (1,2,2,4)",
+        "DENSE_RANK: 동률 같은 순위 + 연속 (1,2,2,3)",
+        "NTILE(N): N개 그룹으로 분할",
+        "A 선택"
+      ],
+      "practical": "각 부서별 1등만 뽑기: WHERE rn=1 (ROW_NUMBER PARTITION BY dept ORDER BY sal DESC).",
+      "pitfall": "동점 처리 의도가 있다면 ROW_NUMBER 대신 RANK/DENSE_RANK를 사용해야 함."
+    }
+  },
+  {
+    "id": "sqld_s2_066",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "RANK",
+      "DENSE_RANK"
+    ],
+    "difficulty": "상",
+    "question": "급여 (1000, 1000, 800, 600)에 대해 RANK()와 DENSE_RANK()의 결과를 차례로 나열한 것은?",
+    "options": {
+      "A": "RANK=(1,1,2,3), DENSE_RANK=(1,1,3,4)",
+      "B": "RANK=(1,1,3,4), DENSE_RANK=(1,1,2,3)",
+      "C": "RANK=(1,2,3,4), DENSE_RANK=(1,2,3,4)",
+      "D": "RANK=(1,1,2,2), DENSE_RANK=(1,1,2,2)"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "RANK는 동률 후 '점프'(1,1,3,4 — 2위는 건너뜀), DENSE_RANK는 '연속'(1,1,2,3)이에요. 둘 다 동률은 같은 순위, 다른 점은 다음 순위가 점프인가 연속인가입니다.",
+      "steps": [
+        "1000=1위, 1000=1위 동률 → RANK는 다음을 3위로 점프, DENSE_RANK는 2위 연속",
+        "RANK: 1,1,3,4 / DENSE_RANK: 1,1,2,3",
+        "B 선택"
+      ],
+      "practical": "올림픽 메달 = RANK(공동2위 다음은 4위). 학년 등수 = 학교 정책에 따라 다름.",
+      "pitfall": "RANK는 동률만큼 점프, DENSE_RANK는 점프 없음. 시험에 자주 출제."
+    }
+  },
+  {
+    "id": "sqld_s2_067",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "LAG",
+      "LEAD"
+    ],
+    "difficulty": "상",
+    "question": "LAG(sal, 1, 0) OVER (ORDER BY hiredate)의 의미로 옳은 것은?",
+    "options": {
+      "A": "다음 행의 sal, 없으면 0",
+      "B": "이전 행의 sal, 없으면 0",
+      "C": "현재 행의 1번째 sal",
+      "D": "전체 평균 sal"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "LAG는 '한 발 뒤'(이전 행), LEAD는 '한 발 앞'(다음 행)이에요. LAG(컬럼, N, 기본값) — N 행 이전 값, 없으면 기본값.",
+      "steps": [
+        "LAG = 이전 행, LEAD = 다음 행",
+        "LAG(sal, 1, 0): 1행 이전 sal, 없으면 0",
+        "B 선택"
+      ],
+      "practical": "전월 대비 증감: sal - LAG(sal,1,0) OVER (ORDER BY month).",
+      "pitfall": "ORDER BY 없으면 의미 없음. PARTITION BY를 함께 쓰면 그룹별 이전 행."
+    }
+  },
+  {
+    "id": "sqld_s2_068",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "NTILE"
+    ],
+    "difficulty": "상",
+    "question": "NTILE(4) OVER (ORDER BY sal DESC) 함수가 반환하는 결과는?",
+    "options": {
+      "A": "급여 상위 4명만 추출",
+      "B": "급여 내림차순으로 4분위 그룹 번호(1~4) 부여",
+      "C": "급여 합계의 1/4",
+      "D": "급여 4의 배수만 추출"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "NTILE(N)은 '데이터를 N등분해서 그룹 번호 부여'예요. NTILE(4)면 상위 25%는 1, 다음 25%는 2, ... 이런 식.",
+      "steps": [
+        "NTILE(N): 결과를 N개 묶음으로 분할",
+        "각 행에 1~N 그룹 번호 할당",
+        "B 선택"
+      ],
+      "practical": "성적 사분위 등급, 매출 상하위 분류, 고객 RFM 등급 등.",
+      "pitfall": "전체 행이 N으로 나누어 떨어지지 않으면 앞 그룹이 1행씩 더 가짐."
+    }
+  },
+  {
+    "id": "sqld_s2_069",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "PARTITION BY"
+    ],
+    "difficulty": "상",
+    "question": "PARTITION BY 절에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "윈도우 함수를 그룹별로 적용한다 (GROUP BY와 유사하나 행 수는 유지).",
+      "B": "결과 행 수를 그룹별로 1행씩 축소한다.",
+      "C": "테이블을 물리적으로 파티션 분할한다.",
+      "D": "PRIMARY KEY를 그룹별로 재설정한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "PARTITION BY = '그룹별 윈도우'예요. GROUP BY처럼 묶지만 행 수는 유지하면서, 그 그룹 내에서 RANK/SUM 등을 계산합니다.",
+      "steps": [
+        "PARTITION BY: 윈도우를 그룹으로 쪼개기",
+        "행 수는 그대로 유지 (GROUP BY와 다름)",
+        "A 선택"
+      ],
+      "practical": "부서별 1등 사원 찾기: RANK() OVER (PARTITION BY dept ORDER BY sal DESC).",
+      "pitfall": "물리 파티션(테이블 파티셔닝)과 헷갈리지 말 것. PARTITION BY는 SQL 윈도우 정의일 뿐."
+    }
+  },
+  {
+    "id": "sqld_s2_070",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "ROWS BETWEEN",
+      "윈도우프레임"
+    ],
+    "difficulty": "상",
+    "question": "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW의 의미는?",
+    "options": {
+      "A": "현재 행만 처리",
+      "B": "현재 행부터 끝까지 처리",
+      "C": "맨 처음부터 현재 행까지의 누적 처리",
+      "D": "맨 처음부터 맨 끝까지 전체 처리"
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "UNBOUNDED PRECEDING = 처음부터, CURRENT ROW = 현재 행까지. 즉 '누적' 윈도우입니다. 누적 합계·평균 계산에 쓰여요.",
+      "steps": [
+        "UNBOUNDED PRECEDING = 시작점부터",
+        "CURRENT ROW = 현재 행까지",
+        "= 누적 범위",
+        "C 선택"
+      ],
+      "practical": "누적 매출: SUM(amt) OVER (ORDER BY dt ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW).",
+      "pitfall": "ROWS는 행 단위, RANGE는 값 단위. 동률 처리에 차이 발생. ORDER BY가 있어야 의미 있음."
+    }
+  },
+  {
+    "id": "sqld_s2_071",
+    "subject": "S2",
+    "topic": "윈도우함수",
+    "tags": [
+      "FIRST_VALUE",
+      "LAST_VALUE"
+    ],
+    "difficulty": "상",
+    "question": "FIRST_VALUE / LAST_VALUE 함수에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "윈도우 내 첫 번째/마지막 행의 값을 반환한다.",
+      "B": "기본 윈도우 프레임은 RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW이다.",
+      "C": "LAST_VALUE는 명시적 프레임 없이도 윈도우의 진짜 마지막 값을 반환한다.",
+      "D": "PARTITION BY와 함께 그룹별 첫/마지막을 구할 수 있다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "LAST_VALUE의 함정! 기본 프레임이 '처음부터 현재까지'라, 명시적 프레임을 안 주면 '마지막 = 현재 행'이 됩니다. 진짜 끝까지 보려면 ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING을 명시해야 해요.",
+      "steps": [
+        "LAST_VALUE 기본 프레임 → 현재 행까지 → '현재 행' 반환 (의도와 다름)",
+        "C: '명시 없이도 진짜 마지막' → 거짓",
+        "→ C 옳지 않음"
+      ],
+      "practical": "그룹별 최신값 추출 시 LAST_VALUE 대신 FIRST_VALUE(... ORDER BY dt DESC) 활용이 안전.",
+      "pitfall": "이 함정은 SQLD 단골 출제. 'LAST_VALUE는 프레임 명시 필수'로 외우기."
+    }
+  },
+  {
+    "id": "sqld_s2_072",
+    "subject": "S2",
+    "topic": "그룹함수",
+    "tags": [
+      "ROLLUP"
+    ],
+    "difficulty": "상",
+    "question": "GROUP BY ROLLUP(A, B)가 생성하는 집계 수준은?",
+    "options": {
+      "A": "(A,B), (A), () — 3가지",
+      "B": "(A,B), (B), () — 3가지",
+      "C": "(A,B), (A), (B), () — 4가지",
+      "D": "(A,B)만 — 1가지"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "ROLLUP은 '계층적 소계'예요. 왼쪽부터 차례로 줄여나가며 합계를 만듭니다. (A,B) → (A) → (전체). N개 컬럼이면 N+1개 집계.",
+      "steps": [
+        "ROLLUP(A,B) → (A,B), (A), () — 3개",
+        "ROLLUP은 좌측 우선 누적",
+        "A 선택"
+      ],
+      "practical": "년/월 매출에 소계+총계: GROUP BY ROLLUP(year, month).",
+      "pitfall": "CUBE는 모든 조합, ROLLUP은 좌측 누적. 헷갈리지 말 것."
+    }
+  },
+  {
+    "id": "sqld_s2_073",
+    "subject": "S2",
+    "topic": "그룹함수",
+    "tags": [
+      "CUBE"
+    ],
+    "difficulty": "상",
+    "question": "GROUP BY CUBE(A, B)가 생성하는 집계 수준의 개수는?",
+    "options": {
+      "A": "2개",
+      "B": "3개",
+      "C": "4개",
+      "D": "8개"
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "CUBE는 '모든 조합'이에요. 2개 컬럼이면 2² = 4개: (A,B), (A), (B), (). 3개면 2³=8개. 다차원 분석에 유용.",
+      "steps": [
+        "CUBE(A,B) → (A,B), (A), (B), () — 4개",
+        "조합 수 = 2^N",
+        "C 선택"
+      ],
+      "practical": "지역×상품×기간 다차원 매출 리포트.",
+      "pitfall": "CUBE는 데이터량이 폭증할 수 있음. 컬럼 4개 이상이면 GROUPING SETS로 필요한 조합만."
+    }
+  },
+  {
+    "id": "sqld_s2_074",
+    "subject": "S2",
+    "topic": "그룹함수",
+    "tags": [
+      "GROUPING SETS"
+    ],
+    "difficulty": "상",
+    "question": "GROUPING SETS((A,B), (A), ())의 결과는 어느 것과 동일한가?",
+    "options": {
+      "A": "ROLLUP(A, B)",
+      "B": "CUBE(A, B)",
+      "C": "GROUP BY A, B",
+      "D": "GROUP BY () "
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "GROUPING SETS은 '내가 원하는 집계만 골라서'예요. ((A,B),(A),())는 정확히 ROLLUP(A,B)와 같습니다.",
+      "steps": [
+        "ROLLUP(A,B) = GROUPING SETS((A,B),(A),())",
+        "CUBE(A,B) = GROUPING SETS((A,B),(A),(B),())",
+        "A 선택"
+      ],
+      "practical": "필요한 집계 수준만 선택적으로 — 불필요한 계산 절약.",
+      "pitfall": "GROUPING() 함수로 집계 수준 식별 가능 — 소계행은 1, 일반행은 0."
+    }
+  },
+  {
+    "id": "sqld_s2_075",
+    "subject": "S2",
+    "topic": "함수",
+    "tags": [
+      "NVL",
+      "COALESCE",
+      "NULL처리"
+    ],
+    "difficulty": "중",
+    "question": "NVL과 COALESCE의 차이에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "NVL은 인자 2개, COALESCE는 다중 인자 지원.",
+      "B": "NVL은 ANSI 표준, COALESCE는 Oracle 전용.",
+      "C": "두 함수는 완전히 동일하며 차이 없다.",
+      "D": "COALESCE는 NULL을 0으로만 변환한다."
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "NVL(a,b) = a가 NULL이면 b. 딱 2개 인자. COALESCE(a,b,c,...)는 'NULL 아닌 첫 값'을 돌려줍니다. 인자가 여러 개 가능.",
+      "steps": [
+        "NVL: 2개 인자, Oracle 전용",
+        "COALESCE: 다중 인자, ANSI 표준",
+        "A 선택"
+      ],
+      "practical": "전화번호 후보: COALESCE(mobile, home, office, '연락처없음').",
+      "pitfall": "NVL2(a, b, c)는 다른 함수 — a가 NOT NULL이면 b, NULL이면 c. 헷갈리지 말 것."
+    }
+  },
+  {
+    "id": "sqld_s2_076",
+    "subject": "S2",
+    "topic": "함수",
+    "tags": [
+      "DECODE",
+      "CASE"
+    ],
+    "difficulty": "중",
+    "question": "DECODE와 CASE의 비교 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "DECODE는 Oracle 전용, CASE는 ANSI 표준.",
+      "B": "DECODE는 동등 비교(=)만 지원, CASE는 범위 비교(>,<)도 가능.",
+      "C": "두 함수 모두 NULL 처리에 IS NULL 사용이 필수이다.",
+      "D": "CASE는 WHEN ... THEN 구문을 사용한다."
+    },
+    "answer": "C",
+    "explanation_detail": {
+      "simple": "DECODE는 NULL을 특별 처리해서 IS NULL 안 써도 NULL=NULL을 TRUE로 봐줍니다. CASE는 일반 SQL 규칙대로 NULL은 IS NULL 필요.",
+      "steps": [
+        "DECODE는 NULL=NULL을 TRUE로 매칭 (특수 동작)",
+        "CASE는 NULL 비교에 IS NULL 필요",
+        "C: '두 함수 모두 IS NULL 필수' → 거짓",
+        "→ C 옳지 않음"
+      ],
+      "practical": "CASE: CASE WHEN x IS NULL THEN 'N/A' ELSE x END. DECODE: DECODE(x, NULL, 'N/A', x).",
+      "pitfall": "Oracle 외 DB에서는 DECODE 없음 → 호환성 위해 CASE 권장."
+    }
+  },
+  {
+    "id": "sqld_s2_077",
+    "subject": "S2",
+    "topic": "함수",
+    "tags": [
+      "TO_CHAR",
+      "TO_DATE",
+      "포맷"
+    ],
+    "difficulty": "중",
+    "question": "TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')의 의미로 옳은 것은?",
+    "options": {
+      "A": "현재 시각을 12시간제로 표시",
+      "B": "현재 시각을 24시간제, 분(MI)·초(SS)로 표시",
+      "C": "현재 시각을 '월(Month)' 단위까지만 표시",
+      "D": "현재 시각을 연도(YYYY)만 표시"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "HH24는 24시간제, MI는 분(Minute), SS는 초(Second)예요. 'MI'를 'MM'(월)으로 잘못 쓰는 실수가 흔하니 주의.",
+      "steps": [
+        "포맷 키워드: YYYY연도, MM월, DD일, HH24 24시간, MI분, SS초",
+        "B 선택"
+      ],
+      "practical": "TO_CHAR(SYSDATE, 'YYYY-MM-DD') = 오늘 날짜, TO_DATE('2026-05-12','YYYY-MM-DD') = 문자→날짜.",
+      "pitfall": "분은 MI(Minute), 월은 MM. MI와 MM 혼동 = 시험 단골 함정."
+    }
+  },
+  {
+    "id": "sqld_s2_078",
+    "subject": "S2",
+    "topic": "함수",
+    "tags": [
+      "집계함수",
+      "NULL",
+      "COUNT"
+    ],
+    "difficulty": "중",
+    "question": "다음 중 NULL 행도 카운트에 포함되는 것은?",
+    "options": {
+      "A": "COUNT(*)",
+      "B": "COUNT(컬럼명)",
+      "C": "COUNT(DISTINCT 컬럼명)",
+      "D": "SUM(컬럼명)"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "COUNT(*)는 '행 수 전체'를 세요. NULL이든 아니든 무조건 포함. COUNT(컬럼)은 NULL을 빼고 셉니다.",
+      "steps": [
+        "COUNT(*): 전체 행 수, NULL 포함",
+        "COUNT(컬럼): NULL 제외",
+        "SUM/AVG: NULL 제외",
+        "A 선택"
+      ],
+      "practical": "응답률 = COUNT(answer) / COUNT(*) — 응답 NULL 제외 / 전체.",
+      "pitfall": "AVG는 NULL 제외 후 평균 → 전체 평균보다 큰 값이 나올 수 있음. AVG(NVL(x,0))과 결과 다름."
+    }
+  },
+  {
+    "id": "sqld_s2_079",
+    "subject": "S2",
+    "topic": "계층질의",
+    "tags": [
+      "CONNECT BY PRIOR",
+      "topdown"
+    ],
+    "difficulty": "상",
+    "question": "다음 쿼리의 결과는?\n\nSELECT empno, mgr, LEVEL FROM emp\nSTART WITH mgr IS NULL\nCONNECT BY PRIOR empno = mgr;",
+    "options": {
+      "A": "최하위 사원부터 상사 방향(bottom-up)으로 전개",
+      "B": "최상위(사장)부터 부하 방향(top-down)으로 전개",
+      "C": "전 사원을 평면적으로 출력",
+      "D": "오류 — START WITH가 빠짐"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "PRIOR empno = mgr → '이전 행의 empno가 다음 행의 mgr'. 즉, 위에서 아래로(상사→부하) 내려갑니다. START WITH mgr IS NULL = 최상위(사장)부터.",
+      "steps": [
+        "START WITH mgr IS NULL → 사장",
+        "CONNECT BY PRIOR empno = mgr → 위→아래 (top-down)",
+        "B 선택"
+      ],
+      "practical": "조직도 출력, 카테고리 트리, 게시판 댓글 계층 등.",
+      "pitfall": "PRIOR의 위치가 바뀌면 방향 반전: PRIOR mgr = empno이면 bottom-up."
+    }
+  },
+  {
+    "id": "sqld_s2_080",
+    "subject": "S2",
+    "topic": "계층질의",
+    "tags": [
+      "SYS_CONNECT_BY_PATH"
+    ],
+    "difficulty": "상",
+    "question": "SYS_CONNECT_BY_PATH(name, '/') 의 결과는?",
+    "options": {
+      "A": "현재 행의 이름만 출력",
+      "B": "최상위부터 현재까지의 경로를 '/'로 연결한 문자열",
+      "C": "다음 행의 이름을 출력",
+      "D": "이름의 길이를 반환"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "SYS_CONNECT_BY_PATH는 '계층 경로 표시'예요. 루트부터 현재 노드까지의 경로를 구분자로 이어 붙입니다. 마치 파일 경로 '/usr/local/bin'처럼요.",
+      "steps": [
+        "계층 경로 출력 함수",
+        "예: '사장/부장/과장/사원'",
+        "B 선택"
+      ],
+      "practical": "카테고리 풀패스, 조직 풀패스 출력.",
+      "pitfall": "구분자가 이미 데이터에 있으면 파싱 시 문제. 경로 깊이가 깊으면 VARCHAR2 길이 초과 가능."
+    }
+  },
+  {
+    "id": "sqld_s2_081",
+    "subject": "S2",
+    "topic": "계층질의",
+    "tags": [
+      "LEVEL",
+      "LPAD",
+      "들여쓰기"
+    ],
+    "difficulty": "상",
+    "question": "계층 쿼리에서 LEVEL과 LPAD를 함께 사용하는 이유로 가장 적절한 것은?",
+    "options": {
+      "A": "쿼리 성능을 향상시키기 위해",
+      "B": "계층 깊이에 따라 들여쓰기 효과를 주기 위해",
+      "C": "정렬 순서를 변경하기 위해",
+      "D": "NULL을 0으로 변환하기 위해"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "LEVEL은 계층 깊이(1,2,3,...). LPAD(name, LEVEL*4)로 '깊이만큼 공백 채우기' → 화면에 계층 들여쓰기 효과.",
+      "steps": [
+        "LEVEL: 현재 행의 계층 깊이",
+        "LPAD(' ', LEVEL*2) || name → 들여쓰기",
+        "B 선택"
+      ],
+      "practical": "조직도/카테고리 트리를 텍스트로 출력할 때 표준 패턴.",
+      "pitfall": "들여쓰기 출력은 WHERE 절 필터링과 무관 — 필터링은 START WITH/CONNECT BY 단계에서 일어남."
+    }
+  },
+  {
+    "id": "sqld_s2_082",
+    "subject": "S2",
+    "topic": "DML",
+    "tags": [
+      "MERGE",
+      "UPSERT"
+    ],
+    "difficulty": "상",
+    "question": "MERGE 문에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "조건에 따라 INSERT와 UPDATE를 한 번에 처리한다.",
+      "B": "USING절에 원본 데이터를, ON절에 매칭 조건을 명시한다.",
+      "C": "WHEN MATCHED THEN UPDATE, WHEN NOT MATCHED THEN INSERT 구조이다.",
+      "D": "MERGE는 DELETE를 처리할 수 없다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "MERGE는 INSERT/UPDATE/DELETE를 한 번에 가능해요. WHEN MATCHED THEN UPDATE ... DELETE WHERE 조건도 지원합니다.",
+      "steps": [
+        "MERGE = UPSERT + DELETE 가능",
+        "D: 'DELETE 불가' → 거짓",
+        "→ D 옳지 않음"
+      ],
+      "practical": "주간 동기화 배치: 신규는 INSERT, 변경은 UPDATE, 삭제 표시된 건 DELETE — MERGE 한 방.",
+      "pitfall": "MERGE의 ON 조건은 UPDATE할 수 없음 (자기참조 금지). 동일 행을 두 번 매칭하면 ORA-30926 에러."
+    }
+  },
+  {
+    "id": "sqld_s2_083",
+    "subject": "S2",
+    "topic": "DDL",
+    "tags": [
+      "TRUNCATE",
+      "DELETE",
+      "차이"
+    ],
+    "difficulty": "중",
+    "question": "TRUNCATE와 DELETE의 차이에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "TRUNCATE는 DDL, DELETE는 DML이다.",
+      "B": "TRUNCATE는 ROLLBACK이 불가능하다(Auto Commit).",
+      "C": "DELETE는 WHERE 조건으로 일부만 삭제할 수 있다.",
+      "D": "TRUNCATE는 트리거를 실행한다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "TRUNCATE는 DDL이라 트리거를 발동시키지 않아요. DELETE는 행 단위로 트리거 실행. TRUNCATE는 빠르지만 그만큼 옵션이 제한적입니다.",
+      "steps": [
+        "TRUNCATE: DDL · Auto Commit · 트리거 X · 빠름",
+        "DELETE: DML · 트랜잭션 · 트리거 O · 느림",
+        "D: 'TRUNCATE가 트리거 실행' → 거짓",
+        "→ D 옳지 않음"
+      ],
+      "practical": "테스트 데이터 일괄 초기화는 TRUNCATE, 운영 중 일부 삭제는 DELETE.",
+      "pitfall": "TRUNCATE는 ROLLBACK 불가 — 운영DB에선 권한 분리, 백업 필수."
+    }
+  },
+  {
+    "id": "sqld_s2_084",
+    "subject": "S2",
+    "topic": "DDL",
+    "tags": [
+      "제약조건",
+      "UNIQUE",
+      "CHECK",
+      "NOT NULL"
+    ],
+    "difficulty": "중",
+    "question": "제약조건(Constraint)에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "PRIMARY KEY는 NOT NULL + UNIQUE를 자동으로 강제한다.",
+      "B": "UNIQUE 제약은 NULL을 여러 개 허용한다 (Oracle 기준).",
+      "C": "CHECK 제약은 컬럼 값의 범위·조건을 검사한다.",
+      "D": "FOREIGN KEY는 NULL 값을 허용하지 않는다."
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "FK는 NULL이 허용돼요. '아직 결정 안 됨'을 표현할 수 있도록. 단, 값이 있다면 부모 PK 값과 일치해야 합니다.",
+      "steps": [
+        "FK 규칙: NULL 허용 (선택), 값이 있으면 부모 PK 일치 필수",
+        "D: 'NULL 불허' → 거짓",
+        "→ D 옳지 않음"
+      ],
+      "practical": "주문에 '담당자 FK' 컬럼 — 아직 배정 전이면 NULL. 배정 후엔 사원 PK 일치.",
+      "pitfall": "FK도 NOT NULL을 명시적으로 추가 가능 — 필수 관계 강제. SQLD 시험에 자주 출제."
+    }
+  },
+  {
+    "id": "sqld_s2_085",
+    "subject": "S2",
+    "topic": "TCL",
+    "tags": [
+      "SAVEPOINT",
+      "ROLLBACK"
+    ],
+    "difficulty": "중",
+    "question": "SAVEPOINT를 사용한 다음 트랜잭션의 최종 결과는?\n\nINSERT INTO t VALUES (1);\nSAVEPOINT sp1;\nINSERT INTO t VALUES (2);\nSAVEPOINT sp2;\nINSERT INTO t VALUES (3);\nROLLBACK TO sp2;\nCOMMIT;",
+    "options": {
+      "A": "t에 1, 2, 3 모두 저장",
+      "B": "t에 1, 2 저장",
+      "C": "t에 1만 저장",
+      "D": "t에 아무것도 저장 안 됨"
+    },
+    "answer": "B",
+    "explanation_detail": {
+      "simple": "ROLLBACK TO sp2는 'sp2 시점으로 되돌아가기' = sp2 이후의 INSERT(3)만 취소. 1과 2는 살아 있고, COMMIT으로 확정됩니다.",
+      "steps": [
+        "1 INSERT 후 sp1",
+        "2 INSERT 후 sp2",
+        "3 INSERT 후 ROLLBACK TO sp2 → 3 취소",
+        "COMMIT → 1, 2 확정",
+        "B 선택"
+      ],
+      "practical": "복잡한 배치에서 단계별 SAVEPOINT — 일부만 롤백하고 나머지 진행 가능.",
+      "pitfall": "ROLLBACK(단독)은 전체 취소, ROLLBACK TO sp는 부분 취소. 큰 차이."
     }
   }
 ]
