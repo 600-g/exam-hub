@@ -393,4 +393,36 @@
   };
 
   global.ExamHub = ExamHub;
+
+  // ⚙️ 인라인 onclick에서 호출되는 글로벌 함수 — 모달 실패 시 prompt fallback
+  global.openExamSettings = function () {
+    try {
+      if (!global.ExamHub || typeof global.ExamHub.openSettings !== 'function') {
+        throw new Error('ExamHub.openSettings 미로딩');
+      }
+      global.ExamHub.openSettings();
+    } catch (e) {
+      console.error('settings modal error:', e);
+      // Fallback: prompt 기반 단순 입력
+      const current = localStorage.getItem('exam_ai_gen_key') || '';
+      const masked = current ? current.slice(0, 7) + '...' + current.slice(-4) : '(없음)';
+      const v = prompt(
+        '⚙️ Gemini API 키 설정\n\n' +
+          '발급: https://aistudio.google.com/app/apikey\n\n' +
+          '현재 저장된 키: ' + masked + '\n' +
+          '(빈 값으로 두면 삭제 / 취소는 변경 없음)\n\n' +
+          '※ 모달 모드 오류로 단순 입력창으로 대체됨: ' + e.message,
+        current
+      );
+      if (v === null) return;
+      const trimmed = v.trim();
+      if (trimmed) {
+        localStorage.setItem('exam_ai_gen_key', trimmed);
+        alert('✅ API 키 저장됨');
+      } else {
+        localStorage.removeItem('exam_ai_gen_key');
+        alert('🗑 API 키 삭제됨');
+      }
+    }
+  };
 })(window);

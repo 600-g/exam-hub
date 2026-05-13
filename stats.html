@@ -12,6 +12,7 @@
     <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
     <h1 id="exam-title">약점 분석</h1>
     <div class="spacer"></div>
+    <button class="btn ghost" title="설정" onclick="openExamSettings()">⚙️</button>
     <button id="reset-btn" class="btn ghost danger" style="font-size:12px;">통계 리셋</button>
   </div>
 </div>
@@ -24,7 +25,7 @@
   <div id="mock-card" class="card"></div>
 </div>
 
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=20260513b"></script>
 <script>
 (async () => {
   const examId = ExamHub.getExamIdFromUrl() || 'ai900';

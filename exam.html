@@ -12,7 +12,7 @@
     <a href="index.html" class="btn ghost">← 시험 선택</a>
     <h1 id="exam-title">시험</h1>
     <div class="spacer"></div>
-    <button id="settings-btn" class="btn ghost" title="설정 — API 키 등">⚙️ 설정</button>
+    <button class="btn ghost" title="설정 — API 키 등" onclick="openExamSettings()">⚙️ 설정</button>
   </div>
 </div>
 
@@ -75,10 +75,8 @@
   }
 </style>
 
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=20260513b"></script>
 <script>
-document.getElementById('settings-btn').addEventListener('click', () => ExamHub.openSettings());
-
 (async () => {
   const id = ExamHub.getExamIdFromUrl() || 'ai900';
   const exam = await ExamHub.getExam(id);

@@ -12,6 +12,7 @@
     <a id="back-link" href="#" class="btn ghost">← 메뉴</a>
     <h1 id="exam-title">모의고사</h1>
     <div class="spacer"></div>
+    <button class="btn ghost" title="설정" onclick="openExamSettings()">⚙️ 설정</button>
     <span id="timer" class="timer">--:--</span>
   </div>
 </div>
@@ -80,7 +81,7 @@
   </div>
 </div>
 
-<script src="assets/app.js"></script>
+<script src="assets/app.js?v=20260513b"></script>
 <script>
 (async () => {
   const examId = ExamHub.getExamIdFromUrl() || 'sqld';
