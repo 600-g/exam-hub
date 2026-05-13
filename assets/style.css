@@ -18,21 +18,28 @@
   --note-border: rgba(247,160,30,0.3);
 }
 [data-theme="light"] {
-  --bg: #fafafa;
+  --bg: #f7f7fb;
   --panel: #ffffff;
-  --panel-2: #f5f5fa;
-  --border: rgba(0,0,0,0.10);
-  --text: #1a1a2e;
-  --text-dim: #5a5a72;
-  --accent-soft: rgba(247,160,30,0.18);
-  --good: #16a34a;
-  --bad: #dc2626;
+  --panel-2: #eef0f5;
+  --border: rgba(0,0,0,0.12);
+  --text: #0f172a;
+  --text-dim: #475569;
+  --accent-soft: rgba(247,160,30,0.20);
+  --good: #15803d;
+  --bad: #b91c1c;
   --modal-bg: #ffffff;
-  --modal-text: #1a1a2e;
+  --modal-text: #0f172a;
   --input-bg: #ffffff;
-  --input-border: rgba(0,0,0,0.15);
-  --note-bg: #fffbeb;
-  --note-border: #fde68a;
+  --input-border: rgba(0,0,0,0.20);
+  --note-bg: #fef3c7;
+  --note-border: #fbbf24;
+  /* 라이트 모드에서 accent를 글자로 쓰면 옅으므로 본문 색 사용 */
+  --accent-text: #0f172a;
+  --link: #1d4ed8;
+}
+:root, [data-theme="dark"] {
+  --accent-text: var(--accent);
+  --link: var(--accent);
 }
 * { box-sizing: border-box; }
 body {
@@ -43,8 +50,14 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
-a { color: var(--accent); text-decoration: none; }
+a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
+[data-theme="light"] a { font-weight: 600; }
+input[type="radio"], input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 16px; height: 16px;
+}
+input::placeholder, textarea::placeholder { color: var(--text-dim); opacity: 0.8; }
 .container {
   max-width: 920px;
   margin: 0 auto;
@@ -101,8 +114,8 @@ table.result th, table.result td {
 table.result th { background: var(--panel-2); font-weight: 600; }
 .badge {
   display: inline-block; padding: 2px 8px; border-radius: 999px;
-  font-size: 11px; font-weight: 600;
-  background: var(--accent-soft); color: var(--accent);
+  font-size: 11px; font-weight: 700;
+  background: var(--accent-soft); color: var(--accent-text);
   border: 1px solid var(--accent);
 }
 .badge.dim { background: var(--panel-2); color: var(--text-dim); border-color: var(--border); }
@@ -119,7 +132,7 @@ table.result th { background: var(--panel-2); font-weight: 600; }
 .option.selected { border-color: var(--accent); background: var(--accent-soft); }
 .option.correct { border-color: var(--good); background: rgba(74,222,128,0.12); }
 .option.wrong { border-color: var(--bad); background: rgba(248,113,113,0.12); }
-.option .opt-label { font-weight: 700; margin-right: 8px; color: var(--accent); }
+.option .opt-label { font-weight: 800; margin-right: 8px; color: var(--accent-text); }
 .progress {
   height: 6px; background: var(--panel-2); border-radius: 999px; overflow: hidden;
 }
@@ -129,7 +142,12 @@ table.result th { background: var(--panel-2); font-weight: 600; }
   background: var(--panel-2); border: 1px solid var(--border);
   font-size: 13.5px; line-height: 1.7;
 }
-.explain h4 { margin: 12px 0 6px; font-size: 13px; color: var(--accent); }
+.explain h4 {
+  margin: 12px 0 6px; font-size: 13px; font-weight: 800;
+  color: var(--accent-text);
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 4px; display: inline-block;
+}
 .explain h4:first-child { margin-top: 0; }
 .exam-card {
   display: flex; gap: 14px; align-items: flex-start;

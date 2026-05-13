@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>관리자 — 문제 편집 | Exam Hub</title>
-<link rel="stylesheet" href="assets/style.css" />
+<link rel="stylesheet" href="assets/style.css?v=20260514a" />
 <style>
   .editor-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
   @media (max-width: 1024px) { .editor-panel { grid-template-columns: 1fr; } }
@@ -23,11 +23,13 @@
   .list-view { max-height: 600px; overflow-y: auto; border: 1px solid var(--border); border-radius: 6px; }
   .list-item { padding: 12px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
   .list-item:hover { background: var(--accent-soft); }
-  .list-item.active { background: var(--accent); color: white; }
-  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+  .list-item.active { background: var(--accent); color: #0a0a14; }
+  .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 1000; align-items: center; justify-content: center; }
   .modal.active { display: flex; }
-  .modal-content { background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; overflow: auto; width: 500px; }
+  .modal-content { background: var(--modal-bg); color: var(--modal-text); border: 1px solid var(--border); padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; overflow: auto; width: 500px; }
+  .modal-content textarea { background: var(--input-bg); color: var(--text); border-color: var(--input-border); }
   .form-hint { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+  #ai-gen-panel { background: var(--panel-2) !important; border-color: var(--border) !important; }
 </style>
 </head>
 <body>
@@ -198,7 +200,7 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=20260513b"></script>
+<script src="assets/app.js?v=20260514a"></script>
 <script>
 (async () => {
   const exams = await ExamHub.loadExams();
