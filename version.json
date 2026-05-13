@@ -1,12 +1,11 @@
 {
-  "version": "1.7.0",
-  "buildTime": "2026-05-13T03:00:00Z",
+  "version": "1.8.0",
+  "buildTime": "2026-05-13T05:00:00Z",
   "features": [
-    "AI-POT 1급 +50문제 (50 → 100문제, 각 영역 20문제 균등)",
-    "G1 신규 토픽 — RLHF, 추론모델, MoE, LangChain, 모델압축, ModelCard",
-    "G2 신규 토픽 — Tree-of-Thoughts, Reflexion, Plan-and-Execute, Constrained Generation",
-    "G4 신규 토픽 — GDPR, 한국개인정보법 자동결정권, 학습데이터 라이선스, 의료 AI 규제",
-    "G5 신규 시나리오 — 멀티모달 RAG, 코드 자동화, 의료 챗봇, 모델 마이그레이션, 온프렘 vs API",
-    "scripts/generate_aipot.py — Claude API 자동 문제 생성기 추가"
+    "AI-POT +50문제 (100 → 150문제)",
+    "회차 모드 — 모의 1~3회 고정 50문제 세트 (영역 균등 10/10/10/10/10)",
+    "mock.html 회차 선택 드롭다운 추가",
+    "✨ AI 생성 패널 (admin.html) — Gemini 2.5 Flash 브라우저 직접 호출",
+    "옵션 A — 본인 API 키로 생성 → 미리보기·채택 → 초안 추가 → JSON 다운로드"
   ]
 }

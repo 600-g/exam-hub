@@ -45,8 +45,38 @@
       <option value="">시험 선택...</option>
     </select>
     <button id="add-question-btn" class="btn primary">+ 새 문제 추가</button>
+    <button id="ai-gen-btn" class="btn primary" style="background: linear-gradient(135deg,#7c3aed,#2563eb);">✨ AI 생성</button>
     <button id="export-btn" class="btn">📥 JSON 내보내기</button>
     <button id="import-btn" class="btn">📤 JSON 가져오기</button>
+  </div>
+
+  <div id="ai-gen-panel" style="display:none;background:#faf5ff;border:1px solid #c4b5fd;border-radius:8px;padding:16px;margin-bottom:20px;">
+    <h3 style="margin-top:0;display:flex;align-items:center;gap:8px;">✨ AI 문제 생성 <span class="muted" style="font-size:12px;font-weight:normal;">Gemini 2.5 Flash · 무료 (15/min, 1500/day)</span></h3>
+    <div class="field-group">
+      <label>Google Gemini API 키 <span class="muted">(localStorage에만 저장됨)</span></label>
+      <input type="password" id="gen-api-key" placeholder="AIza... (https://aistudio.google.com/app/apikey 발급)">
+      <div class="form-hint">⚠️ 정적 사이트라 키가 브라우저 localStorage에 저장됩니다. 본인 기기에서만 사용하세요.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="field-group">
+        <label>영역(과목)</label>
+        <select id="gen-subject" class="option"></select>
+      </div>
+      <div class="field-group">
+        <label>토픽</label>
+        <input type="text" id="gen-topic" placeholder="예: RLHF / Chain-of-Thought / GDPR">
+      </div>
+      <div class="field-group">
+        <label>문제 수 (1~10)</label>
+        <input type="number" id="gen-count" value="3" min="1" max="10">
+      </div>
+    </div>
+    <div class="button-row">
+      <button id="gen-start" class="btn primary">🚀 생성 시작</button>
+      <button id="gen-close" class="btn ghost">닫기</button>
+      <span id="gen-status" class="muted" style="font-size:12px;align-self:center;"></span>
+    </div>
+    <div id="gen-preview" style="margin-top:14px;"></div>
   </div>
 
   <div class="editor-panel">
@@ -353,6 +383,152 @@
   });
 
   document.getElementById('add-question-btn').addEventListener('click', newQuestion);
+
+  // ───── AI 생성 패널 ─────
+  const genPanel = document.getElementById('ai-gen-panel');
+  const genApiKey = document.getElementById('gen-api-key');
+  const genSubject = document.getElementById('gen-subject');
+  const genTopic = document.getElementById('gen-topic');
+  const genCount = document.getElementById('gen-count');
+  const genStatus = document.getElementById('gen-status');
+  const genPreview = document.getElementById('gen-preview');
+
+  genApiKey.value = localStorage.getItem('exam_ai_gen_key') || '';
+  genApiKey.addEventListener('change', () => {
+    localStorage.setItem('exam_ai_gen_key', genApiKey.value);
+  });
+
+  document.getElementById('ai-gen-btn').addEventListener('click', () => {
+    if (!currentExamId) { alert('먼저 시험을 선택하세요.'); return; }
+    const exam = exams.exams.find((e) => e.id === currentExamId);
+    genSubject.innerHTML = '';
+    (exam.subjects || exam.domains || []).forEach((s) => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = `${s.id} — ${s.name}`;
+      genSubject.appendChild(opt);
+    });
+    genPanel.style.display = '';
+    genPreview.innerHTML = '';
+    genStatus.textContent = '';
+  });
+
+  document.getElementById('gen-close').addEventListener('click', () => {
+    genPanel.style.display = 'none';
+  });
+
+  function buildGenPrompt(examName, subjectId, subjectName, topic, count) {
+    return `당신은 ${examName} 자격 시험 출제 전문가입니다.\n\n다음 조건으로 시험 문제 ${count}개를 JSON 배열로 생성하세요:\n- 영역: ${subjectName} (${subjectId})\n- 토픽: ${topic}\n- 형식: 4지선다 객관식\n- 난이도: 실전 수준 (상/중/하 중 하나로 분류)\n\n각 문제 스키마(필드 정확히 이 이름):\n{\n  "subject": "${subjectId}",\n  "topic": "${topic}",\n  "tags": ["키워드1","키워드2"],\n  "difficulty": "상|중|하",\n  "question": "문제 본문 (한국어)",\n  "options": { "A": "...", "B": "...", "C": "...", "D": "..." },\n  "answer": "A|B|C|D",\n  "explanation_detail": {\n    "simple": "비전공자도 이해할 쉬운 비유 (3-4문장)",\n    "steps": ["풀이 단계1","단계2","단계3","결론"],\n    "practical": "실무 활용 (1-2문장)",\n    "pitfall": "함정·시험 빈출 포인트"\n  }\n}\n\n반드시 [ ] 로 시작/종료되는 순수 JSON 배열만 출력 — 설명·markdown 펜스 금지.`;
+  }
+
+  async function callGemini(apiKey, prompt) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+          responseMimeType: 'application/json',
+        },
+      }),
+    });
+    if (!r.ok) {
+      const err = await r.text();
+      throw new Error(`Gemini API ${r.status}: ${err.slice(0, 200)}`);
+    }
+    const data = await r.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    let parsed = JSON.parse(text);
+    if (!Array.isArray(parsed)) {
+      if (Array.isArray(parsed?.questions)) parsed = parsed.questions;
+      else throw new Error('응답이 JSON 배열이 아닙니다');
+    }
+    return parsed;
+  }
+
+  let genCandidates = []; // {id, picked, q}
+
+  function renderGenPreview() {
+    if (!genCandidates.length) { genPreview.innerHTML = ''; return; }
+    const html = genCandidates.map((c, i) => `
+      <div class="card" style="margin-bottom:8px;background:white;">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <input type="checkbox" data-i="${i}" class="gen-pick" ${c.picked ? 'checked' : ''}>
+            <b>Q${i + 1}</b>
+          </label>
+          <span class="badge dim">${ExamHub.escape(c.q.subject || '')}</span>
+          <span class="badge dim">🎯 ${ExamHub.escape(c.q.difficulty || '중')}</span>
+          <span class="badge dim">#${ExamHub.escape(c.q.topic || '')}</span>
+        </div>
+        <div style="margin-bottom:6px;white-space:pre-wrap;">${ExamHub.escape(c.q.question || '')}</div>
+        <div style="font-size:13px;display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          ${['A','B','C','D'].map((k) => `<div>${k}. ${ExamHub.escape(c.q.options?.[k] || '')}${c.q.answer === k ? ' <b style="color:var(--good);">← 정답</b>' : ''}</div>`).join('')}
+        </div>
+        <details style="margin-top:8px;font-size:12px;">
+          <summary class="muted">해설 보기</summary>
+          <div style="margin-top:6px;"><b>쉬운설명</b>: ${ExamHub.escape(c.q.explanation_detail?.simple || '')}</div>
+          <div style="margin-top:4px;"><b>풀이</b>: ${(c.q.explanation_detail?.steps || []).map(ExamHub.escape).join(' → ')}</div>
+          <div style="margin-top:4px;"><b>실무</b>: ${ExamHub.escape(c.q.explanation_detail?.practical || '')}</div>
+          <div style="margin-top:4px;"><b>함정</b>: ${ExamHub.escape(c.q.explanation_detail?.pitfall || '')}</div>
+        </details>
+      </div>
+    `).join('');
+    const pickedCount = genCandidates.filter((c) => c.picked).length;
+    genPreview.innerHTML = html + `
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <button id="gen-accept" class="btn primary">✅ 선택한 ${pickedCount}개 채택 + 초안에 추가</button>
+        <button id="gen-pick-all" class="btn">전체 선택</button>
+        <button id="gen-pick-none" class="btn ghost">전체 해제</button>
+      </div>`;
+    genPreview.querySelectorAll('.gen-pick').forEach((el) => {
+      el.addEventListener('change', () => {
+        genCandidates[+el.dataset.i].picked = el.checked;
+        renderGenPreview();
+      });
+    });
+    document.getElementById('gen-pick-all').onclick = () => { genCandidates.forEach((c) => c.picked = true); renderGenPreview(); };
+    document.getElementById('gen-pick-none').onclick = () => { genCandidates.forEach((c) => c.picked = false); renderGenPreview(); };
+    document.getElementById('gen-accept').onclick = () => {
+      const ts = Date.now();
+      const picked = genCandidates.filter((c) => c.picked).map((c, i) => ({
+        ...c.q,
+        id: `gen_${ts}_${i.toString().padStart(3, '0')}`,
+      }));
+      if (!picked.length) { alert('채택할 문제를 선택하세요.'); return; }
+      allQuestions = allQuestions.concat(picked);
+      ExamHub.setJSON(`admin_${currentExamId}`, 'questions_draft', allQuestions);
+      genCandidates = [];
+      genPreview.innerHTML = '';
+      genStatus.textContent = `✅ ${picked.length}문제 초안에 추가됨 (총 ${allQuestions.length})`;
+      renderList();
+      alert(`✅ ${picked.length}문제 초안에 추가됨!\n\n다음: "📥 JSON 내보내기"로 다운로드 → GitHub에서 questions.json 교체 + commit.`);
+    };
+  }
+
+  document.getElementById('gen-start').addEventListener('click', async () => {
+    if (!genApiKey.value) { alert('Gemini API 키를 입력하세요.'); return; }
+    if (!genTopic.value.trim()) { alert('토픽을 입력하세요.'); return; }
+    const exam = exams.exams.find((e) => e.id === currentExamId);
+    const subjId = genSubject.value;
+    const subj = (exam.subjects || exam.domains || []).find((s) => s.id === subjId);
+    const count = Math.max(1, Math.min(10, +genCount.value || 3));
+    genStatus.textContent = '🤖 Gemini 호출 중...';
+    genPreview.innerHTML = '';
+    try {
+      const prompt = buildGenPrompt(exam.name, subjId, subj?.name || subjId, genTopic.value.trim(), count);
+      const arr = await callGemini(genApiKey.value, prompt);
+      genCandidates = arr.map((q) => ({ q, picked: true }));
+      genStatus.textContent = `✅ ${arr.length}개 생성. 검토 후 채택하세요.`;
+      renderGenPreview();
+    } catch (e) {
+      genStatus.textContent = `❌ ${e.message}`;
+    }
+  });
+
   document.getElementById('save-question-btn').addEventListener('click', saveQuestion);
   document.getElementById('delete-question-btn').addEventListener('click', deleteQuestion);
   document.getElementById('cancel-btn').addEventListener('click', () => {

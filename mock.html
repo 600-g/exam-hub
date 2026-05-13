@@ -36,6 +36,14 @@
       <p class="muted" style="font-size: 12px; margin: 0;">
         표준 모드는 시험 난이도를 정확히 반영합니다. 난이도 균형 모드는 모든 난이도를 골고루 경험할 수 있습니다.
       </p>
+
+      <label id="round-label" style="display: none; font-size: 13px; font-weight: 600; margin: 16px 0 8px;">📚 회차 선택 (고정 세트)</label>
+      <select id="round-select" class="option" style="display: none; margin-bottom: 8px;">
+        <option value="">랜덤 (매번 다른 문제)</option>
+      </select>
+      <p id="round-help" class="muted" style="display: none; font-size: 12px; margin: 0;">
+        회차 선택 시 미리 정의된 같은 50문제 세트가 출제됩니다 (실전 모의 회차).
+      </p>
     </div>
 
     <button id="start-mock" class="btn primary lg" style="width:100%;margin-top:14px;">⏱ 시작</button>
@@ -88,6 +96,34 @@
     (exam.subjectFailThreshold ? ` (과목별 ${Math.round(exam.subjectFailThreshold * 100)}% 미만 = 과락)` : '');
 
   const all = await ExamHub.loadQuestions(examId);
+
+  // 회차(mock 세트) 자동 감지 — 문제에 mockSet 필드가 있으면 드롭다운 채움
+  const roundsAvailable = [...new Set(all.map((q) => q.mockSet).filter(Boolean))].sort();
+  if (roundsAvailable.length > 0) {
+    const sel = document.getElementById('round-select');
+    roundsAvailable.forEach((r, i) => {
+      const opt = document.createElement('option');
+      opt.value = r;
+      opt.textContent = `📘 모의 ${i + 1}회 (${r})`;
+      sel.appendChild(opt);
+    });
+    document.getElementById('round-label').style.display = '';
+    document.getElementById('round-select').style.display = '';
+    document.getElementById('round-help').style.display = '';
+  }
+
+  function buildRoundSet(roundId) {
+    // 같은 mockSet의 문제만 추출 → 영역 순으로 정렬 후 출제
+    const pool = all.filter((q) => q.mockSet === roundId);
+    if (exam.subjects) {
+      const out = [];
+      exam.subjects.forEach((s) => {
+        out.push(...pool.filter((q) => q.subject === s.id).slice(0, s.questionCount));
+      });
+      return out;
+    }
+    return pool.slice(0, exam.totalQuestions);
+  }
 
   function buildMockSet() {
     // SQLD: subject 비율 맞춤 / 그 외: 도메인 weight
@@ -253,9 +289,15 @@
 
   document.getElementById('start-mock').onclick = () => {
     const mode = document.getElementById('mode-select').value;
-    const mockSet = mode === 'difficulty'
-      ? ExamHub.buildDifficultyBalancedSet(all, exam, exam.totalQuestions)
-      : buildMockSet();
+    const round = document.getElementById('round-select').value;
+    let mockSet;
+    if (round) {
+      mockSet = buildRoundSet(round);
+    } else if (mode === 'difficulty') {
+      mockSet = ExamHub.buildDifficultyBalancedSet(all, exam, exam.totalQuestions);
+    } else {
+      mockSet = buildMockSet();
+    }
     queue = mockSet.map((q) => ExamHub.shuffleOptions(q));
     if (queue.length === 0) { alert('이 시험에 등록된 문제가 없습니다'); return; }
     answers = {}; curIdx = 0;

@@ -27,7 +27,8 @@
       ],
       "practical": "ChatGPT, Claude, Gemini는 모두 동일한 원리. 다음 토큰 예측이라는 단순한 작업을 수십억 번 반복해 자연스러운 응답을 생성.",
       "pitfall": "LLM이 '이해'하는 게 아니라 '예측'한다는 점을 기억. 사실 검증·정확한 계산은 보조 도구(코드 실행·검색) 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_002",
@@ -57,7 +58,8 @@
       ],
       "practical": "긴 문맥에서도 앞뒤 단어 관계를 파악할 수 있는 이유. Context window가 길어질수록 더 풍부한 참조 가능.",
       "pitfall": "Self-Attention은 계산량이 시퀀스 길이의 제곱(O(n²))에 비례 — 긴 입력은 비용·지연 증가."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_003",
@@ -87,7 +89,8 @@
       ],
       "practical": "한국어 프롬프트는 같은 의미여도 영어 대비 1.5~2배 토큰 소비. 비용 민감한 작업은 영어 프롬프트가 유리할 수 있음.",
       "pitfall": "OpenAI Tokenizer / Anthropic Tokenizer 결과가 다름. 정확한 토큰 수는 각 SDK의 카운트 도구로 확인."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_004",
@@ -116,7 +119,8 @@
       ],
       "practical": "Claude Sonnet 4.6: 200K, GPT-5: 400K, Gemini 2.5: 1M+ 등. 긴 문서 요약·코드베이스 분석은 큰 윈도우 필수.",
       "pitfall": "Window가 크다고 항상 좋은 성능은 아님. 중간 위치 정보를 놓치는 'Lost in the Middle' 현상 존재."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_005",
@@ -146,7 +150,8 @@
       ],
       "practical": "사실 확인이 필요한 작업(법률·의료·통계)은 반드시 출처 검증 또는 RAG 기반 검색 결합.",
       "pitfall": "모델이 '확신 있게' 거짓을 말하는 게 더 위험. 응답의 자신감 ≠ 정확성."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_006",
@@ -177,7 +182,8 @@
       ],
       "practical": "작업별 최적 모델 다름 — 코드는 Claude/GPT, 멀티모달은 Gemini, 비용 민감은 Haiku/Flash 등.",
       "pitfall": "한 모델의 프롬프트 패턴이 다른 모델에서 동일하게 작동하지 않을 수 있음. 모델 전환 시 재튜닝 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_007",
@@ -207,7 +213,8 @@
       ],
       "practical": "사실 답변: T=0~0.3 / 창작: T=0.7~1.0. 코드 생성은 일반적으로 낮게.",
       "pitfall": "Temperature를 너무 낮추면 같은 실수도 반복. 너무 높이면 응집성 잃음."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_008",
@@ -236,7 +243,8 @@
       ],
       "practical": "회사 문서 검색 시스템 = 문서 임베딩 → 벡터DB(Pinecone, Qdrant 등) → 질의 임베딩 비교.",
       "pitfall": "임베딩 모델이 바뀌면 기존 벡터 무효 — 전체 재인덱싱 필요. 임베딩과 추론용 모델은 다른 것이 일반적."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_009",
@@ -267,7 +275,8 @@
       ],
       "practical": "사내 위키 챗봇, 법률 검색 보조, 최신 뉴스 응답 등 대부분 RAG. ChatGPT 'Browse', Claude Projects도 RAG 변형.",
       "pitfall": "검색 품질이 답변 품질을 좌우 — 잘못된 문서 검색 시 환각 증가. 청크 크기·임베딩 모델·재순위(rerank) 튜닝 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_010",
@@ -297,7 +306,8 @@
       ],
       "practical": "스크린샷 디버깅, PDF 차트 데이터 추출, 영수증 자동 입력 등에서 강력. 비용은 텍스트만 쓸 때보다 큼.",
       "pitfall": "이미지 해상도 옵션(detail: low/high)으로 토큰 수 조절 가능. 정확도 vs 비용 트레이드오프."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_001",
@@ -326,7 +336,8 @@
       ],
       "practical": "간단한 작업(요약·번역·분류)은 zero-shot으로 충분. 출력 형식이 까다로우면 few-shot이 유리.",
       "pitfall": "최신 모델일수록 zero-shot 성능이 좋아지지만, 특수 도메인·일관된 포맷은 여전히 few-shot이 효과적."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_002",
@@ -355,7 +366,8 @@
       ],
       "practical": "분류 작업: 양성·음성·중립 각 1~2개씩. 추출 작업: 명확한·모호한·극단 케이스를 섞어 제시.",
       "pitfall": "예시가 한 카테고리에 치우치면 그 카테고리로 편향. 예시 순서도 영향 — 최근 예시(끝) 패턴이 더 강하게 반영."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_003",
@@ -384,7 +396,8 @@
       ],
       "practical": "수학 문제: 'Let's solve step by step'. 의사결정: '먼저 장단점을 비교하고 결론을 내려줘'.",
       "pitfall": "응답이 길어져 토큰 비용 증가. 간단한 작업엔 오히려 노이즈. 추론 모델(o1, Claude Extended Thinking)은 자동 CoT."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_004",
@@ -413,7 +426,8 @@
       ],
       "practical": "'당신은 한국법 전문 변호사입니다', '당신은 8세 아이에게 설명하는 선생님입니다'.",
       "pitfall": "역할만 부여한다고 사실성·정확성이 보장되진 않음. 역할 + 구체적 출력 형식 + 예시 결합이 안전."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_005",
@@ -441,7 +455,8 @@
       ],
       "practical": "고객센터 챗봇: System에 '환불 정책·금지 표현·존댓말 사용' 등을 정의. User는 실제 고객 문의.",
       "pitfall": "System 우선순위가 높지만 절대적이지 않음 — 강력한 user 지시·jailbreak로 우회될 수 있어 별도 정책 강제 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_006",
@@ -470,7 +485,8 @@
       ],
       "practical": "OpenAI: response_format={type:'json_object'}, Anthropic: tool use로 강제. 파싱 실패 시 재시도 로직 권장.",
       "pitfall": "프롬프트가 JSON을 시켰는데 모델이 ```json``` 코드 펜스로 감싸는 경우 — 파싱 전 펜스 제거 또는 strict mode 사용."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_007",
@@ -498,7 +514,8 @@
       ],
       "practical": "Anthropic prompt caching: 시스템 프롬프트 90% 비용 절감. OpenAI prompt caching도 유사 지원.",
       "pitfall": "지나친 압축은 환각·오해 증가. 토큰 절약과 정확성의 균형이 중요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_008",
@@ -528,7 +545,8 @@
       ],
       "practical": "복잡한 추론 작업의 정답률을 5~15%p 향상. 단점은 비용 N배.",
       "pitfall": "다수결이 항상 옳지는 않음 — 모든 시도가 동일한 함정에 빠지면 잘못된 답이 다수가 됨."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_009",
@@ -559,7 +577,8 @@
       ],
       "practical": "LangChain, AutoGPT, Claude Agent SDK 등 대부분의 에이전트가 ReAct 또는 변형 사용.",
       "pitfall": "무한 루프·잘못된 도구 선택 위험 — 최대 단계 수 제한과 도구 설명 명확화 필수."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g2_010",
@@ -589,7 +608,8 @@
       ],
       "practical": "캘린더 예약, 데이터베이스 조회, 결제 처리 등 모든 외부 작업의 표준 인터페이스.",
       "pitfall": "함수 설명이 모호하면 잘못된 함수 호출. 인자 검증은 호출 측에서 반드시 수행 — 모델 출력을 그대로 신뢰 X."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_001",
@@ -617,7 +637,8 @@
       ],
       "practical": "회의록 요약 템플릿: '결정사항 / 액션아이템(담당·기한) / 미결 안건'.",
       "pitfall": "Context Window 초과 시 잘림 — 매우 긴 문서는 chunk 단위 요약 → 종합(stepwise summarization)."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_002",
@@ -645,7 +666,8 @@
       ],
       "practical": "의약품 라벨, 계약서, 재무제표 등 법적 책임이 있는 번역은 반드시 사람이 최종 확인.",
       "pitfall": "AI가 자신감 있게 오역할 때가 가장 위험. 익숙하지 않은 약어·신조어는 특히 검토 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_003",
@@ -674,7 +696,8 @@
       ],
       "practical": "'Python 3.12 + pandas 2.2, 입력은 CSV, 결측치는 0으로 채우고, pytest로 테스트 가능하게'.",
       "pitfall": "생성된 코드를 그대로 실행 금지 — 인젝션·의존성 취약점 검토. LLM은 존재하지 않는 함수를 만들어내기도 함."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_004",
@@ -702,7 +725,8 @@
       ],
       "practical": "ChatGPT Advanced Data Analysis, Claude with code execution. SQL이 필요하면 결과 검증을 위해 쿼리도 확인.",
       "pitfall": "LLM이 만든 코드의 로직 자체가 잘못되면 결과도 잘못됨. 샘플 데이터로 검증 권장."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_005",
@@ -730,7 +754,8 @@
       ],
       "practical": "'A4 반장 분량, 처음 만난 거래처 차장, 미팅 일정 재조율 요청, 정중하고 간결하게'.",
       "pitfall": "개인정보(실명·이메일·전화번호) 그대로 입력은 정보 유출 위험. 가명/마스킹 후 입력 권장."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_006",
@@ -759,7 +784,8 @@
       ],
       "practical": "Zoom·Teams 자체 요약 기능도 이 파이프라인. 민감 회의는 온프레미스 STT + 로컬 LLM 고려.",
       "pitfall": "음성 품질이 낮으면 STT 오류 → LLM이 잘못된 회의록 생성. 핵심 발언은 사람이 재확인 권장."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_007",
@@ -788,7 +814,8 @@
       ],
       "practical": "한국 표시광고법, 의료광고법 등 분야별 규제 준수. 환불·과장 표현 특히 주의.",
       "pitfall": "이미지/슬로건도 저작권·상표권 위험 — 기존 브랜드와 유사한 표현 자동 검토 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_008",
@@ -817,7 +844,8 @@
       ],
       "practical": "'고1 수학 함수 단원, 1차함수 기본 익힘, 25분 수업용, 일상 예시 3개 + 연습 5문제 + 풀이'.",
       "pitfall": "AI가 만든 예제·정답에 오류 가능 — 게재 전 교사·전문가 검토 필수."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_009",
@@ -846,7 +874,8 @@
       ],
       "practical": "벡터DB(권한별 컬렉션 분리) + 임베딩 검색 + Top-K 청크 + 출처 링크 첨부 = 표준 구성.",
       "pitfall": "권한 검사를 LLM 프롬프트로만 처리하면 우회 가능 — 인덱스·DB 레벨에서 강제."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g3_010",
@@ -875,7 +904,8 @@
       ],
       "practical": "프로젝트 GO/NO-GO 결정 시 'pros/cons 표 + 가정 + 리스크 + 미정 사항' 생성 요청.",
       "pitfall": "AI 결론을 '권위'로 받아들이지 말 것. AI도 편향·환각이 있고 사용자 의도에 영합하는(sycophancy) 경향이 있음."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_001",
@@ -904,7 +934,8 @@
       ],
       "practical": "기업 사용 시 'API plan / Enterprise plan'은 보통 학습 비활용. 무료 플랜·기본 설정은 학습에 쓰일 수 있어 확인 필수.",
       "pitfall": "기업 비밀·고객 정보를 무료 챗봇에 입력 시 외부 학습 가능. 사내 정책으로 입력 가능 범위 명문화 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_002",
@@ -933,7 +964,8 @@
       ],
       "practical": "AI 단순 생성 결과는 그대로 사용 시 타인이 베껴도 보호받기 어려움. 인간 편집·재구성 시 저작권 발생 여지.",
       "pitfall": "타인이 AI로 만든 결과물을 '저작권 없음'으로 단정해 무단 사용 시, 학습 원본의 침해·기타 권리(상표·퍼블리시티) 위반 가능성 별도 검토."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_003",
@@ -962,7 +994,8 @@
       ],
       "practical": "한국 개인정보보호법: 동의 없는 제3자 제공·국외 이전 제한. 의료·금융은 더 엄격(개별 동의·익명화).",
       "pitfall": "마스킹해도 다른 정보와 결합 시 재식별 위험 (k-익명성·차분프라이버시 등 추가 통제 고려)."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_004",
@@ -992,7 +1025,8 @@
       ],
       "practical": "채용·대출·평가 등 고위험 영역은 정기 감사·결과 모니터링·인간 검토 필수.",
       "pitfall": "편향 측정 자체가 어려움 — 어떤 결과가 '편향'인지의 정의도 사회적 합의에 의존."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_005",
@@ -1021,7 +1055,8 @@
       ],
       "practical": "프롬프트에 '확실하지 않으면 \"확인 필요\"라고 표시'를 명시. 의료·법률은 면책 문구 자동 첨부.",
       "pitfall": "모델이 모른다고 말해도 '거짓 모름'(실제로는 답 가능)일 수 있음 — 보조 검색 결합이 안전."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_006",
@@ -1050,7 +1085,8 @@
       ],
       "practical": "Microsoft Responsible AI 6원칙, Google AI Principles, EU AI Act가 대표 프레임워크.",
       "pitfall": "원칙 선언만 있고 점검 체크리스트·감사 체계가 없으면 형식적. KPI·대시보드로 가시화 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_007",
@@ -1078,7 +1114,8 @@
       ],
       "practical": "방어: 입력 검증·시스템 프롬프트 분리·도구 호출 권한 최소화·민감 작업 사람 승인.",
       "pitfall": "100% 차단은 어려움. '치명적 작업은 사람 확인'을 시스템 설계 단계에서 강제 — 모델 단독 신뢰 X."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_008",
@@ -1106,7 +1143,8 @@
       ],
       "practical": "EU 시장에 서비스하는 한국 기업도 적용 대상. 고위험 시스템은 CE 마크 유사 인증·기술 문서 요구.",
       "pitfall": "범용 AI(GPT·Claude 등)에 대한 별도 의무도 단계적 도입. 한국 'AI 기본법' 등 국내 법제와 차이 비교 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_009",
@@ -1135,7 +1173,8 @@
       ],
       "practical": "Google SynthID(이미지 워터마크), OpenAI 출처 메타데이터, Adobe Content Credentials 등.",
       "pitfall": "워터마크는 변조·압축·스크린샷에 약함. 다층 방어(메타데이터+탐지 모델)가 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g4_010",
@@ -1164,7 +1203,8 @@
       ],
       "practical": "EU AI Act 고위험 시스템: 사용자 통지 의무. 챗봇임을 숨기면 위반.",
       "pitfall": "기업 비밀(모델 가중치·학습 데이터 세부)과 사용자 권리(작동 원리·결정 근거) 균형이 어려운 영역."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_001",
@@ -1191,7 +1231,8 @@
       ],
       "practical": "RAG로 사내 규정 PDF·위키 인덱싱 + 시스템 프롬프트의 '근거 한정' 명령 조합.",
       "pitfall": "'근거 한정'만으로는 우회 가능 — 응답 후 출력 검증 또는 출처 강제 첨부로 이중 안전망."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_002",
@@ -1219,7 +1260,8 @@
       ],
       "practical": "개선: '20대 여성 대상, 신제품 친환경 텀블러, 발랄한 톤, 인스타 캡션 3개, 각 50자 이내, 마지막에 구매 링크 유도'.",
       "pitfall": "AI에 '좋게 알아서 해줘' 의존 = 평범한 결과. 구체성이 곧 품질."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_003",
@@ -1247,7 +1289,8 @@
       ],
       "practical": "Anthropic Haiku, OpenAI Mini, Google Flash — 분당 호출이 많은 1차 처리에 적합.",
       "pitfall": "경량 모델이 잘못 분류하면 잘못된 후속 처리. 분류 결과의 confidence score를 보고 사람 fallback."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_004",
@@ -1276,7 +1319,8 @@
       ],
       "practical": "Anthropic prompt caching: 시스템 프롬프트 캐시 시 90% 절감. OpenAI도 자동 캐싱 지원.",
       "pitfall": "비용 알람·일일 한도(quota)를 미리 설정하지 않으면 사고. 환경별(dev/prod) 키 분리도 필수."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_005",
@@ -1303,7 +1347,8 @@
       ],
       "practical": "AI 응답에 '근거 출처 표기'를 강제하면 검증이 빨라짐. 출처가 없는 주장은 의심.",
       "pitfall": "보고서 책임은 사용자에게 있음 — AI를 핑계로 면책되지 않음."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_006",
@@ -1331,7 +1376,8 @@
       ],
       "practical": "청크 크기 200~800 토큰, 중첩 10~20%, BM25 + 임베딩 하이브리드 + Cohere/내부 rerank가 권장 패턴.",
       "pitfall": "긴 문서를 한 청크로 두면 핵심이 묻힘. 너무 작게 쪼개면 맥락 손실. 도메인별 실험 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_007",
@@ -1359,7 +1405,8 @@
       ],
       "practical": "도구별 권한 분리: 읽기-only 도구는 자유, 쓰기 도구는 승인 필요, 결제는 OTP 필수.",
       "pitfall": "프롬프트로만 '신중히'라고 적는 건 안전장치가 아님. 시스템 레벨 강제가 필요."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_008",
@@ -1388,7 +1435,8 @@
       ],
       "practical": "Anthropic Workbench, OpenAI Evals, LangSmith, Promptfoo 등 도구 활용. CI에 자동화하면 더 안전.",
       "pitfall": "평가셋이 너무 작으면 노이즈. 도메인을 대표하는 30~100개 이상 + 엣지 케이스 포함 권장."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_009",
@@ -1418,7 +1466,8 @@
       ],
       "practical": "Rate limit(429)·Timeout(504)·Content filter(400) 등 코드별 정책 분리. 사용자에게는 친화적 메시지.",
       "pitfall": "0초 무한 재시도는 rate limit 가속·비용 폭증. Idempotency key로 중복 결제 방지."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g5_010",
@@ -1447,7 +1496,8 @@
       ],
       "practical": "회사 정책 예: 외부 챗봇에 입력 가능한 데이터를 '공개 자료'로 한정. 사내 승인 AI 도구는 별도 SSO + 로깅.",
       "pitfall": "개인 챗봇 계정으로 회사 자료를 다루는 '섀도 IT' — 정책으로 명시 + 사내 대체 도구 제공이 실효적."
-    }
+    },
+    "mockSet": "mock1"
   },
   {
     "id": "aipot_g1_011",
@@ -1476,7 +1526,8 @@
       ],
       "practical": "사내 챗봇·법률·의료처럼 특수 분야는 base 모델 + 미세조정. 데이터가 작으면 LoRA·QLoRA로 경량 조정.",
       "pitfall": "미세조정으로 특정 영역이 좋아지면서 일반 능력이 떨어지는 'Catastrophic Forgetting' 위험. 평가셋으로 회귀 점검 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_012",
@@ -1506,7 +1557,8 @@
       ],
       "practical": "ChatGPT·Claude·Gemini 모두 RLHF 또는 그 변형(RLAIF·DPO 등) 적용. 안전성·도움됨·정직성의 균형 조정.",
       "pitfall": "RLHF로 다듬으면 일부 능력(원시 추론·창의성)이 손상되는 'alignment tax' 발생. 보상 해킹(reward hacking) 위험도 있음."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_013",
@@ -1535,7 +1587,8 @@
       ],
       "practical": "OpenAI o-시리즈, Claude Extended Thinking, DeepSeek-R1. 단순 작업엔 일반 모델이 더 빠르고 저렴.",
       "pitfall": "Thinking 토큰도 과금 대상. 짧은 작업에 추론 모델 쓰면 비용·지연 비효율."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_014",
@@ -1564,7 +1617,8 @@
       ],
       "practical": "Mixtral, DeepSeek-V3, GPT-4 추정. 동일 비용으로 더 큰 모델 효과.",
       "pitfall": "메모리는 전체 파라미터 만큼 필요. 라우팅 학습이 까다로워 안정성·균형 문제."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_015",
@@ -1596,7 +1650,8 @@
       ],
       "practical": "Anthropic·OpenAI 모두 LLM-as-Judge를 평가 파이프라인에 사용. 단, 평가자 모델 편향·자기 선호 주의.",
       "pitfall": "Judge 모델이 길고 화려한 응답을 선호하는 'length bias' 존재. 기준을 명확히 프롬프트로 고정."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_016",
@@ -1626,7 +1681,8 @@
       ],
       "practical": "Llama 3.x·Qwen·DeepSeek은 오픈, GPT·Claude·Gemini는 폐쇄. 하이브리드(민감 작업 온프렘, 일반 작업 API)도 흔함.",
       "pitfall": "오픈소스 라이선스(Llama Community License 등)는 상업 사용 제한·재배포 조건을 면밀히 확인."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_017",
@@ -1655,7 +1711,8 @@
       ],
       "practical": "프로토타입은 LangChain, 운영에선 단순화된 자체 구조를 직접 작성하는 경우도 흔함 (성능·디버깅 이슈).",
       "pitfall": "추상화 깊이가 깊어 디버깅 어려움. 직접 SDK(Anthropic/OpenAI) 호출이 더 명확할 때도 있음."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_018",
@@ -1684,7 +1741,8 @@
       ],
       "practical": "온디바이스 LLM은 보통 INT4 양자화 + LoRA 어댑터. 학습은 큰 모델, 배포는 압축본.",
       "pitfall": "양자화는 일부 정확도 손실. 도메인에 따라 INT8까지만 안전하고 INT4는 성능 저하 큰 경우 있음."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_019",
@@ -1714,7 +1772,8 @@
       ],
       "practical": "텍스트: Claude, 이미지: Midjourney, 영상: Sora·Runway, 음악: Suno, 코드: Cursor/Claude.",
       "pitfall": "생성형은 '새 결과'가 강점이지만 사실 보장 불가. 결정형이 더 맞는 작업(규정 검증 등)을 무리하게 생성형으로 풀면 사고."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g1_020",
@@ -1743,7 +1802,8 @@
       ],
       "practical": "Hugging Face 모델, Anthropic·OpenAI 공식 문서 = 모델 카드 형태로 공개.",
       "pitfall": "오픈소스 미공개·모호한 모델 카드는 도입 위험 신호. 평가 결과·한계 명시 없는 모델은 운영 적용 신중."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_011",
@@ -1772,7 +1832,8 @@
       ],
       "practical": "퍼즐(24 게임)·계획·증명 같은 탐색형 문제에서 ToT 우세. 단순 QA는 CoT로 충분.",
       "pitfall": "ToT는 호출 수·토큰 비용이 폭증. 작업 난이도와 비용 트레이드오프 검토 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_012",
@@ -1801,7 +1862,8 @@
       ],
       "practical": "긴 보고서 작성: 개요 → 섹션 초안 → 통합 → 문법·톤 교정.",
       "pitfall": "체이닝이 깊을수록 오류 전파 위험. 중간 단계 검증 게이트 필요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_013",
@@ -1829,7 +1891,8 @@
       ],
       "practical": "팀 내 표준 프롬프트 라이브러리를 메타프롬프트로 자동 갱신.",
       "pitfall": "메타프롬프트가 만든 결과가 항상 최선은 아님 — eval set으로 채택 여부 검증."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_014",
@@ -1858,7 +1921,8 @@
       ],
       "practical": "Few-shot 예시 사이를 명확히 구분하는 구분자에 자주 사용.",
       "pitfall": "Stop이 정답의 일부에 포함되면 답이 잘림. 충분히 구별되는 시퀀스 선택."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_015",
@@ -1887,7 +1951,8 @@
       ],
       "practical": "Server-Sent Events(SSE) 또는 chunk transfer로 클라이언트에 푸시.",
       "pitfall": "JSON 파싱 등 후처리가 필요한 응답은 스트리밍이 불리. 작업별로 선택."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_016",
@@ -1916,7 +1981,8 @@
       ],
       "practical": "OpenAI response_format · Anthropic tool use · Outlines / Guardrails 등.",
       "pitfall": "스키마가 너무 엄격하면 미세한 어긋남으로 파싱 실패 폭증. 유연성과 엄격성의 균형."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_017",
@@ -1945,7 +2011,8 @@
       ],
       "practical": "도구 인자 생성·DSL 출력·정확한 enum 분류에 효과적.",
       "pitfall": "지나치게 좁은 문법은 자연스러움 손상. 자유 텍스트엔 부적합."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_018",
@@ -1974,7 +2041,8 @@
       ],
       "practical": "ChatGPT의 'Memory', Claude의 Projects 기능도 압축·검색 기반 메모리.",
       "pitfall": "요약 손실로 중요한 사실 누락 가능. 핵심 사실은 별도 메모리에 명시 저장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_019",
@@ -2003,7 +2071,8 @@
       ],
       "practical": "복잡한 코딩·작문·논증 작업에서 정답률 향상 보고.",
       "pitfall": "자기 비평이 '잘 됐어요'로 끝나는 sycophancy 위험. 비판 기준을 명시적 체크리스트로 제공."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g2_020",
@@ -2033,7 +2102,8 @@
       ],
       "practical": "Claude Agent SDK, LangGraph, AutoGen 등 에이전트 프레임워크가 이 패턴 변형 사용.",
       "pitfall": "계획 단계에서 잘못된 가정 → 모든 실행 단계 오류. 계획 자체 검토가 중요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_011",
@@ -2062,7 +2132,8 @@
       ],
       "practical": "AI 초안 → 전문가 검토·일화·1차 자료 보강 → 발행 = 안전 패턴.",
       "pitfall": "AI 대량 생성 콘텐츠는 'Spammy AI content' 정책 위반 가능 — 수동 제재 위험."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_012",
@@ -2091,7 +2162,8 @@
       ],
       "practical": "STAR 기법(Situation·Task·Action·Result)으로 본인 경험 입력 → AI가 직무 적합 표현으로 재구성.",
       "pitfall": "AI 특유의 클리셰 표현이 너무 많으면 변별력 ↓. 사람 검토로 개인 색깔 보강."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_013",
@@ -2119,7 +2191,8 @@
       ],
       "practical": "BI(Tableau·PowerBI) + LLM 코멘트 생성 통합. 결과는 검증 후 슬랙·이메일 자동 배포.",
       "pitfall": "데이터 권한·민감도 분리. 외부 LLM에 매출 원본 그대로 보내는 건 정보 유출."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_014",
@@ -2148,7 +2221,8 @@
       ],
       "practical": "Westlaw, Harvey, Spellbook 등 법률 전문 AI도 모두 'attorney review required'를 명시.",
       "pitfall": "AI가 만든 조항이 한국법과 안 맞을 수 있음(영미법 기반 학습 비중↑). 국내법 관할 명확화 필요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_015",
@@ -2177,7 +2251,8 @@
       ],
       "practical": "식약처 'AI 의료기기 가이드라인' 준수. 진단형 AI는 의료기기 인허가 필수.",
       "pitfall": "정보 제공과 의료 행위의 경계가 모호 — 법무·식약처 사전 검토 권장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_016",
@@ -2206,7 +2281,8 @@
       ],
       "practical": "채용 AI는 정기 감사·결과 모니터링·인간 최종 결정·지원자 권리 고지 필수.",
       "pitfall": "Amazon 채용 AI 사례: 과거 데이터의 남성 편향 학습으로 폐기. 한국에서도 차별 발생 시 법적 분쟁 위험."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_017",
@@ -2234,7 +2310,8 @@
       ],
       "practical": "Midjourney·DALL-E·Flux: 길고 구조화된 프롬프트가 효과적. Stable Diffusion: 가중치 문법 활용.",
       "pitfall": "특정 작가·캐릭터 스타일 모방은 저작권·퍼블리시티권 분쟁 위험. 'in the style of [살아있는 작가]' 사용 자제."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_018",
@@ -2263,7 +2340,8 @@
       ],
       "practical": "ElevenLabs·Resemble AI 모두 본인 음성 검증·동의 절차 보유. 상업적 사용 계약 별도.",
       "pitfall": "성우 더빙을 AI로 대체할 때 노동 윤리·계약 분쟁. 업계 가이드라인(예: SAG-AFTRA AI 협약) 동향 주시."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_019",
@@ -2291,7 +2369,8 @@
       ],
       "practical": "AI 스크립트 + B-roll 자동 매칭(Runway·Pictory) + AI 음성(ElevenLabs) = 완성도 ↑.",
       "pitfall": "AI 자동화 영상이 플랫폼 정책에 의해 강등될 수 있음(YouTube: AI 콘텐츠 라벨 의무 강화)."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g3_020",
@@ -2319,7 +2398,8 @@
       ],
       "practical": "AI 번역 + 현지 검토자(Native LQA) + 시장별 A/B 테스트 = 표준 흐름.",
       "pitfall": "AI 번역이 외래어 그대로 두는 경우 많음(예: 'CTA'를 '클릭 유도'로 풀어주지 못함). 용어집·스타일 가이드 제공이 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_011",
@@ -2348,7 +2428,8 @@
       ],
       "practical": "OpenAI·Anthropic 유럽 사용자에게 데이터 처리·국외 이전 고지. 기업 이용 시 DPA(Data Processing Agreement) 체결.",
       "pitfall": "GDPR 위반 과징금 = 전 세계 매출의 4% 또는 €2천만 중 큰 금액. 글로벌 서비스는 사전 컴플라이언스 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_012",
@@ -2376,7 +2457,8 @@
       ],
       "practical": "AI 신용평가·채용·복지 결정 등은 자동결정 통지·설명·인간 검토 요구 절차 마련 필수.",
       "pitfall": "사용자 데이터를 모델 학습에 활용하려면 별도 동의·옵트아웃 제공이 안전."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_013",
@@ -2407,7 +2489,8 @@
       ],
       "practical": "기업 학습 시 라이선스·CC·OPT-OUT(robots.txt, ai.txt) 존중. Common Crawl·LAION 등은 출처 확인 필수.",
       "pitfall": "Getty 워터마크가 그대로 생성되는 사례 등 침해 증거가 노출되면 분쟁 패소 위험."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_014",
@@ -2436,7 +2519,8 @@
       ],
       "practical": "Google SynthID(부분 강건), Adobe Content Credentials(C2PA), 출처 다층 검증 결합 필요.",
       "pitfall": "탐지기가 사람 글을 'AI 생성'으로 오판하는 사례 다수. 학사 부정 등에 탐지기 단독 증거 사용은 위험."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_015",
@@ -2466,7 +2550,8 @@
       ],
       "practical": "Lunit·Vuno 등 의료 AI 기업은 모두 식약처·FDA 인허가 후 상용. 처방은 의사 최종 권한.",
       "pitfall": "건강 정보 챗봇이 진단·치료 권유에 가까워지면 의료기기 분류 위험. 사전 법무 검토 필요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_016",
@@ -2495,7 +2580,8 @@
       ],
       "practical": "기업: AI 도입 + 재교육·역할 재설계 병행. 일방적 인력 감축은 사기·법적 분쟁 위험.",
       "pitfall": "AI에 의존도가 너무 높아지면 인간 전문성 저하('deskilling') 위험 — 검증 능력 유지를 위한 훈련 필요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_017",
@@ -2525,7 +2611,8 @@
       ],
       "practical": "Google·MS·Anthropic 등 데이터센터 재생에너지 PPA·물 사용 보고서 발간. ESG 공시 요구 증가.",
       "pitfall": "Scope 3 (간접 배출)에 AI API 사용이 포함될 수 있음 — 기업 탄소 보고에 반영."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_018",
@@ -2554,7 +2641,8 @@
       ],
       "practical": "선거 시기 SNS 콘텐츠는 'AI 합성 여부' 라벨 의무. 플랫폼 모니터링·신고 체계 강화.",
       "pitfall": "정상적 풍자·패러디와 악의적 조작의 경계가 모호 — 표현의 자유와 균형이 어려운 영역."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_019",
@@ -2583,7 +2671,8 @@
       ],
       "practical": "Character.AI·Replika 등 챗봇 안전 사고 이후 미성년 보호 강화 움직임. 한국 개정 개인정보보호법도 만 14세 미만 별도 동의 강화.",
       "pitfall": "연령 자기 신고만 믿으면 우회 쉬움 — 추가 검증·맥락 기반 위험 신호 모니터링."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g4_020",
@@ -2610,7 +2699,8 @@
       ],
       "practical": "Anthropic, OpenAI, Google DeepMind 모두 출시 전·후 red team 수행. UK AISI·US AISI 정부 평가도 진행.",
       "pitfall": "내부 red team만으로는 사각지대 — 외부 전문가·버그 바운티 병행 권장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_011",
@@ -2640,7 +2730,8 @@
       ],
       "practical": "제조업 매뉴얼·의료 영상·CAD 도면 검색 등에 효과적.",
       "pitfall": "OCR 품질·캡션 정확도가 검색 품질을 결정 — 도메인별 평가셋 구축 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_012",
@@ -2668,7 +2759,8 @@
       ],
       "practical": "GitHub Copilot Code Review, Cursor Bugbot, Sourcegraph Cody. 정책으로 외부 LLM 전송 코드 범위 명시.",
       "pitfall": "AI 리뷰가 자잘한 코멘트로 노이즈를 만들 수 있음 — 심각도 임계값 설정으로 필터링."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_013",
@@ -2696,7 +2788,8 @@
       ],
       "practical": "Detect 모델(fastText·CLD3·LLM) + 시스템 프롬프트 internationalization + 면책 다국어화.",
       "pitfall": "혼합 언어(코드 스위칭) 입력 처리·언어별 톤 차이·금기어 차이 사전 점검."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_014",
@@ -2725,7 +2818,8 @@
       ],
       "practical": "'생명 위험 키워드 사전'·LLM 분류기로 위험 신호 감지 → 응급 응답 템플릿 자동 트리거.",
       "pitfall": "맥락 없는 키워드 매칭은 오탐 가능 — LLM 의도 분류 + 키워드 결합 권장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_015",
@@ -2754,7 +2848,8 @@
       ],
       "practical": "Khan Academy의 Khanmigo, MathGPT 등이 유사 패턴.",
       "pitfall": "AI가 '쉽게 정답을 주는' 의존성 형성 위험 — 단계별 힌트·소크라테스식 질문 권장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_016",
@@ -2783,7 +2878,8 @@
       ],
       "practical": "CDP(Customer Data Platform)에 동의 상태 컬럼 유지·옵트아웃 즉시 반영.",
       "pitfall": "AI 개인화가 너무 노골적이면 'creepy' UX. 적당한 변별력·옵트아웃 가시화."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_017",
@@ -2812,7 +2908,8 @@
       ],
       "practical": "사전 정책: 외부 챗봇 사용 가능 범위 명문화·DLP 도구·사내 승인 AI 대체 제공.",
       "pitfall": "로그 임의 삭제는 증거 인멸·처벌 가중. 사고 대응 매뉴얼·법무 라인 사전 정비 필요."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_018",
@@ -2843,7 +2940,8 @@
       ],
       "practical": "동일 프롬프트가 모델 간에 다르게 동작 — 특히 시스템 프롬프트 길이·tool use 동작 차이 큼.",
       "pitfall": "고객 응답 톤이 미묘하게 바뀌어 CS 컴플레인 증가 가능 — 사람 검수 필수."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_019",
@@ -2873,7 +2971,8 @@
       ],
       "practical": "하이브리드 전략: 민감 작업 온프렘 + 일반 작업 API 혼용.",
       "pitfall": "GPU·운영 인력 비용을 과소평가하기 쉬움 — 1년 TCO로 비교 권장."
-    }
+    },
+    "mockSet": "mock2"
   },
   {
     "id": "aipot_g5_020",
@@ -2902,6 +3001,1484 @@
       ],
       "practical": "Anthropic Evals, OpenAI Evals, Promptfoo, LangSmith. CI에 회귀 게이트로 연결.",
       "pitfall": "평가셋이 학습 데이터·운영 트래픽에 누출되면 'overfit'. 평가용 별도 잠금 운영."
-    }
+    },
+    "mockSet": "mock2"
+  },
+  {
+    "id": "aipot_g1_021",
+    "subject": "G1",
+    "topic": "ConstitutionalAI",
+    "tags": [
+      "Constitutional AI",
+      "정렬",
+      "AI원칙"
+    ],
+    "difficulty": "상",
+    "question": "Anthropic의 Constitutional AI(CAI) 접근의 핵심으로 가장 적절한 것은?",
+    "options": {
+      "A": "사전 정의된 원칙(헌법)에 따라 모델이 자기 응답을 비판·수정하도록 학습한다",
+      "B": "사람이 모든 응답을 일일이 검수해 직접 라벨링한다",
+      "C": "모델 파라미터 수를 줄여 환각을 자동으로 0으로 만든다",
+      "D": "응답을 무작위로 생성하여 다양성을 확보한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "Constitutional AI는 'AI에게 헌법(원칙)을 주고 그 기준으로 자기 답을 비판·수정하게 가르치는' 방법이에요. RLHF가 사람 피드백에 의존한다면, CAI는 명시적 원칙으로 자기 정렬합니다.",
+      "steps": [
+        "1) 원칙(harmless·honest·helpful 등) 정의",
+        "2) 모델이 응답 생성 → 원칙 기준 자기 비평 → 수정안",
+        "3) 수정안 데이터로 학습 (RLAIF로 확장)",
+        "A 선택"
+      ],
+      "practical": "Claude 시리즈의 안전 정렬 핵심 방법론. 원칙은 공개되어 검토 가능 → 투명성↑.",
+      "pitfall": "원칙 자체에 편향이 있으면 그대로 학습. 원칙의 가치관·문화권을 검토하는 메타 절차 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_022",
+    "subject": "G1",
+    "topic": "MCP",
+    "tags": [
+      "MCP",
+      "Model Context Protocol",
+      "표준"
+    ],
+    "difficulty": "상",
+    "question": "MCP(Model Context Protocol)의 주된 목적으로 가장 적절한 것은?",
+    "options": {
+      "A": "LLM이 외부 데이터·도구에 접근하는 방식을 표준화하여 통합 비용을 낮춘다",
+      "B": "모델 파라미터를 압축한다",
+      "C": "사용자 인터페이스 디자인 표준을 정의한다",
+      "D": "GPU 드라이버를 자동 업데이트한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "MCP는 'AI ↔ 도구·데이터' 사이의 표준 케이블이에요. 각 도구마다 다른 방식으로 연결하지 않고 표준 프로토콜 하나로 묶어 통합 비용을 크게 낮춥니다.",
+      "steps": [
+        "MCP 서버: 도구·자원·프롬프트를 표준 인터페이스로 노출",
+        "MCP 클라이언트: 다양한 LLM·앱이 동일 프로토콜로 연결",
+        "A 선택"
+      ],
+      "practical": "Anthropic 주도 오픈 표준, Claude Desktop·Cursor·VS Code 확장에 채택 확대 중.",
+      "pitfall": "권한·인증 설계는 MCP 자체가 해결해 주지 않음. 보안은 서버 구현에 위임."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_023",
+    "subject": "G1",
+    "topic": "프롬프트캐싱",
+    "tags": [
+      "prompt caching",
+      "비용절감",
+      "Anthropic"
+    ],
+    "difficulty": "중",
+    "question": "Prompt Caching(프롬프트 캐싱)의 효과로 가장 적절한 것은?",
+    "options": {
+      "A": "반복 사용되는 시스템 프롬프트·문서를 캐시해 입력 토큰 비용·지연을 크게 줄인다",
+      "B": "응답을 항상 동일한 텍스트로 강제한다",
+      "C": "모델의 학습 데이터를 변경한다",
+      "D": "사용자 비밀번호를 자동 저장한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "긴 시스템 프롬프트·매뉴얼을 매번 보내면 토큰 비용 폭증. Prompt Caching은 그걸 모델 측에 캐시해 두고 변하지 않은 부분의 비용을 90% 가까이 절감합니다.",
+      "steps": [
+        "캐시 가능: 시스템 프롬프트·few-shot 예시·문서·툴 정의",
+        "Anthropic·OpenAI 모두 지원 (자동/수동 차이)",
+        "A 선택"
+      ],
+      "practical": "사내 챗봇처럼 같은 시스템 프롬프트가 매 호출 동일하면 캐싱 적용으로 비용 대폭 절감.",
+      "pitfall": "캐시 TTL·최소 토큰 임계값이 있어 너무 짧거나 자주 바뀌는 프롬프트는 캐시 미스. 모델 변경 시 캐시 무효화."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_024",
+    "subject": "G1",
+    "topic": "토큰비용구조",
+    "tags": [
+      "input token",
+      "output token",
+      "과금"
+    ],
+    "difficulty": "중",
+    "question": "LLM API의 토큰 과금 구조에 대한 설명으로 가장 적절한 것은?",
+    "options": {
+      "A": "일반적으로 출력 토큰이 입력 토큰보다 단가가 높고, 합산해 청구된다",
+      "B": "입력 토큰만 과금되고 출력은 무료이다",
+      "C": "출력 토큰만 과금되고 입력은 무료이다",
+      "D": "토큰 수와 무관하게 호출 횟수로만 과금된다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "API는 보통 '입력 1M토큰당 X달러, 출력 1M토큰당 Y달러'로 계산해요. 출력이 더 비싼 게 일반적(생성 비용↑).",
+      "steps": [
+        "입력가 < 출력가 (일반)",
+        "캐시된 입력은 더 저렴",
+        "A 선택"
+      ],
+      "practical": "예: Claude Sonnet 4.6 입력 $3/M, 출력 $15/M (대략). 응답 길이를 제어하면 비용 절감.",
+      "pitfall": "max_tokens를 무제한으로 두면 의도치 않은 긴 응답으로 비용 폭증. 출력 길이 제한·구조화 강제 권장."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_025",
+    "subject": "G1",
+    "topic": "Streaming흐름",
+    "tags": [
+      "SSE",
+      "streaming",
+      "프로토콜"
+    ],
+    "difficulty": "중",
+    "question": "LLM 스트리밍 응답에 일반적으로 사용되는 전송 프로토콜은?",
+    "options": {
+      "A": "Server-Sent Events(SSE) — 텍스트 청크를 한 방향으로 점진 전송",
+      "B": "FTP — 파일 전체를 일괄 전송",
+      "C": "SMTP — 이메일 전송",
+      "D": "ICMP — 핑(ping) 패킷"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "스트리밍 표준은 SSE예요. 서버가 'data: ...'를 청크 단위로 보내고 클라이언트는 받는 대로 화면에 표시합니다.",
+      "steps": [
+        "SSE: HTTP 위 텍스트 청크 스트림",
+        "대안: WebSocket(양방향)",
+        "A 선택"
+      ],
+      "practical": "OpenAI·Anthropic·Google 모두 SSE 기반 스트리밍 제공.",
+      "pitfall": "프록시·CDN이 응답 버퍼링하면 스트리밍 효과 상실. Nginx·CF 설정에서 chunked 응답 허용 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_026",
+    "subject": "G1",
+    "topic": "멀티에이전트",
+    "tags": [
+      "multi-agent",
+      "협업",
+      "오케스트레이션"
+    ],
+    "difficulty": "상",
+    "question": "멀티 에이전트 시스템(Multi-Agent System)의 일반적 구성 패턴은?",
+    "options": {
+      "A": "오케스트레이터가 역할별 에이전트(연구·작성·검수 등)에게 하위 작업을 분배·조정한다",
+      "B": "단 하나의 에이전트가 모든 작업을 수행한다",
+      "C": "사용자가 모든 에이전트를 동시에 직접 조작한다",
+      "D": "에이전트끼리 통신할 수 없는 격리 구조이다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "멀티 에이전트는 '팀 작업'이에요. 매니저(오케스트레이터)가 역할별 에이전트(리서처·라이터·검수자 등)에게 일을 분담하고 결과를 종합합니다.",
+      "steps": [
+        "역할 분담: Planner, Researcher, Writer, Critic, Executor",
+        "조정: 오케스트레이터 또는 그래프(LangGraph) 기반",
+        "A 선택"
+      ],
+      "practical": "Claude Devin, AutoGen, CrewAI, OpenAI Swarm 등 프레임워크.",
+      "pitfall": "에이전트 수가 늘면 토큰 비용·지연·복잡도 폭증. 단순 작업은 단일 에이전트가 더 효율적."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_027",
+    "subject": "G1",
+    "topic": "임베딩차원",
+    "tags": [
+      "embedding dimension",
+      "정규화",
+      "차원"
+    ],
+    "difficulty": "상",
+    "question": "임베딩 차원(예: 1536·3072)의 의미와 차원 축소에 대한 설명으로 옳은 것은?",
+    "options": {
+      "A": "차원이 클수록 표현력은 풍부하지만 저장·검색 비용도 커지며, Matryoshka 등 차원 축소 기법으로 일부 줄일 수 있다",
+      "B": "차원은 항상 1536으로 고정되어 있다",
+      "C": "차원은 모델 응답 속도와 완전히 동일하다",
+      "D": "차원 축소는 절대 불가능하다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "차원은 임베딩 벡터의 '길이'예요. 길수록 표현 풍부 + 비용 큼. Matryoshka 학습은 한 임베딩을 여러 길이로 자를 수 있게 만들어 비용과 성능을 절충합니다.",
+      "steps": [
+        "차원 ↑ → 표현력 ↑·저장 ↑",
+        "Matryoshka: 1536 → 512로 잘라도 성능 유지",
+        "A 선택"
+      ],
+      "practical": "OpenAI text-embedding-3-large(3072), Cohere embed v3(1024). 벡터DB 용량·성능 따라 축소.",
+      "pitfall": "임베딩 모델 바꾸면 차원·분포가 달라 전체 재인덱싱 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_028",
+    "subject": "G1",
+    "topic": "ContextCaching",
+    "tags": [
+      "context caching",
+      "Anthropic",
+      "비용"
+    ],
+    "difficulty": "상",
+    "question": "Context Caching과 Prompt Caching의 관계로 가장 적절한 것은?",
+    "options": {
+      "A": "둘 다 같은 입력의 반복 처리를 줄이는 캐싱 기법이며, 벤더에 따라 명칭·세부 동작이 다르다",
+      "B": "Context Caching은 모델 학습 데이터를 영구 저장한다",
+      "C": "두 기법은 정반대 효과를 낸다",
+      "D": "Context Caching은 사용자 비밀번호 캐싱이다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "Google·Anthropic·OpenAI가 비슷한 캐싱 기능을 각자 이름으로 부르고 있어요. 본질은 '같은 큰 입력을 재사용해 비용·지연 절감'.",
+      "steps": [
+        "Google: Context Caching API",
+        "Anthropic: Prompt Caching",
+        "OpenAI: Prompt Caching (자동)",
+        "A 선택"
+      ],
+      "practical": "긴 매뉴얼·코드베이스·정책 문서를 반복 호출에 재사용할 때 효과 큼.",
+      "pitfall": "TTL·최소 크기·캐시 키 동작이 벤더마다 달라 마이그레이션 시 비용 모델 재검토 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_029",
+    "subject": "G1",
+    "topic": "데이터큐레이션",
+    "tags": [
+      "data curation",
+      "학습데이터",
+      "품질"
+    ],
+    "difficulty": "중",
+    "question": "LLM 미세조정용 데이터 큐레이션 원칙으로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "고품질·다양성·일관된 포맷을 우선하고 중복·노이즈를 제거",
+      "B": "라벨 품질을 정기적으로 감사·재검토",
+      "C": "민감 정보·저작권 위반 자료를 필터링",
+      "D": "데이터 양만을 기준으로 무제한 수집하고 검토는 생략"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "학습 데이터는 '양'보다 '품질'이에요. 노이즈가 많으면 모델이 잘못 배우고, 저작권·민감 정보를 거르지 않으면 법적 위험이 따라옵니다.",
+      "steps": [
+        "원칙: 품질·다양성·법적합성·라벨 감사",
+        "D: '검토 생략' → 적절치 않음",
+        "→ D"
+      ],
+      "practical": "LIMA(2023) 연구: 잘 큐레이션된 1,000건이 무선별 수만 건보다 우수 결과.",
+      "pitfall": "사람 라벨러의 일관성 부족이 가장 큰 노이즈 원인 — 라벨링 가이드·합의율(IAA) 관리 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g1_030",
+    "subject": "G1",
+    "topic": "SystemCard",
+    "tags": [
+      "system card",
+      "transparency",
+      "보고서"
+    ],
+    "difficulty": "중",
+    "question": "Model Card와 System Card의 차이로 가장 적절한 것은?",
+    "options": {
+      "A": "Model Card는 모델 자체 문서, System Card는 모델을 포함한 전체 시스템(파이프라인·정책·평가) 문서",
+      "B": "두 용어는 완전히 동일하다",
+      "C": "Model Card는 사용자 매뉴얼, System Card는 광고 자료이다",
+      "D": "System Card는 모델 학습 데이터를 모두 공개하는 문서이다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "Model Card는 '모델 하나'에 대한 설명서, System Card는 '제품 전체(모델+가드레일+평가+정책)'를 한꺼번에 다루는 더 큰 범위의 문서예요.",
+      "steps": [
+        "Model Card: 학습·평가·한계",
+        "System Card: 모델 + 정책 + 시스템 평가 + 위험 분석",
+        "A 선택"
+      ],
+      "practical": "OpenAI GPT-5 System Card, Anthropic Claude 시리즈 System Card 공개 사례.",
+      "pitfall": "공개 범위·세부도는 벤더 정책. 기업 도입 시 시스템 카드 + 자체 평가가 함께 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_021",
+    "subject": "G2",
+    "topic": "XML태그",
+    "tags": [
+      "XML",
+      "Anthropic",
+      "구조화프롬프트"
+    ],
+    "difficulty": "중",
+    "question": "Claude 등에 자주 권장되는 XML 태그 활용 프롬프트의 이점은?",
+    "options": {
+      "A": "지시·예시·입력 데이터·출력 형식을 구분해 모델이 섹션을 안정적으로 인식하게 한다",
+      "B": "응답을 항상 XML로만 강제한다",
+      "C": "프롬프트 토큰을 항상 절반으로 줄인다",
+      "D": "모델의 학습 데이터를 자동 갱신한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "<instruction>, <example>, <input>처럼 섹션을 명확히 묶어주면 모델이 '이건 예시·이건 실제 입력'을 정확히 구분합니다. Anthropic 공식 가이드의 표준 패턴.",
+      "steps": [
+        "효과: 섹션 식별·예시-실제 혼동 방지·재사용성↑",
+        "A 선택"
+      ],
+      "practical": "<context>...</context><task>...</task><format>...</format> 패턴이 매우 효과적.",
+      "pitfall": "XML 태그라고 응답이 XML이 되는 건 아님. 출력 형식은 별도로 지시."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_022",
+    "subject": "G2",
+    "topic": "NegativePrompting",
+    "tags": [
+      "negative prompt",
+      "금지지시"
+    ],
+    "difficulty": "중",
+    "question": "Negative Prompting(금지 지시)의 효과적 활용법으로 가장 적절한 것은?",
+    "options": {
+      "A": "'하지 마' 대신 '대신 무엇을 하라'를 함께 제시하면 모델 준수율이 높아진다",
+      "B": "어떤 경우에도 금지 지시는 모델에 영향을 주지 못한다",
+      "C": "금지 지시는 한 번에 50개 이상 나열하는 게 효과적이다",
+      "D": "긍정 지시 없이 금지만 잔뜩 나열한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "'코드 블록 쓰지 마' 같은 단독 부정문보다 'JSON만 출력, 코드 블록은 쓰지 마' 같은 'do + don't' 쌍이 훨씬 잘 지켜집니다. 대안 제시가 핵심.",
+      "steps": [
+        "패턴: '대신 X를 하라 + Y는 하지 마라'",
+        "A 선택"
+      ],
+      "practical": "고객센터 톤 가이드: '비격식 표현 금지 → 정중한 존댓말 사용'.",
+      "pitfall": "부정만 나열하면 모델이 우회하거나 무시. 긍정 대안과 짝 제시."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_023",
+    "subject": "G2",
+    "topic": "PromptVersioning",
+    "tags": [
+      "versioning",
+      "ab test",
+      "운영"
+    ],
+    "difficulty": "중",
+    "question": "운영 프롬프트의 버전 관리에 대한 설명으로 가장 적절한 것은?",
+    "options": {
+      "A": "코드처럼 Git/저장소에 버전을 두고 변경 이력·평가 결과·롤백 절차를 관리한다",
+      "B": "프롬프트는 변경하지 않고 그대로 유지한다",
+      "C": "변경 후 평가 없이 즉시 전 사용자에게 배포한다",
+      "D": "버전 관리는 코드에만 해당되며 프롬프트는 해당 사항 없다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "프롬프트는 '코드'와 같아요. 누가 언제 왜 바꿨는지, 변경 후 평가는 어땠는지 추적해야 회귀를 막을 수 있습니다.",
+      "steps": [
+        "관리: Git 저장·평가 결과 연결·점진 롤아웃·롤백 키",
+        "A 선택"
+      ],
+      "practical": "Anthropic Workbench, LangSmith, Helicone 등 도구.",
+      "pitfall": "프롬프트만 바꾸고 모델·temperature·시스템 메시지도 동시에 변경하면 어느 변수가 원인인지 추적 불가."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_024",
+    "subject": "G2",
+    "topic": "ABTest",
+    "tags": [
+      "A/B test",
+      "evaluation",
+      "통계"
+    ],
+    "difficulty": "상",
+    "question": "프롬프트 A/B 테스트를 운영 환경에서 진행할 때 가장 적절하지 않은 접근은?",
+    "options": {
+      "A": "트래픽을 분할하고 동일 사용자에게는 동일 변형이 노출되도록 일관성 보장",
+      "B": "결과 지표(정답률·만족도·CSAT·전환율)를 사전에 정의",
+      "C": "통계적 유의성 충족 전에 변형을 채택하지 않는다",
+      "D": "한 사용자에게 매 호출마다 변형을 무작위로 바꿔 일관성 없는 응답을 제공"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "같은 사용자에게 매번 답이 달라지면 신뢰가 깨지고 실험 결과도 오염돼요. 사용자별로 한 변형 고정이 표준입니다.",
+      "steps": [
+        "사용자 단위 무작위 배정 (sticky)",
+        "지표·기간·표본 크기 사전 설계",
+        "D: '매 호출 무작위' → 부적절",
+        "→ D"
+      ],
+      "practical": "Hash(user_id) % 100으로 그룹 결정. Statsig·GrowthBook 등 활용.",
+      "pitfall": "Novelty effect(초기 호기심)·계절성·외부 사건이 결과 오염 — 충분한 기간·동시 비교 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_025",
+    "subject": "G2",
+    "topic": "SafetyGuard",
+    "tags": [
+      "refusal",
+      "safety",
+      "거절처리"
+    ],
+    "difficulty": "상",
+    "question": "사용자 요청이 안전 정책에 위배될 때 LLM 챗봇의 권장 응답 패턴은?",
+    "options": {
+      "A": "정중히 거절 + 거절 사유 간단 설명 + 대안 안내",
+      "B": "사용자 ID를 외부에 공개한다",
+      "C": "거절 사유 없이 무응답으로 처리",
+      "D": "위배 요청을 그대로 수행한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "안전 위배 요청에는 '죄송하지만 X는 도와드릴 수 없어요. 대신 Y는 가능합니다' 패턴이 표준입니다. 무응답·과한 설교 모두 비권장.",
+      "steps": [
+        "정중한 거절 → 핵심 사유 → 가능한 대안",
+        "A 선택"
+      ],
+      "practical": "OpenAI·Anthropic 시스템 가이드: 'soft refusal' 권장. 사용자 좌절 최소화.",
+      "pitfall": "과한 거절(over-refusal) = 사용자 불만. 너무 짧은 거절 = 설명 부족. 균형 학습 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_026",
+    "subject": "G2",
+    "topic": "도메인페르소나",
+    "tags": [
+      "domain persona",
+      "전문가",
+      "specialization"
+    ],
+    "difficulty": "중",
+    "question": "도메인 특화 페르소나 프롬프트의 효과로 가장 적절한 것은?",
+    "options": {
+      "A": "용어·관점·세부도가 해당 분야에 맞춰져 응답 적합성이 높아진다",
+      "B": "모델의 학습 데이터를 자동으로 그 분야로 교체한다",
+      "C": "응답 정확도를 100% 보장한다",
+      "D": "모든 분야에서 동일한 응답이 나온다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "'당신은 한국 세법 전문 회계사'라고 시작하면 응답에 한국 세법 용어·근거·실무 관점이 자연스럽게 들어옵니다.",
+      "steps": [
+        "효과: 용어·관점·구조 정렬",
+        "A 선택"
+      ],
+      "practical": "분야별 시스템 프롬프트 라이브러리를 운영해 호출 시 자동 주입.",
+      "pitfall": "페르소나만으론 사실성 보장 X — RAG·전문가 검수 보완 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_027",
+    "subject": "G2",
+    "topic": "페르소나충돌",
+    "tags": [
+      "persona conflict",
+      "instruction priority"
+    ],
+    "difficulty": "상",
+    "question": "시스템 페르소나와 사용자 요청이 충돌할 때 일반적인 처리 우선순위는?",
+    "options": {
+      "A": "시스템(개발자 정의) > 사용자 요청 — 단, 사용자 안전·법규는 어떤 페르소나보다 우선",
+      "B": "사용자 요청이 시스템보다 항상 우선한다",
+      "C": "AI가 무작위로 결정한다",
+      "D": "충돌 시 어떤 응답도 하지 않는다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "원칙은 '시스템 > 사용자'예요. 하지만 사용자가 위급 도움을 요청하거나 법적·안전 의무 사항이라면 페르소나를 넘어서 처리해야 합니다.",
+      "steps": [
+        "OpenAI 모델 스펙·Anthropic 정책 모두 유사 위계",
+        "예외: 안전·응급·법적 의무",
+        "A 선택"
+      ],
+      "practical": "시스템 프롬프트로 페르소나·금지·우회 시 거절을 상세 정의하면 안정.",
+      "pitfall": "Jailbreak 시도(이전 지시 무시 등)를 시스템 레벨에서 차단 — 단일 시스템 메시지만으론 우회 가능."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_028",
+    "subject": "G2",
+    "topic": "출력스키마마이그",
+    "tags": [
+      "output schema",
+      "버전관리"
+    ],
+    "difficulty": "상",
+    "question": "출력 스키마(JSON)를 변경할 때 안전한 마이그레이션 방법은?",
+    "options": {
+      "A": "버전 필드 추가(v: 1→2) + 양쪽 호환 처리 → 점진 전환 → 구버전 폐기",
+      "B": "공지 없이 전체 사용자에게 즉시 변경",
+      "C": "이전 클라이언트와의 호환을 고려하지 않는다",
+      "D": "필드 이름을 무작위로 매번 바꾼다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "API 버저닝과 같아요. JSON 응답에 v 필드를 두고 신·구 양쪽을 일정 기간 지원 후 구버전을 일몰합니다.",
+      "steps": [
+        "1) 새 스키마 도입(병행)",
+        "2) 클라이언트 점진 마이그",
+        "3) 구 스키마 일몰",
+        "A 선택"
+      ],
+      "practical": "OpenAPI/Pydantic 스키마 + 버전 헤더로 관리.",
+      "pitfall": "한 번에 깨는 변경(breaking change)은 운영 사고. 변경 영향도 평가 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_029",
+    "subject": "G2",
+    "topic": "멀티턴메모리",
+    "tags": [
+      "memory",
+      "summary",
+      "long context"
+    ],
+    "difficulty": "중",
+    "question": "장기 멀티턴 대화에서 메모리 관리에 일반적으로 사용되는 패턴이 아닌 것은?",
+    "options": {
+      "A": "Sliding Window — 최근 N 메시지만 유지",
+      "B": "Summary Memory — 오래된 메시지를 요약해 압축",
+      "C": "Vector Memory — 의미 검색으로 관련 과거 메시지 회수",
+      "D": "Crash Memory — 응답 실패 시 사용자 PC를 강제 종료"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "Sliding Window·Summary·Vector 메모리는 모두 표준 패턴. 'Crash Memory'는 존재하지 않는 단어이고 사용자 PC 종료는 어떤 정상 시스템도 하지 않습니다.",
+      "steps": [
+        "표준 메모리: Window / Summary / Vector / Knowledge",
+        "D는 가짜",
+        "→ D"
+      ],
+      "practical": "LangChain Memory·LlamaIndex Chat Engine·Claude Projects 등이 위 패턴 조합.",
+      "pitfall": "메모리 압축에서 핵심 사실이 사라질 위험 — 'pinned facts' 영역을 따로 두는 게 안전."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g2_030",
+    "subject": "G2",
+    "topic": "프롬프트보안",
+    "tags": [
+      "jailbreak",
+      "prompt leak",
+      "방어"
+    ],
+    "difficulty": "상",
+    "question": "프롬프트 누출(Prompt Leak)·탈옥(Jailbreak)에 대한 일반적 방어책으로 적절하지 않은 것은?",
+    "options": {
+      "A": "민감 시스템 프롬프트를 모델 외부 게이트(필터·룰)로 추가 보호",
+      "B": "위험 작업은 모델 단독 결정 대신 사람·정책 게이트에 통과시킴",
+      "C": "사용자 입력 검증·이상 패턴 탐지·로그 모니터링",
+      "D": "시스템 프롬프트 한 줄로 '절대 비밀'이라고 적어두면 어떤 우회도 막힌다"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "'비밀이야'라고만 적은 시스템 프롬프트는 다양한 우회 기법으로 쉽게 공개돼요. 모델 자체의 거절 능력에만 의존하지 말고 외부 게이트로 보호하는 게 표준.",
+      "steps": [
+        "올바른 방어: 다층 방어 + 모니터링 + 사람 게이트",
+        "D: '한 줄로 절대 안전' → 거짓",
+        "→ D 적절치 않음"
+      ],
+      "practical": "Anthropic·OpenAI 공식 가이드 모두 '시스템 프롬프트는 비밀이 아닐 수 있다고 가정'.",
+      "pitfall": "민감 정보(키·내부 URL)는 절대 시스템 프롬프트에 넣지 말고 도구·환경변수로 분리."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_021",
+    "subject": "G3",
+    "topic": "검색요약",
+    "tags": [
+      "search",
+      "summarization",
+      "perplexity"
+    ],
+    "difficulty": "중",
+    "question": "검색 결과를 LLM이 요약·답변하는 'AI 검색 어시스턴트' 설계에서 가장 중요한 요소는?",
+    "options": {
+      "A": "출처 인용·근거 표기·시점 정보로 답변의 검증 가능성을 보장",
+      "B": "출처 없이 매끄러운 문장만 제공",
+      "C": "검색 결과를 무시하고 모델 내부 지식만 사용",
+      "D": "사용자 신원을 외부에 공개"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "AI 검색의 신뢰는 '출처'에서 옵니다. Perplexity·You.com·Copilot 모두 답변마다 출처 링크를 표기해요. 검증 가능성이 핵심 가치.",
+      "steps": [
+        "필수: 출처 URL·발행일·인용 문구",
+        "A 선택"
+      ],
+      "practical": "RAG + 검색 인덱스 + 인라인 인용. 사용자는 답변 + 클릭으로 원문 확인.",
+      "pitfall": "AI가 출처를 명시했지만 실제 출처 내용과 다른 경우 — 인용 정확도 모니터링 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_022",
+    "subject": "G3",
+    "topic": "데이터시각화",
+    "tags": [
+      "visualization",
+      "차트",
+      "BI"
+    ],
+    "difficulty": "중",
+    "question": "AI에게 데이터 시각화를 맡길 때 효과적인 프롬프트 요소는?",
+    "options": {
+      "A": "데이터 구조·전달하려는 메시지·청중·매체(인쇄/웹)·차트 유형 후보를 명시",
+      "B": "'예쁘게 차트 만들어줘'",
+      "C": "데이터 없이 시각화만 요청",
+      "D": "색맹·접근성을 무시한 강한 빨강·초록 조합"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "시각화는 '이 데이터로 어떤 메시지를 누구에게 전달할지'에 따라 차트 종류·색·구도가 달라져요. 정보가 많을수록 더 적절한 결과가 나옵니다.",
+      "steps": [
+        "필수: 데이터·메시지·청중·매체·접근성",
+        "A 선택"
+      ],
+      "practical": "Vega-Lite·matplotlib·D3 코드 생성을 LLM에게 시키되 실제 렌더는 코드 실행 환경에서.",
+      "pitfall": "색맹 친화 팔레트(Tableau 10 등) 명시, 축 단위·기준선 누락 주의."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_023",
+    "subject": "G3",
+    "topic": "회의진행",
+    "tags": [
+      "meeting",
+      "facilitation",
+      "real-time"
+    ],
+    "difficulty": "중",
+    "question": "실시간 회의 보조 AI(아젠다 관리·요약·액션 추출)의 가장 적절한 활용법은?",
+    "options": {
+      "A": "참석자 동의·녹취 고지 후 STT + LLM이 아젠다·결정·액션을 실시간 정리하고 끝나면 검토",
+      "B": "참석자 동의 없이 비밀 녹음",
+      "C": "AI가 회의 진행을 강제로 가로채 결정 권한을 행사",
+      "D": "회의 후 결과를 외부에 공개"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "회의 보조는 '동의·고지·녹취·정리·검토'가 표준이에요. 참석자에게 미리 알리는 게 법적·윤리적으로도 필수.",
+      "steps": [
+        "동의 → 녹음·STT → 실시간 정리 → 종료 후 검토",
+        "A 선택"
+      ],
+      "practical": "Zoom AI Companion·MS Teams·Otter.ai. 사내 정책: 비공개 회의 별도 분류.",
+      "pitfall": "민감 회의(인사·법무)는 외부 AI 사용 금지·온프렘 STT 사용."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_024",
+    "subject": "G3",
+    "topic": "영업제안서",
+    "tags": [
+      "proposal",
+      "sales",
+      "personalization"
+    ],
+    "difficulty": "중",
+    "question": "B2B 영업 제안서를 AI로 작성할 때 차별화 요소로 가장 적절한 것은?",
+    "options": {
+      "A": "고객사 산업·상황·KPI에 맞춘 가치 제안·ROI 추정·레퍼런스 인용",
+      "B": "모든 고객에게 동일한 표준 양식 그대로 전송",
+      "C": "근거 없는 과장 표현으로 분량 늘리기",
+      "D": "고객 정보를 외부 공개 챗봇에 그대로 입력"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "B2B 제안서는 '고객 맞춤'이 생명이에요. 그 회사의 산업·핵심 지표·과거 사례 인용이 들어가야 설득력이 큽니다.",
+      "steps": [
+        "구성: 문제 정의·해결안·ROI·레퍼런스·일정·비용",
+        "A 선택"
+      ],
+      "practical": "CRM·사전 리서치(공시·뉴스)와 RAG 결합으로 자동 개인화.",
+      "pitfall": "고객 내부 자료를 외부 LLM에 그대로 보내는 건 NDA 위반 위험."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_025",
+    "subject": "G3",
+    "topic": "고객페르소나",
+    "tags": [
+      "persona analysis",
+      "segmentation"
+    ],
+    "difficulty": "중",
+    "question": "AI 기반 고객 페르소나 분석을 실무에 적용할 때 가장 적절한 접근은?",
+    "options": {
+      "A": "동의 받은 데이터 + 군집화·LLM 해석으로 페르소나 가설 도출 후 정성 인터뷰로 검증",
+      "B": "동의 없는 SNS 스크래핑으로 개인 식별 프로파일링",
+      "C": "단일 사용자의 한 번 행동만으로 일반 페르소나 단정",
+      "D": "AI가 만든 가설을 검증 없이 그대로 광고 타깃팅에 적용"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "AI는 '가설 생성'에 빠르고 강해요. 다만 가설은 정성 인터뷰·실험으로 검증해야 진짜 인사이트가 됩니다.",
+      "steps": [
+        "정량(클러스터링) + 정성(인터뷰) 결합",
+        "A 선택"
+      ],
+      "practical": "마케팅·UX 리서치 표준 흐름. AI는 시간 단축·후보군 발굴 역할.",
+      "pitfall": "민감 카테고리(건강·종교·정치)는 별도 가이드라인. 차별 위험."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_026",
+    "subject": "G3",
+    "topic": "사내위키",
+    "tags": [
+      "wiki",
+      "internal chatbot",
+      "운영"
+    ],
+    "difficulty": "상",
+    "question": "사내 위키 챗봇 운영에서 정확도 유지에 가장 중요한 운영 절차는?",
+    "options": {
+      "A": "원본 위키 갱신 시 자동 재인덱싱 + 정기 정답률 평가 + 사용자 피드백 루프",
+      "B": "한 번 인덱싱 후 영원히 갱신하지 않는다",
+      "C": "사용자 질문을 어떤 형태로도 로깅하지 않는다",
+      "D": "오답이 들어오면 시스템 전체를 즉시 폐기한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "위키는 계속 변하니까 챗봇도 계속 따라가야 해요. 자동 재인덱싱 + 정기 평가 + 피드백 루프가 운영의 핵심.",
+      "steps": [
+        "자동 인덱싱·평가·피드백 3축",
+        "A 선택"
+      ],
+      "practical": "Notion·Confluence·SharePoint 변경 이벤트로 인덱싱 트리거.",
+      "pitfall": "민감 페이지가 인덱싱에 섞이면 권한 우회. 권한별 인덱스 분리 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_027",
+    "subject": "G3",
+    "topic": "코드리팩토링",
+    "tags": [
+      "refactoring",
+      "코드품질"
+    ],
+    "difficulty": "중",
+    "question": "AI 보조 코드 리팩토링 작업에서 가장 안전한 접근은?",
+    "options": {
+      "A": "테스트 커버리지 확보 후 단계별 리팩토링 + 매 단계 테스트·리뷰 통과",
+      "B": "한 번에 전체 코드를 AI에게 다시 작성시키고 즉시 배포",
+      "C": "테스트 없이 운영 환경에서 직접 변경",
+      "D": "코드 리뷰를 생략"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "리팩토링은 '동작 보존'이 생명이에요. 테스트가 그걸 보장하고, AI 작업도 단계별 검증을 거쳐야 안전합니다.",
+      "steps": [
+        "1) 테스트 보강 → 2) 작은 단위 변경 → 3) 테스트 통과 → 4) 리뷰",
+        "A 선택"
+      ],
+      "practical": "Strangler Fig 패턴·기능 토글로 점진 교체 안전.",
+      "pitfall": "AI가 미세한 동작 차이를 도입할 수 있어 회귀 테스트 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_028",
+    "subject": "G3",
+    "topic": "테스트자동작성",
+    "tags": [
+      "test generation",
+      "TDD",
+      "커버리지"
+    ],
+    "difficulty": "중",
+    "question": "AI로 테스트 케이스를 자동 작성할 때 가장 적절한 접근은?",
+    "options": {
+      "A": "정상·경계·예외·악성 입력을 분류해 다양한 케이스를 만들고 커버리지·실행 결과로 검증",
+      "B": "통과만 하는 안전한 테스트만 만든다",
+      "C": "정답 출력을 모델이 추측해 그대로 기댓값으로 사용",
+      "D": "테스트 결과 무시"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "테스트는 '예외와 경계'를 잡는 데 의의가 있어요. AI에게 입력 카테고리별로 풍부하게 생성을 시키고 결과는 직접 검증해야 합니다.",
+      "steps": [
+        "분류: happy·edge·error·malicious",
+        "A 선택"
+      ],
+      "practical": "GitHub Copilot Test, Cursor 등이 자동 테스트 생성 지원.",
+      "pitfall": "AI 추측 기댓값은 사람 검토 필수 — 기댓값 자체가 틀리면 테스트가 거짓 안정감을 줌."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_029",
+    "subject": "G3",
+    "topic": "BI인사이트",
+    "tags": [
+      "BI",
+      "insight",
+      "데이터"
+    ],
+    "difficulty": "상",
+    "question": "BI 데이터에서 AI에게 인사이트 도출을 요청할 때 효과를 높이는 접근은?",
+    "options": {
+      "A": "사업 KPI·맥락·기간을 명시하고 결과는 사람·전문가가 인과·외부 변수와 교차 검증",
+      "B": "데이터만 던지고 'AI가 알아서' 결론을 내리도록 위임",
+      "C": "상관관계만 보고 인과관계로 단정",
+      "D": "외부 사건·계절성을 무시"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "AI는 패턴 발견엔 강하지만 인과 추정·외부 사건 해석엔 약해요. 맥락·KPI를 제공하고 결과는 반드시 검증해야 합니다.",
+      "steps": [
+        "맥락: 시점·KPI·외부 사건·계절성",
+        "검증: 인과 가설·전문가 리뷰",
+        "A 선택"
+      ],
+      "practical": "Tableau Pulse·Mode AI·Looker BI Agents — 사람 검토를 워크플로에 내장.",
+      "pitfall": "AI 인사이트가 의사결정의 '권위'로 잘못 사용될 수 있음 — 의사결정자 책임 분리 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g3_030",
+    "subject": "G3",
+    "topic": "번역검수",
+    "tags": [
+      "translation",
+      "LQA",
+      "워크플로"
+    ],
+    "difficulty": "중",
+    "question": "대규모 다국어 번역에 AI를 도입할 때의 권장 워크플로는?",
+    "options": {
+      "A": "AI 초벌 번역 + 용어집·스타일 가이드 적용 + 현지 검수(LQA) + A/B 모니터링",
+      "B": "AI 번역 결과를 검수 없이 즉시 게재",
+      "C": "용어집 없이 매번 다른 표현 사용",
+      "D": "지역·문화 차이를 모두 무시"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "AI 번역은 빠르지만 톤·맥락·용어 일관성 보장이 어려워요. 용어집·LQA·모니터링까지 묶어야 품질이 안정됩니다.",
+      "steps": [
+        "초벌(AI) → 후처리(스타일·용어집) → LQA → 모니터링",
+        "A 선택"
+      ],
+      "practical": "DeepL·Google·Claude + Lokalise·Smartling 등 LSP 결합.",
+      "pitfall": "AI가 명확한 어조 차이를 일관되게 유지 못 함 — 핵심 카피는 사람 작성."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_021",
+    "subject": "G4",
+    "topic": "Reliability",
+    "tags": [
+      "reliability",
+      "safety",
+      "운영안정성"
+    ],
+    "difficulty": "중",
+    "question": "AI 시스템의 신뢰성(Reliability)을 높이는 운영 요소로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "장애·이상 감지 + 자동 페일오버 + 모니터링 알람",
+      "B": "정기 회귀 평가셋·SLO 정의",
+      "C": "운영 로그 보존·사고 사후 분석(Postmortem)",
+      "D": "장애 발생을 외부에 절대 알리지 않고 은폐"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "장애·사고는 알려야 빠르게 복구·재발 방지가 됩니다. 은폐는 신뢰의 반대 — 운영 원칙 위반이에요.",
+      "steps": [
+        "올바른 운영: 감지·페일오버·SLO·로그·Postmortem",
+        "D: 은폐 → 비윤리·법적 위험",
+        "→ D 적절치 않음"
+      ],
+      "practical": "사용자에게 영향 있는 사고는 상태 페이지·공지·재발 방지 보고 공유.",
+      "pitfall": "사고 보고의 균형 — 너무 상세하면 보안 노출, 너무 짧으면 신뢰 손상."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_022",
+    "subject": "G4",
+    "topic": "ModelGovernance",
+    "tags": [
+      "governance",
+      "정책",
+      "거버넌스"
+    ],
+    "difficulty": "상",
+    "question": "기업의 AI 모델 거버넌스 요소로 일반적으로 포함되지 않는 것은?",
+    "options": {
+      "A": "모델 카드·평가 결과·승인 절차",
+      "B": "데이터·프롬프트·운영 변경의 변경관리(Change Management)",
+      "C": "사용 영역·금지 영역·승인된 모델 화이트리스트",
+      "D": "직원 개인의 일기 내용을 회사 차원에서 강제 수집"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "거버넌스는 '모델·데이터·정책'을 관리하는 거지, 직원 사생활까지 강제 수집하는 게 아닙니다.",
+      "steps": [
+        "표준 요소: 모델/데이터/정책/변경관리/감사",
+        "D: 사생활 강제 수집 → 거버넌스 아님",
+        "→ D"
+      ],
+      "practical": "NIST AI RMF·ISO/IEC 42001 등 표준 프레임워크 참조.",
+      "pitfall": "거버넌스 문서만 만들고 운영이 따라가지 않으면 형식적. KPI·감사로 실효성 확보."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_023",
+    "subject": "G4",
+    "topic": "AuditTrail",
+    "tags": [
+      "audit",
+      "log",
+      "추적"
+    ],
+    "difficulty": "중",
+    "question": "AI 운영에서 감사 로그(Audit Trail)에 일반적으로 포함되는 항목으로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "호출자·시간·모델·입력·출력 요약·도구 호출 결과",
+      "B": "정책 위반 탐지·이상 응답 플래그",
+      "C": "보존 기간·접근 권한 분리",
+      "D": "사용자 평문 비밀번호·전체 결제 정보"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "감사 로그에는 누가·언제·무엇을 했는지가 들어가지만, 평문 비밀번호·전체 카드번호 같은 민감 정보는 절대 들어가면 안 됩니다.",
+      "steps": [
+        "포함: 호출 메타·정책 위반·접근 권한",
+        "제외: 민감 PII·평문 비밀번호·전체 결제",
+        "→ D 적절치 않음"
+      ],
+      "practical": "OpenSearch·BigQuery 등에 저장, 민감 필드는 토큰화·해시.",
+      "pitfall": "로그 자체가 유출 사고의 원인이 될 수 있음 — 마스킹·접근 제어 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_024",
+    "subject": "G4",
+    "topic": "NIST_RMF",
+    "tags": [
+      "NIST",
+      "AI RMF",
+      "프레임워크"
+    ],
+    "difficulty": "상",
+    "question": "NIST AI RMF(Risk Management Framework)의 4가지 핵심 기능은?",
+    "options": {
+      "A": "Govern · Map · Measure · Manage",
+      "B": "Develop · Deploy · Delete · Dispose",
+      "C": "Plan · Do · Check · Act",
+      "D": "Read · Write · Update · Delete"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "NIST AI RMF는 'Govern(거버넌스 수립) → Map(위험 식별) → Measure(측정) → Manage(완화)' 4단계 사이클이에요. 글로벌 표준 프레임워크.",
+      "steps": [
+        "Govern·Map·Measure·Manage",
+        "A 선택"
+      ],
+      "practical": "미국 정부 조달·민간 ISO 42001과 연계. 기업 AI 정책의 기본 골격.",
+      "pitfall": "프레임워크는 가이드일 뿐 — 산업·법규에 맞게 구체화·운영해야 의미."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_025",
+    "subject": "G4",
+    "topic": "광고심의",
+    "tags": [
+      "표시광고법",
+      "광고심의",
+      "한국"
+    ],
+    "difficulty": "중",
+    "question": "AI로 작성한 한국 광고 카피의 법적 점검 항목으로 가장 적절하지 않은 것은?",
+    "options": {
+      "A": "표시광고법상 부당 표시·광고(허위·기만·과장) 여부",
+      "B": "의료·금융·식품 등 분야별 추가 규제(의료광고법 등)",
+      "C": "근거 자료 보유 및 입증 가능성",
+      "D": "효과 보장 표현을 자유롭게 사용해도 법적 문제 없다"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "'100% 효과·1위·완치' 같은 과장 표현은 표시광고법 위반 위험이 커요. 객관적 근거 없는 효과 보장은 금지에 가깝습니다.",
+      "steps": [
+        "점검: 부당광고·분야규제·근거",
+        "D: '효과 보장 자유' → 거짓",
+        "→ D 적절치 않음"
+      ],
+      "practical": "공정거래위 표시광고법 가이드라인·식약처 의료광고 가이드 준수.",
+      "pitfall": "AI 자동 생성이라도 게재 책임은 사업자. 법무 사전 검토 워크플로 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_026",
+    "subject": "G4",
+    "topic": "정보주체권리",
+    "tags": [
+      "data subject rights",
+      "삭제권"
+    ],
+    "difficulty": "상",
+    "question": "정보 주체의 '삭제 요청(Right to be Forgotten)'이 들어왔을 때 AI 학습 모델 측 대응으로 가장 현실적인 접근은?",
+    "options": {
+      "A": "원본 DB 삭제 + 인덱스·캐시 제거 + 향후 학습 데이터에서 배제, 이미 학습된 가중치 완전 제거는 기술적 한계 존재",
+      "B": "어떤 조치도 하지 않는다",
+      "C": "사용자에게 절대 응답하지 않고 무시",
+      "D": "모든 모델을 매번 처음부터 재학습한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "이미 학습된 모델 가중치에서 특정 사용자 정보를 '깨끗이' 제거하는 건 어렵습니다. 현실적으로는 DB·인덱스·캐시 삭제 + 재학습 시 배제가 표준 대응이에요.",
+      "steps": [
+        "표준 대응: 원본·인덱스·캐시 삭제 + 향후 학습 배제",
+        "Machine Unlearning 연구 중 (완전 제거는 한계)",
+        "A 선택"
+      ],
+      "practical": "RAG 시스템은 비교적 쉽게 삭제 가능 (벡터 인덱스에서 제거). 파라미터 학습 모델은 어려움.",
+      "pitfall": "삭제 요청을 받았지만 실효적 조치가 없으면 GDPR·개인정보보호법 위반 위험. 절차·증빙 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_027",
+    "subject": "G4",
+    "topic": "오픈소스라이선스",
+    "tags": [
+      "license",
+      "CC",
+      "Apache",
+      "MIT"
+    ],
+    "difficulty": "상",
+    "question": "AI 학습 데이터·코드 라이선스에 대한 설명으로 옳지 않은 것은?",
+    "options": {
+      "A": "CC BY는 출처 표기 시 상업적 사용 가능",
+      "B": "CC BY-NC는 비상업적 사용으로 제한",
+      "C": "MIT·Apache 2.0 코드는 일반적으로 상업적 활용 가능 (조건 충족 시)",
+      "D": "GPL 코드를 무단으로 폐쇄 상용 제품에 그대로 임베드해도 법적 문제 없다"
+    },
+    "answer": "D",
+    "explanation_detail": {
+      "simple": "GPL은 'copyleft' — 파생 작업도 GPL을 따라야 합니다. 폐쇄 상용 제품에 GPL을 무단 임베드하면 라이선스 위반이에요.",
+      "steps": [
+        "MIT·Apache·BSD: 관대 (조건만 충족)",
+        "GPL·AGPL: copyleft (파생도 동일 라이선스)",
+        "CC BY-NC: 비상업적만",
+        "D: '무단 임베드 OK' → 거짓",
+        "→ D 옳지 않음"
+      ],
+      "practical": "기업 코드베이스의 의존성 라이선스를 SBOM으로 관리·자동 검사(FOSSA·Snyk).",
+      "pitfall": "AI 생성 코드도 학습 출처가 GPL이면 위험 가능성 — 코드 검사 자동화 권장."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_028",
+    "subject": "G4",
+    "topic": "익명화가명화",
+    "tags": [
+      "익명화",
+      "가명화",
+      "재식별"
+    ],
+    "difficulty": "상",
+    "question": "익명화(Anonymization)와 가명화(Pseudonymization)의 차이로 가장 적절한 것은?",
+    "options": {
+      "A": "익명화는 재식별 불가능한 처리, 가명화는 별도 키로 재식별 가능한 처리",
+      "B": "두 용어는 완전히 동일하다",
+      "C": "가명화 처리된 데이터는 개인정보가 아니다",
+      "D": "익명화는 단순히 이름만 가리는 것이다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "익명화는 '아무도 못 찾도록 처리'고, 가명화는 '키 있는 사람만 다시 찾을 수 있게 처리'예요. 가명화 데이터는 여전히 개인정보로 취급됩니다.",
+      "steps": [
+        "익명화: 재식별 불가 (법상 개인정보 아님)",
+        "가명화: 재식별 가능 (개인정보 — 별도 동의·관리 필요)",
+        "A 선택"
+      ],
+      "practical": "한국 개인정보보호법: 가명정보 처리 특례 — 통계·연구·공익 목적 제한적 활용 가능.",
+      "pitfall": "익명화로 보였지만 다른 데이터와 결합 시 재식별되는 경우 — k-익명성·차분프라이버시 권장."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_029",
+    "subject": "G4",
+    "topic": "알고리즘차별",
+    "tags": [
+      "disparate impact",
+      "차별",
+      "공정성"
+    ],
+    "difficulty": "상",
+    "question": "AI 채용·신용평가에서 'Disparate Impact(차별적 영향)'에 대한 설명으로 가장 적절한 것은?",
+    "options": {
+      "A": "의도가 없어도 특정 집단에 불리한 결과가 나타나면 차별 책임이 발생할 수 있다",
+      "B": "차별은 의도가 있을 때만 문제된다",
+      "C": "AI가 판단했으므로 책임은 면제된다",
+      "D": "결과가 불리해도 통계가 우연이면 문제 없다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "법은 의도가 아니라 '결과'를 봐요. 의도 없는 자동 결정이라도 특정 성별·연령·인종에 불리한 결과가 일관되게 나오면 차별로 판단될 수 있습니다.",
+      "steps": [
+        "기준: 의도가 아닌 결과 영향",
+        "측정: 80% 룰·통계 검정",
+        "A 선택"
+      ],
+      "practical": "EU AI Act 고위험 시스템 의무, 미국 EEOC 가이드, 한국 차별금지 관련 조항.",
+      "pitfall": "공정성 측정 자체가 어려움 — 어떤 집단·어떤 지표를 볼지 사전 정의·합의 필요."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g4_030",
+    "subject": "G4",
+    "topic": "책임분배",
+    "tags": [
+      "accountability",
+      "공급자배포자",
+      "책임"
+    ],
+    "difficulty": "상",
+    "question": "EU AI Act 등 글로벌 규제에서 AI 책임 주체 분류로 일반적인 것은?",
+    "options": {
+      "A": "Provider(공급자) · Deployer(배포자/사용 기업) · End User 등 역할별 책임 차등",
+      "B": "사용자 개인만 모든 책임을 진다",
+      "C": "AI가 자체 책임을 진다",
+      "D": "어떤 주체도 책임을 지지 않는다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "AI 책임은 한 명에게만 있지 않아요. 만든 회사(Provider), 도입·운영한 기업(Deployer), 사용자가 각자 다른 책임을 집니다.",
+      "steps": [
+        "Provider: 모델·문서·평가",
+        "Deployer: 도입·운영·고지·인간 감독",
+        "End User: 책임 있는 사용",
+        "A 선택"
+      ],
+      "practical": "기업이 외부 API를 도입해 서비스에 적용하면 'Deployer' 책임이 추가로 발생.",
+      "pitfall": "공급자 약관에 '책임 면책'이 있어도 자국 법규·고객 계약은 별개. 사내 책임 매트릭스 작성 권장."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_021",
+    "subject": "G5",
+    "topic": "다중도구라우팅",
+    "tags": [
+      "tool routing",
+      "agent",
+      "분기"
+    ],
+    "difficulty": "상",
+    "question": "검색·계산·DB 조회 등 여러 도구를 사용하는 에이전트에서 도구 선택 정확도를 높이는 방법은?",
+    "options": {
+      "A": "도구마다 명확한 설명·인자 스키마·언제 쓰는지/쓰면 안 되는지 명시",
+      "B": "도구 설명은 한 단어로만 작성",
+      "C": "모든 도구를 매 호출마다 항상 호출",
+      "D": "도구 인자 검증을 생략"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "도구 설명이 곧 라우팅 품질을 결정해요. '언제 써·언제 쓰지 마' + 인자 스키마가 명확해야 모델이 잘 선택합니다.",
+      "steps": [
+        "구성: 이름·설명·언제·예시·인자",
+        "A 선택"
+      ],
+      "practical": "Anthropic/OpenAI 모두 도구 설명 품질이 라우팅 정확도 30%p 이상 차이.",
+      "pitfall": "도구 수가 너무 많으면 라우팅 정확도 급락 — 계층화·서브 에이전트 분리."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_022",
+    "subject": "G5",
+    "topic": "멀티모델라우팅",
+    "tags": [
+      "model routing",
+      "비용분기"
+    ],
+    "difficulty": "상",
+    "question": "단순 분류와 복잡 추론을 모두 다루는 서비스의 효율적 모델 라우팅 전략은?",
+    "options": {
+      "A": "1차로 경량 모델(Haiku/Flash)이 의도 분류·간단 응답, 어려운 경우만 상위 모델(Sonnet/Opus)로 escalation",
+      "B": "모든 호출을 가장 비싼 모델로 처리",
+      "C": "모든 호출을 가장 싼 모델로 처리하고 품질 모니터링 없음",
+      "D": "모델 선택을 무작위로 결정"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "쉬운 일은 경량, 어려운 일은 상위 모델 — '계층적 라우팅'이 비용·품질의 최적화 표준이에요.",
+      "steps": [
+        "1단계: 의도/난이도 분류 (경량 모델)",
+        "2단계: 분류 결과에 따라 모델 라우팅",
+        "A 선택"
+      ],
+      "practical": "Confidence·복잡도 점수 → 임계값 기준 escalation. OpenRouter·내부 라우터 활용.",
+      "pitfall": "라우터 자체의 정확도가 떨어지면 잘못된 경로로 분기. 라우터 평가셋도 별도 운영."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_023",
+    "subject": "G5",
+    "topic": "비용최적화",
+    "tags": [
+      "cost optimization",
+      "성능"
+    ],
+    "difficulty": "상",
+    "question": "월간 LLM 비용 50% 절감 목표를 달성하려 할 때 효과가 가장 큰 단일 조치는?",
+    "options": {
+      "A": "프롬프트 캐싱 적용 + 출력 길이 제어 + 적정 모델 라우팅",
+      "B": "사용자 수를 임의로 절반으로 줄임",
+      "C": "사용자 응답 품질을 의도적으로 저하시킴",
+      "D": "모든 호출을 사람 상담으로 전환"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "캐싱·출력 제어·모델 라우팅 3박자만 잘 해도 50% 절감이 흔합니다. 사용자 경험을 해치지 않고 가능한 정공법이에요.",
+      "steps": [
+        "캐싱: 입력 토큰 비용 90% 감",
+        "출력 제어: max_tokens·구조화 강제",
+        "라우팅: 작업별 모델 차등",
+        "A 선택"
+      ],
+      "practical": "실측: 캐싱 적용만으로 월 비용 30~50% 절감 사례 다수.",
+      "pitfall": "절감에 매몰되어 품질 저하 — eval set으로 회귀 모니터링."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_024",
+    "subject": "G5",
+    "topic": "컴플라이언스응답",
+    "tags": [
+      "compliance",
+      "응답정책"
+    ],
+    "difficulty": "상",
+    "question": "금융·의료 등 규제 산업 챗봇에서 컴플라이언스 응답을 강제하는 가장 적절한 방법은?",
+    "options": {
+      "A": "프롬프트로 가이드 + 출력 검증·필터 + 외부 정책 엔진(rule engine)을 다층으로 적용",
+      "B": "프롬프트 한 줄로 '법규 지키라'고만 적는다",
+      "C": "응답 검증 없이 사용자에게 그대로 전달",
+      "D": "규제를 무시한다"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "규제 준수는 단일 프롬프트로는 보장 안 돼요. 프롬프트 + 출력 필터 + 룰 엔진 다층으로 감싸야 신뢰 가능합니다.",
+      "steps": [
+        "Defense in depth: 프롬프트·필터·룰엔진·사람 검토",
+        "A 선택"
+      ],
+      "practical": "은행 챗봇: 권유 표현 금지·면책 자동 첨부·민원 키워드 사람 라우팅.",
+      "pitfall": "규제 변경 시 즉시 반영되도록 룰 엔진을 코드 외부로 분리(Hot reload)."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_025",
+    "subject": "G5",
+    "topic": "사용자페르소나",
+    "tags": [
+      "user persona",
+      "tone"
+    ],
+    "difficulty": "중",
+    "question": "B2C 챗봇이 사용자 연령·맥락에 따라 톤·세부도를 조정하려 한다. 적절한 접근은?",
+    "options": {
+      "A": "사용자 프로필·이전 대화 기반으로 시스템 프롬프트를 분기 적용 + 동의 받은 데이터만 활용",
+      "B": "민감 정보(인종·종교 등) 추정을 기반으로 응답을 차별화",
+      "C": "한 종류 톤만 모든 사용자에게 사용",
+      "D": "사용자 동의 없는 행동 기반 자동 프로파일링"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "맥락 적응은 좋지만 민감 카테고리 추정 기반 차별은 안 돼요. 동의 받은 데이터·명시적 설정 기반이 안전합니다.",
+      "steps": [
+        "기반: 동의 데이터·명시 선호",
+        "금지: 민감 추정·차별",
+        "A 선택"
+      ],
+      "practical": "노약자·청소년·전문가 모드 명시 선택 옵션 제공.",
+      "pitfall": "암묵적 차별이 차별금지 분쟁의 원인 — 사전 감사 필수."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_026",
+    "subject": "G5",
+    "topic": "에러핸들링",
+    "tags": [
+      "error handling",
+      "fallback",
+      "사용자경험"
+    ],
+    "difficulty": "중",
+    "question": "LLM 출력이 정책 위반·이상 응답으로 판정되었을 때 권장 사용자 경험은?",
+    "options": {
+      "A": "친화적 fallback 메시지 + 사람 상담 안내 + 내부 로그로 케이스 적재",
+      "B": "원본 위반 응답을 그대로 노출",
+      "C": "사용자에게 무응답으로 종료",
+      "D": "위반 사실을 외부에 즉시 공개"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "위반 응답은 사용자에게 노출하지 말고, 친화적 안내 + 사람 상담 옵션을 주고, 내부에는 케이스를 적재해 개선해야 합니다.",
+      "steps": [
+        "위반 감지 → fallback → 사람 라우팅 → 사례 로깅",
+        "A 선택"
+      ],
+      "practical": "정책 위반 카테고리별 사용자 메시지 템플릿화.",
+      "pitfall": "fallback이 자주 발동하면 모델·정책 튜닝 필요 — 정상 응답도 막히지 않게 균형."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_027",
+    "subject": "G5",
+    "topic": "ABTest운영",
+    "tags": [
+      "A/B test",
+      "프롬프트",
+      "유의성"
+    ],
+    "difficulty": "상",
+    "question": "프롬프트 변경 A/B 테스트의 결과 해석에서 주의할 점은?",
+    "options": {
+      "A": "표본 크기·기간·외부 변수·통계적 유의성·실용적 유의성을 모두 검토",
+      "B": "표본 수와 무관하게 첫 1시간 결과로 결정",
+      "C": "유의성 검정 없이 더 좋아 보이면 채택",
+      "D": "외부 사건(이벤트·계절성) 무시"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "A/B 결과는 '통계적으로 의미 있는가'와 '실무적으로 충분히 큰 차이인가'를 둘 다 봐야 해요. 짧은 기간·작은 표본의 차이는 노이즈일 가능성이 큽니다.",
+      "steps": [
+        "검토: 표본·기간·외부 변수·p값·효과 크기",
+        "A 선택"
+      ],
+      "practical": "Sequential testing으로 조기 종료 시 false positive 증가 — 사전 설계 필수.",
+      "pitfall": "여러 지표 동시 검정 시 다중비교 보정 필요 (Bonferroni 등)."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_028",
+    "subject": "G5",
+    "topic": "모델업데이트대응",
+    "tags": [
+      "model update",
+      "deprecation",
+      "운영"
+    ],
+    "difficulty": "상",
+    "question": "사용 중인 LLM 모델이 벤더로부터 deprecate 공지되었을 때 적절한 절차는?",
+    "options": {
+      "A": "후속 모델 평가 → 프롬프트 재튜닝 → 카나리 롤아웃 → 모니터링 → 구 모델 폐기",
+      "B": "공지를 무시하고 폐기일까지 방치",
+      "C": "당일 전 사용자 일괄 강제 전환",
+      "D": "롤백 계획 없이 전환"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "모델 deprecation은 운영 사고로 이어질 수 있어요. 충분한 시간을 두고 후속 모델 검증·점진 전환·롤백 옵션이 필수입니다.",
+      "steps": [
+        "평가 → 재튜닝 → Canary → 모니터링 → 폐기",
+        "A 선택"
+      ],
+      "practical": "OpenAI·Anthropic은 보통 deprecation 6~12개월 전 공지. 그 안에 마이그레이션 권장.",
+      "pitfall": "deprecation 일자가 갑자기 당겨질 수 있으니 여유 두고 작업."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_029",
+    "subject": "G5",
+    "topic": "응급회피",
+    "tags": [
+      "safety",
+      "응급상황",
+      "위험감지"
+    ],
+    "difficulty": "상",
+    "question": "사용자 메시지에 자해·자살 위험 신호가 감지되었을 때 챗봇의 적절한 응답 정책은?",
+    "options": {
+      "A": "공감·이해 표시 + 응급 연락처(자살예방상담 1393 등) + 사람 상담 전환 안내",
+      "B": "방법론·도구 정보를 자세히 제공",
+      "C": "위험 신호를 무시하고 일반 답변 지속",
+      "D": "사용자 정보를 외부에 무단 공개"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "자해·자살 신호는 가장 높은 우선순위로 처리해야 합니다. 공감 + 응급 연락처 + 사람 안내가 모든 챗봇의 안전 정책 표준이에요.",
+      "steps": [
+        "감지 → 공감 응답 → 1393·119 안내 → 사람 상담 라우팅",
+        "A 선택"
+      ],
+      "practical": "한국 자살예방상담전화: 1393, 청소년: 1388, 응급: 119. 챗봇 시스템 프롬프트에 명시.",
+      "pitfall": "오탐(false positive)도 사람 안내로 이어져 안전. 미탐(false negative)이 더 위험."
+    },
+    "mockSet": "mock3"
+  },
+  {
+    "id": "aipot_g5_030",
+    "subject": "G5",
+    "topic": "프롬프트누출",
+    "tags": [
+      "prompt leak",
+      "보안",
+      "운영"
+    ],
+    "difficulty": "상",
+    "question": "운영 중 챗봇의 시스템 프롬프트가 사용자에게 누출되는 사고가 발생했다. 가장 적절한 대응은?",
+    "options": {
+      "A": "누출 영향 평가 → 시스템 프롬프트에서 민감 정보 제거 → 다층 방어 보강(외부 필터·모델 정렬) → 재발 방지 가이드",
+      "B": "민감 키·내부 정보가 들어 있어도 그대로 운영",
+      "C": "누출 사고를 은폐",
+      "D": "시스템 프롬프트는 영원히 안전하다고 가정"
+    },
+    "answer": "A",
+    "explanation_detail": {
+      "simple": "시스템 프롬프트는 누출될 수 있다고 가정하고 운영해야 해요. 누출 시엔 영향 평가 → 민감 정보 제거 → 다층 방어 보강이 표준 절차입니다.",
+      "steps": [
+        "영향 평가·민감 정보 회수·다층 방어·재발 방지",
+        "A 선택"
+      ],
+      "practical": "민감 키·URL·내부 데이터는 절대 시스템 프롬프트에 두지 않고, 도구·환경변수 분리.",
+      "pitfall": "재발 방지 없는 일회성 패치는 같은 사고 반복. 운영 가이드 업데이트 필수."
+    },
+    "mockSet": "mock3"
   }
 ]
