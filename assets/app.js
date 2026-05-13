@@ -7,6 +7,113 @@
     examMeta: null, // exams.json 캐시
 
     /**
+     * ⚙️ 설정 모달 — Gemini API 키 등 글로벌 설정
+     * 페이지마다 topbar의 ⚙️ 버튼이 이 함수를 호출
+     */
+    openSettings() {
+      const existing = document.getElementById('exam-settings-modal');
+      if (existing) existing.remove();
+
+      const overlay = document.createElement('div');
+      overlay.id = 'exam-settings-modal';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
+      const currentKey = localStorage.getItem('exam_ai_gen_key') || '';
+      overlay.innerHTML = `
+        <div style="background:white;border-radius:10px;padding:22px;max-width:520px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,0.2);">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+            <h2 style="margin:0;flex:1;">⚙️ 설정</h2>
+            <button id="settings-close-x" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;">✕</button>
+          </div>
+
+          <h3 style="margin:14px 0 6px;font-size:15px;">✨ AI 문제 생성 — Google Gemini API</h3>
+          <p class="muted" style="font-size:12px;margin:0 0 10px;">
+            admin 페이지의 "✨ AI 생성" 기능에 사용됩니다. Gemini 2.5 Flash 무료 tier (15/min, 1500/day).
+            <br>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:#7c3aed;">→ API 키 발급받기 (무료, Gmail 로그인)</a>
+          </p>
+          <label style="display:block;font-size:13px;font-weight:600;margin-bottom:4px;">API 키</label>
+          <div style="display:flex;gap:6px;">
+            <input type="password" id="settings-api-key" value="${currentKey.replace(/"/g,'&quot;')}" placeholder="AIza..." style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:monospace;font-size:13px;">
+            <button id="settings-show-key" type="button" style="padding:0 12px;border:1px solid #ddd;border-radius:6px;background:#f5f5f5;cursor:pointer;">👁</button>
+          </div>
+          <div style="margin-top:6px;font-size:11px;color:#888;">
+            ${currentKey ? '✅ 저장된 키 있음 (' + currentKey.slice(0,7) + '...' + currentKey.slice(-4) + ')' : '⚠️ 저장된 키 없음'}
+          </div>
+          <div class="muted" style="font-size:11px;margin-top:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:8px;">
+            🔒 키는 이 브라우저의 localStorage에만 저장되며 서버로 전송되지 않습니다.
+            <br>본인 기기에서만 사용하세요. 공용 PC·외부 공유 금지.
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:18px;">
+            <button id="settings-save" class="btn primary" style="flex:1;">💾 저장</button>
+            <button id="settings-clear" class="btn danger">🗑 삭제</button>
+            <button id="settings-close" class="btn ghost">닫기</button>
+          </div>
+
+          <hr style="margin:18px 0;border:none;border-top:1px solid #eee;">
+          <h3 style="margin:0 0 6px;font-size:14px;">🧪 진단</h3>
+          <button id="settings-test" class="btn" style="font-size:12px;">🔌 Gemini 연결 테스트</button>
+          <div id="settings-test-result" style="margin-top:8px;font-size:12px;color:#666;"></div>
+        </div>`;
+      document.body.appendChild(overlay);
+
+      const $ = (sel) => overlay.querySelector(sel);
+      const input = $('#settings-api-key');
+      const close = () => overlay.remove();
+      $('#settings-close-x').onclick = close;
+      $('#settings-close').onclick = close;
+      overlay.onclick = (e) => { if (e.target === overlay) close(); };
+
+      $('#settings-show-key').onclick = () => {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      };
+
+      $('#settings-save').onclick = () => {
+        const v = input.value.trim();
+        if (!v) { alert('API 키를 입력하세요.'); return; }
+        localStorage.setItem('exam_ai_gen_key', v);
+        $('#settings-test-result').innerHTML = '✅ 저장됨';
+        setTimeout(close, 600);
+      };
+
+      $('#settings-clear').onclick = () => {
+        if (!confirm('저장된 API 키를 삭제할까요?')) return;
+        localStorage.removeItem('exam_ai_gen_key');
+        input.value = '';
+        $('#settings-test-result').innerHTML = '🗑 삭제됨';
+      };
+
+      $('#settings-test').onclick = async () => {
+        const key = input.value.trim();
+        if (!key) { $('#settings-test-result').innerHTML = '⚠️ 키를 먼저 입력하세요.'; return; }
+        $('#settings-test-result').innerHTML = '🔄 테스트 중...';
+        try {
+          const r = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: 'Reply with just: OK' }] }],
+                generationConfig: { maxOutputTokens: 10 },
+              }),
+            }
+          );
+          if (!r.ok) {
+            const t = await r.text();
+            $('#settings-test-result').innerHTML = `❌ ${r.status}: ${t.slice(0, 150)}`;
+            return;
+          }
+          $('#settings-test-result').innerHTML = '✅ Gemini API 정상 작동';
+        } catch (e) {
+          $('#settings-test-result').innerHTML = `❌ ${e.message}`;
+        }
+      };
+
+      input.focus();
+    },
+
+    /**
      * URL ?id=xxx 추출 (없으면 null)
      */
     getExamIdFromUrl() {

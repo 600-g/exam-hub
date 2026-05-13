@@ -36,6 +36,7 @@
     <a href="exam.html" class="btn ghost">← 돌아가기</a>
     <h1>📝 문제 편집</h1>
     <div class="spacer"></div>
+    <button id="settings-btn" class="btn ghost" title="설정 — API 키 등">⚙️ 설정</button>
   </div>
 </div>
 
@@ -199,6 +200,8 @@
 
 <script src="assets/app.js"></script>
 <script>
+document.getElementById('settings-btn').addEventListener('click', () => ExamHub.openSettings());
+
 (async () => {
   const exams = await ExamHub.loadExams();
   const examSelect = document.getElementById('exam-select');

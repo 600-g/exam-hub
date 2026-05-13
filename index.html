@@ -11,6 +11,8 @@
   <div class="topbar-inner">
     <h1>📚 Exam Hub</h1>
     <span class="muted">자격증 시험 준비 — AI-POT · SQLD · AI-900</span>
+    <div class="spacer" style="flex:1;"></div>
+    <button id="settings-btn" class="btn ghost" title="설정 — API 키 등">⚙️ 설정</button>
   </div>
 </div>
 
@@ -27,6 +29,8 @@
 
 <script src="assets/app.js"></script>
 <script>
+document.getElementById('settings-btn').addEventListener('click', () => ExamHub.openSettings());
+
 (async () => {
   const meta = await ExamHub.loadExams();
   const wrap = document.getElementById('exam-list');
