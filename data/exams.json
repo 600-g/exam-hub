@@ -57,8 +57,60 @@
       ],
       "language": "ko",
       "active": true
+    },
+    {
+      "id": "aipot",
+      "name": "AI-POT 1급",
+      "fullName": "AI 프롬프트 활용능력 1급 (KPC)",
+      "emoji": "🤖",
+      "color": "#7c3aed",
+      "description": "한국생산성본부 — 생성형 AI 이론·프롬프트 엔지니어링·업무활용·윤리·실전 시나리오 종합 평가",
+      "totalQuestions": 50,
+      "passScore": 60,
+      "maxScore": 100,
+      "timeMinutes": 60,
+      "subjectFailThreshold": 0.4,
+      "subjects": [
+        {
+          "id": "G1",
+          "name": "생성형 AI 이론",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["LLM기본", "Transformer", "토큰", "ContextWindow", "Hallucination", "모델비교", "샘플링파라미터", "Embedding", "RAG", "Multimodal"]
+        },
+        {
+          "id": "G2",
+          "name": "프롬프트 엔지니어링 기술",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["ZeroShot", "FewShot", "ChainOfThought", "RolePrompting", "SystemPrompt", "출력형식", "프롬프트압축", "SelfConsistency", "ReAct", "FunctionCalling"]
+        },
+        {
+          "id": "G3",
+          "name": "프롬프트 엔지니어링 업무 활용",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["문서요약", "번역", "코드생성", "데이터분석", "이메일작성", "회의록", "마케팅", "교육자료", "챗봇설계", "의사결정보조"]
+        },
+        {
+          "id": "G4",
+          "name": "AI 윤리와 책임",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["저작권", "개인정보", "편향", "환각대응", "ResponsibleAI", "프롬프트인젝션", "AI법규", "딥페이크", "환경영향", "투명성"]
+        },
+        {
+          "id": "G5",
+          "name": "실전 시나리오",
+          "questionCount": 10,
+          "score": 20,
+          "topics": ["시나리오선택", "프롬프트진단", "모델선택", "토큰비용", "출력해석", "RAG설계", "에이전트설계", "프롬프트개선", "오류대응", "실무판단"]
+        }
+      ],
+      "language": "ko",
+      "active": true
     }
   ],
-  "version": "1.0.0",
-  "lastUpdated": "2026-05-08"
+  "version": "1.6.0",
+  "lastUpdated": "2026-05-13"
 }
