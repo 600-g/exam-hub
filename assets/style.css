@@ -1,5 +1,5 @@
-/* exam-hub 공통 스타일 — 기본 다크 테마 + 시험별 accent color */
-:root {
+/* exam-hub 공통 스타일 — 라이트/다크 듀얼 + 시험별 accent color */
+:root, [data-theme="dark"] {
   --bg: #0b0b14;
   --panel: #14141f;
   --panel-2: #1c1c2b;
@@ -10,6 +10,29 @@
   --accent-soft: rgba(247,160,30,0.15);
   --good: #4ade80;
   --bad: #f87171;
+  --modal-bg: #1c1c2b;
+  --modal-text: #e6e6f0;
+  --input-bg: #0b0b14;
+  --input-border: rgba(255,255,255,0.15);
+  --note-bg: rgba(247,160,30,0.08);
+  --note-border: rgba(247,160,30,0.3);
+}
+[data-theme="light"] {
+  --bg: #fafafa;
+  --panel: #ffffff;
+  --panel-2: #f5f5fa;
+  --border: rgba(0,0,0,0.10);
+  --text: #1a1a2e;
+  --text-dim: #5a5a72;
+  --accent-soft: rgba(247,160,30,0.18);
+  --good: #16a34a;
+  --bad: #dc2626;
+  --modal-bg: #ffffff;
+  --modal-text: #1a1a2e;
+  --input-bg: #ffffff;
+  --input-border: rgba(0,0,0,0.15);
+  --note-bg: #fffbeb;
+  --note-border: #fde68a;
 }
 * { box-sizing: border-box; }
 body {
@@ -29,7 +52,7 @@ a:hover { text-decoration: underline; }
 }
 .topbar {
   position: sticky; top: 0; z-index: 10;
-  background: rgba(11,11,20,0.92);
+  background: var(--panel);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
@@ -67,7 +90,7 @@ a:hover { text-decoration: underline; }
 hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 pre, code { font-family: ui-monospace, SF Mono, "JetBrains Mono", monospace; }
 pre {
-  background: #08080f; border: 1px solid var(--border);
+  background: var(--panel-2); border: 1px solid var(--border);
   padding: 12px 14px; border-radius: 8px;
   overflow-x: auto; font-size: 13px; line-height: 1.55;
 }
