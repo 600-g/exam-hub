@@ -39,6 +39,11 @@
       <div><h3>약점 분석</h3>
       <p>토픽별 정답률 차트 + 약한 영역 추천.</p></div>
     </a>
+    <a id="link-admin" class="exam-card" href="#" style="border-left: 4px solid #7c3aed;">
+      <div class="emoji">✨</div>
+      <div><h3>문제 편집 · AI 생성 <span class="muted" style="font-size:12px;font-weight:normal;">관리자</span></h3>
+      <p>Gemini로 문제 자동 생성 + 미리보기·채택. JSON 내보내기로 백업.</p></div>
+    </a>
   </div>
 </div>
 
@@ -123,6 +128,7 @@
   document.getElementById('link-mock').href = `mock.html?id=${id}`;
   document.getElementById('link-review').href = `review.html?id=${id}`;
   document.getElementById('link-stats').href = `stats.html?id=${id}`;
+  document.getElementById('link-admin').href = `admin.html?id=${id}`;
   document.getElementById('mock-desc').textContent = `${exam.totalQuestions}문항 / ${exam.timeMinutes}분 / 합격 ${exam.passScore}점`;
   document.getElementById('review-desc').textContent = wrong === 0 ? '오답이 없습니다 🎉' : `오답 ${wrong}문제 대기 중`;
 })();
