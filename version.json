@@ -1,12 +1,9 @@
 {
-  "version": "1.10.1",
-  "buildTime": "2026-05-14T01:00:00Z",
+  "version": "1.10.2",
+  "buildTime": "2026-05-14T09:55:00Z",
   "features": [
-    "라이트 모드 콘트라스트 전수 강화 — 본문 #0f172a, dim #475569",
-    "accent 글자(.badge·.opt-label·.explain h4)를 라이트 모드에서 본문색으로 자동 전환",
-    "a 태그 라이트 모드 #1d4ed8 진한 파랑 + 굵게",
-    "라디오/체크박스에 accent-color 적용 (양쪽 모드 가시성)",
-    "admin.html 인라인 스타일도 변수화 (다크/라이트 모달 일관)",
-    "자산 캐시버스터 v=20260514a (옛 자산 강제 갱신)"
+    "두근컴퍼니 임베드 위젯 추가 — 우하단 ⚙️ 개발자모드 비번 후 채팅·패치노트 접근",
+    "전 페이지 (admin/exam/index/mock/quiz/review/stats) <script src='600g.net/embed/widget.js' data-team-id='ai900'> 주입",
+    "두근컴퍼니 본진 팀명: AI900 + SQLD 시험 → 시험앱"
   ]
 }
