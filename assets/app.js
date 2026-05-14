@@ -76,9 +76,9 @@
           <div id="settings-test-result" style="margin-top:8px;font-size:12px;color:var(--text-dim);"></div>
 
           <hr style="margin:18px 0;">
-          <h3 style="margin:0 0 6px;font-size:14px;color:var(--accent);">⚙️ 두근컴퍼니</h3>
-          <p style="font-size:12px;margin:0 0 10px;color:var(--text-dim);">개발자가 채팅·패치노트로 시험앱을 관리해요</p>
-          <button id="settings-doogeun" class="btn" style="font-size:12px;">⚙️ 두근컴퍼니 열기</button>
+          <h3 style="margin:0 0 6px;font-size:14px;color:var(--accent);">🔧 개발자 모드</h3>
+          <p style="font-size:12px;margin:0 0 10px;color:var(--text-dim);">채팅·터미널·패치 히스토리로 시험앱을 직접 관리</p>
+          <button id="settings-doogeun" class="btn" style="font-size:12px;">🔧 개발자 모드 열기</button>
         </div>`;
       document.body.appendChild(overlay);
 
