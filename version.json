@@ -1,8 +1,8 @@
 {
-  "version": "1.10.5",
-  "buildTime": "2026-05-14T11:30:00Z",
+  "version": "1.10.6",
+  "buildTime": "2026-05-14T11:55:00Z",
   "features": [
-    "widget script src 에 ?v=2 추가 — CF Pages 옛 widget.js 캐시(14400s) 우회",
-    "이제 매번 비밀번호 모달이 강제로 표시됨 (쿠키 자동 통과 X)"
+    "widget URL v=2 → v=3 — CF Pages _headers 미반영 우회 (CF cache 4시간 그대로라 호스트 URL 자체 변경으로 cache miss 강제)",
+    "강제 새로고침 후 매번 비번 모달 + 색상 강화 + 도구 진행 표시 즉시 반영"
   ]
 }
