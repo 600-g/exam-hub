@@ -74,6 +74,11 @@
           <h3 style="margin:0 0 6px;font-size:14px;color:var(--accent);">🧪 진단</h3>
           <button id="settings-test" class="btn" style="font-size:12px;">🔌 Gemini 연결 테스트</button>
           <div id="settings-test-result" style="margin-top:8px;font-size:12px;color:var(--text-dim);"></div>
+
+          <hr style="margin:18px 0;">
+          <h3 style="margin:0 0 6px;font-size:14px;color:var(--accent);">⚙️ 두근컴퍼니</h3>
+          <p style="font-size:12px;margin:0 0 10px;color:var(--text-dim);">개발자가 채팅·패치노트로 시험앱을 관리해요</p>
+          <button id="settings-doogeun" class="btn" style="font-size:12px;">⚙️ 두근컴퍼니 열기</button>
         </div>`;
       document.body.appendChild(overlay);
 
@@ -106,6 +111,14 @@
         localStorage.removeItem('exam_ai_gen_key');
         input.value = '';
         $('#settings-test-result').innerHTML = '🗑 삭제됨';
+      };
+
+      $('#settings-doogeun').onclick = () => {
+        if (window.doogeunEmbed && typeof window.doogeunEmbed.open === 'function') {
+          window.doogeunEmbed.open();
+        } else {
+          alert('두근컴퍼니 위젯 로드 실패 — 페이지 새로고침 후 다시 시도해주세요');
+        }
       };
 
       $('#settings-test').onclick = async () => {

@@ -1,9 +1,8 @@
 {
-  "version": "1.10.2",
-  "buildTime": "2026-05-14T09:55:00Z",
+  "version": "1.10.3",
+  "buildTime": "2026-05-14T10:25:00Z",
   "features": [
-    "두근컴퍼니 임베드 위젯 추가 — 우하단 ⚙️ 개발자모드 비번 후 채팅·패치노트 접근",
-    "전 페이지 (admin/exam/index/mock/quiz/review/stats) <script src='600g.net/embed/widget.js' data-team-id='ai900'> 주입",
-    "두근컴퍼니 본진 팀명: AI900 + SQLD 시험 → 시험앱"
+    "두근컴퍼니 위젯 — FAB 제거 (data-no-fab) → ⚙️ 설정 모달 안에서 [⚙️ 두근컴퍼니 열기] 클릭으로 진입",
+    "기존 위치 충돌 해결 + 백엔드 CORS 쿠키 인증 허용 (.600g.net 서브도메인 regex)"
   ]
 }
