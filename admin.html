@@ -200,7 +200,7 @@
   </div>
 </div>
 
-<script src="assets/app.js?v=20260514a"></script>
+<script src="assets/app.js?v=20260521a"></script>
 <script>
 (async () => {
   const exams = await ExamHub.loadExams();
@@ -435,16 +435,31 @@
           temperature: 0.7,
           maxOutputTokens: 8192,
           responseMimeType: 'application/json',
+          // gemini-2.5-flash 는 thinking 모델 — thinkingBudget:0 이 없으면 사고 토큰이
+          // 출력 예산을 잠식해 JSON 이 잘리고 파싱이 실패한다.
+          thinkingConfig: { thinkingBudget: 0 },
         },
       }),
     });
     if (!r.ok) {
       const err = await r.text();
-      throw new Error(`Gemini API ${r.status}: ${err.slice(0, 200)}`);
+      let hint = '';
+      if (r.status === 400 || r.status === 403) hint = ' (API 키 오류 — 새 키 발급 필요)';
+      else if (r.status === 429) hint = ' (무료 한도 초과 — 잠시 후 재시도)';
+      throw new Error(`Gemini API ${r.status}${hint}: ${err.slice(0, 200)}`);
     }
     const data = await r.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    let parsed = JSON.parse(text);
+    const cand = data?.candidates?.[0];
+    const text = (cand?.content?.parts?.[0]?.text || '').trim();
+    if (!text) {
+      throw new Error(`Gemini 빈 응답 (finishReason: ${cand?.finishReason || '없음'}) — 문제 수를 줄여 재시도하세요`);
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch (_) {
+      throw new Error('Gemini 응답 JSON 파싱 실패 — 출력이 잘렸을 수 있음 (문제 수 줄여 재시도)');
+    }
     if (!Array.isArray(parsed)) {
       if (Array.isArray(parsed?.questions)) parsed = parsed.questions;
       else throw new Error('응답이 JSON 배열이 아닙니다');

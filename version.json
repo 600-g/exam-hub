@@ -1,8 +1,9 @@
 {
-  "version": "1.10.6",
-  "buildTime": "2026-05-14T11:55:00Z",
+  "version": "1.10.7",
+  "buildTime": "2026-05-21T00:00:00Z",
   "features": [
-    "widget URL v=2 → v=3 — CF Pages _headers 미반영 우회 (CF cache 4시간 그대로라 호스트 URL 자체 변경으로 cache miss 강제)",
-    "강제 새로고침 후 매번 비번 모달 + 색상 강화 + 도구 진행 표시 즉시 반영"
+    "Gemini AI 생성/연결테스트 — thinkingConfig.thinkingBudget:0 추가. gemini-2.5-flash 가 thinking 모델이라 사고 토큰이 출력 예산을 잠식해 빈 응답/JSON 잘림 오류가 나던 버그 수정",
+    "Gemini 오류 메시지 개선 — 키 오류(400/403)·한도초과(429)·빈응답 구분 안내",
+    "app.js 캐시버스트 v=20260521a"
   ]
 }

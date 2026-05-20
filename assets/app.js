@@ -133,18 +133,29 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 contents: [{ parts: [{ text: 'Reply with just: OK' }] }],
-                generationConfig: { maxOutputTokens: 10 },
+                // gemini-2.5-flash 는 thinking 모델 — thinkingBudget:0 이 없으면
+                // maxOutputTokens 를 내부 사고 토큰에 다 써버려 빈 응답이 온다.
+                generationConfig: { maxOutputTokens: 10, thinkingConfig: { thinkingBudget: 0 } },
               }),
             }
           );
           if (!r.ok) {
             const t = await r.text();
-            $('#settings-test-result').innerHTML = `❌ ${r.status}: ${t.slice(0, 150)}`;
+            let hint = '';
+            if (r.status === 400 || r.status === 403) hint = ' — API 키가 잘못되었거나 만료됨. aistudio.google.com 에서 새 키 발급';
+            else if (r.status === 429) hint = ' — 무료 한도 초과 (분15·일1500). 잠시 후 재시도';
+            $('#settings-test-result').innerHTML = `❌ ${r.status}${hint}<br><span style="opacity:.65;">${ExamHub.escape(t.slice(0, 150))}</span>`;
+            return;
+          }
+          const data = await r.json();
+          const txt = (data?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+          if (!txt) {
+            $('#settings-test-result').innerHTML = '⚠️ 키는 유효하나 모델 응답 본문이 비어있음 — 잠시 후 재시도';
             return;
           }
           $('#settings-test-result').innerHTML = '✅ Gemini API 정상 작동';
         } catch (e) {
-          $('#settings-test-result').innerHTML = `❌ ${e.message}`;
+          $('#settings-test-result').innerHTML = `❌ ${ExamHub.escape(e.message)} — 네트워크/CORS 문제일 수 있음`;
         }
       };
 
