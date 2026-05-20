@@ -33,7 +33,7 @@
   <div id="list-view"></div>
 </div>
 
-<script src="assets/app.js?v=20260521a"></script>
+<script src="assets/app.js?v=20260521b"></script>
 <script>
 (async () => {
   const examId = ExamHub.getExamIdFromUrl() || 'ai900';
@@ -146,7 +146,7 @@
         const correct = picked === shuffled.answer;
         footerHtml = `
           <div style="margin-top:14px;">
-            ${ExamHub.renderExplanation(origQ)}
+            ${ExamHub.renderExplanation(shuffled)}
           </div>
           <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
             ${correct

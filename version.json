@@ -1,9 +1,10 @@
 {
-  "version": "1.10.7",
-  "buildTime": "2026-05-21T00:00:00Z",
+  "version": "1.10.8",
+  "buildTime": "2026-05-21T01:00:00Z",
   "features": [
-    "Gemini AI 생성/연결테스트 — thinkingConfig.thinkingBudget:0 추가. gemini-2.5-flash 가 thinking 모델이라 사고 토큰이 출력 예산을 잠식해 빈 응답/JSON 잘림 오류가 나던 버그 수정",
-    "Gemini 오류 메시지 개선 — 키 오류(400/403)·한도초과(429)·빈응답 구분 안내",
-    "app.js 캐시버스트 v=20260521a"
+    "보기 셔플 시 해설 풀이 어긋남 수정 — shuffleOptions 가 정답키뿐 아니라 해설(평문/4단)의 보기 letter 참조까지 같은 매핑으로 remap. '정답은 B' 같은 풀이가 셔플 후에도 정확히 일치",
+    "letter remap 안전장치 — API·RAG·2D·3D·A4·C2PA·D3·B2B 등 라틴/숫자 인접 letter 보호, 'A/B 테스트' 고정 용어 보존",
+    "review.html 오답복습 — 셔플본 기준으로 해설 렌더 (origQ → shuffled)",
+    "Gemini thinkingBudget:0 (이전 빌드 포함), app.js 캐시버스트 v=20260521b"
   ]
 }

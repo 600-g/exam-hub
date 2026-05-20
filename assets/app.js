@@ -289,23 +289,58 @@
     },
 
     /**
-     * 보기(A/B/C/D) 순서 무작위 셔플 — 위치 암기 방지
+     * 보기(A/B/C/D) 순서 무작위 셔플 — 위치 암기 방지.
      * 같은 문제를 여러 번 만나도 항상 다른 배치로 보임.
-     * 정답은 새 위치로 자동 remap. 4단 해설은 정답 표시 그대로.
+     * 정답키 + 해설(평문 explanation / 4단 explanation_detail)의 letter 참조를
+     * 같은 매핑으로 함께 remap → 셔플해도 "정답은 B" 같은 풀이가 어긋나지 않음.
      */
     shuffleOptions(q) {
       if (!q.options || Object.keys(q.options).length < 2) return q;
       const entries = Object.entries(q.options); // [[origKey, value], ...]
       const shuffled = this.shuffle(entries);
       const newOptions = {};
-      const remap = {}; // newKey → origKey
+      const fwd = {}; // origKey → newKey (해설 remap 에 사용)
       shuffled.forEach(([origKey, val], i) => {
         const newKey = String.fromCharCode(65 + i); // A=65, B=66, ...
         newOptions[newKey] = val;
-        remap[newKey] = origKey;
+        fwd[origKey] = newKey;
       });
-      const newAnswer = Object.keys(remap).find((k) => remap[k] === q.answer) || q.answer;
-      return { ...q, options: newOptions, answer: newAnswer, _origAnswer: q.answer };
+      const out = {
+        ...q,
+        options: newOptions,
+        answer: fwd[q.answer] || q.answer,
+        _origAnswer: q.answer,
+      };
+      // 해설 letter 동기화 — 평문 explanation + 4단 explanation_detail
+      if (q.explanation) out.explanation = this._remapAnswerLetters(q.explanation, fwd);
+      if (q.explanation_detail) {
+        const ed = q.explanation_detail;
+        out.explanation_detail = {
+          ...ed,
+          simple: this._remapAnswerLetters(ed.simple, fwd),
+          steps: Array.isArray(ed.steps) ? ed.steps.map((s) => this._remapAnswerLetters(s, fwd)) : ed.steps,
+          practical: this._remapAnswerLetters(ed.practical, fwd),
+          pitfall: this._remapAnswerLetters(ed.pitfall, fwd),
+        };
+      }
+      return out;
+    },
+
+    /**
+     * 해설 텍스트의 보기 letter(A-D)를 셔플 매핑(fwd: origKey→newKey)대로 치환.
+     * 셔플로 "정답은 B" 같은 풀이가 어긋나는 것을 막는다.
+     * - 라틴문자/숫자에 인접한 letter 는 제외 → API·RAG·2D·3D·A4·C2PA·D3·B2B 보호
+     * - "A/B 테스트·결과" 처럼 letter 가 고정 용어인 구간은 문맥 검사로 보존
+     * 보기 참조든 예시 라벨(NVL(A,B) 등)이든 일관 치환되어 의미가 깨지지 않는다.
+     * lookbehind 미사용 (구형 iOS Safari 호환).
+     */
+    _remapAnswerLetters(text, fwd) {
+      if (!text || typeof text !== 'string') return text;
+      const TERM = /[A-D]\s*\/\s*[A-D]\s*(?:테스트|테스팅|결과|실험)/;
+      return text.replace(/([^A-Za-z0-9]|^)([A-D])(?![A-Za-z0-9])/g, (m, pre, ch, offset, str) => {
+        if (TERM.test(str.slice(Math.max(0, offset - 4), offset + 16))) return m;
+        return pre + (fwd[ch] || ch);
+      });
     },
 
     /* 약점 분석 — 토픽별 정답률 낮은 순 */
