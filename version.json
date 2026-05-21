@@ -1,10 +1,9 @@
 {
-  "version": "1.10.8",
-  "buildTime": "2026-05-21T01:00:00Z",
+  "version": "1.10.9",
+  "buildTime": "2026-05-21T02:00:00Z",
   "features": [
-    "보기 셔플 시 해설 풀이 어긋남 수정 — shuffleOptions 가 정답키뿐 아니라 해설(평문/4단)의 보기 letter 참조까지 같은 매핑으로 remap. '정답은 B' 같은 풀이가 셔플 후에도 정확히 일치",
-    "letter remap 안전장치 — API·RAG·2D·3D·A4·C2PA·D3·B2B 등 라틴/숫자 인접 letter 보호, 'A/B 테스트' 고정 용어 보존",
-    "review.html 오답복습 — 셔플본 기준으로 해설 렌더 (origQ → shuffled)",
-    "Gemini thinkingBudget:0 (이전 빌드 포함), app.js 캐시버스트 v=20260521b"
+    "웹/모바일 확대 차단 — 핀치줌(iOS gesture·멀티터치)·더블탭줌(touch-action)·트랙패드/Ctrl휠·Ctrl+키보드 줌 차단으로 고정 레이아웃 보호. viewport maximum-scale=1,user-scalable=no",
+    "이전: 보기 셔플 시 해설 풀이 어긋남 수정 + Gemini thinkingBudget:0",
+    "app.js 캐시버스트 v=20260521c"
   ]
 }

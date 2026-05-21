@@ -515,4 +515,37 @@
       }
     }
   };
+
+  // ───── 웹/모바일 확대 차단 (핀치·더블탭·트랙패드·Ctrl휠) — 고정 레이아웃 보호 ─────
+  (function preventZoom() {
+    const stop = (e) => e.preventDefault();
+    // 더블탭 줌 차단 (일반 탭/클릭은 정상 동작)
+    document.documentElement.style.touchAction = 'manipulation';
+    // iOS Safari 핀치 줌 제스처 (viewport user-scalable=no 를 iOS 가 무시하므로 필요)
+    ['gesturestart', 'gesturechange', 'gestureend'].forEach((evt) => {
+      document.addEventListener(evt, stop, { passive: false });
+    });
+    // 멀티터치(핀치) 차단 — 한 손가락 스크롤은 영향 없음
+    document.addEventListener(
+      'touchmove',
+      (e) => {
+        if (e.touches && e.touches.length > 1) e.preventDefault();
+      },
+      { passive: false }
+    );
+    // 데스크탑 Ctrl+휠 / 트랙패드 핀치 줌 차단 (일반 스크롤은 그대로)
+    document.addEventListener(
+      'wheel',
+      (e) => {
+        if (e.ctrlKey) e.preventDefault();
+      },
+      { passive: false }
+    );
+    // Ctrl/⌘ + +/-/0 키보드 줌 (브라우저가 허용하는 범위 내)
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0'].indexOf(e.key) !== -1) {
+        e.preventDefault();
+      }
+    });
+  })();
 })(window);
